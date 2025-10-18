@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toolgenix - Tools That Actually Get You</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --white: #FFFFFF;
+            --soft-gray: #F8F8F8;
+            --dark-navy: #1E1E2F;
+            --deep-gray: #2E2E3F;
+            --purple: #7A5CFA;
+            --violet: #8A63FF;
+            --gold: #FFD700;
+            --shadow: rgba(122, 92, 250, 0.15);
+            --gold-shadow: rgba(255, 215, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark-navy);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Ultra Compact Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px var(--shadow);
+            z-index: 1000;
+            padding: 0.6rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            display: flex;
+        }
+
+        .logo span:first-child {
+            color: var(--dark-navy);
+        }
+
+        .logo span:last-child {
+            background: linear-gradient(135deg, var(--purple), var(--violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--deep-gray);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--purple);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--purple), var(--violet));
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 3px 10px var(--shadow), 0 0 8px var(--gold-shadow);
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 5px 15px var(--shadow), 0 0 12px var(--gold-shadow);
+            background: linear-gradient(135deg, #6A4EDC, #7A4EF5);
+        }
+
+        /* Ultra Compact Hero Section */
+        .hero {
+            padding: 4.5rem 5% 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 65vh;
+            background: linear-gradient(to bottom, var(--white), var(--soft-gray));
+        }
+
+        .hero-content {
+            max-width: 55%;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: var(--deep-gray);
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+            max-width: 90%;
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.2rem;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--purple);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--deep-gray);
+        }
+
+        .hero-image {
+            position: relative;
+            max-width: 42%;
+            height: 320px;
+        }
+
+        .person {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--soft-gray), var(--white));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 12px 25px var(--shadow);
+        }
+
+        .person::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><circle cx="50" cy="50" r="40" fill="%237A5CFA" opacity="0.1"/></svg>') center/contain no-repeat;
+        }
+
+        .floating-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .floating-icon {
+            position: absolute;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--purple), var(--violet));
+            color: white;
+            box-shadow: 0 3px 10px var(--shadow), 0 0 5px var(--gold-shadow);
+            font-size: 0.9rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-icon:nth-child(1) { top: 10%; left: 8%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 20%; right: 10%; animation-delay: 1s; }
+        .floating-icon:nth-child(3) { bottom: 15%; left: 10%; animation-delay: 2s; }
+        .floating-icon:nth-child(4) { bottom: 25%; right: 8%; animation-delay: 3s; }
+        .floating-icon:nth-child(5) { top: 50%; left: 4%; animation-delay: 4s; }
+        .floating-icon:nth-child(6) { top: 40%; right: 4%; animation-delay: 5s; }
+        .floating-icon:nth-child(7) { top: 15%; left: 50%; animation-delay: 1.5s; }
+        .floating-icon:nth-child(8) { bottom: 10%; right: 15%; animation-delay: 2.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        /* Compact Tools Section */
+        .tools {
+            padding: 2.5rem 5% 2rem;
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            font-size: 0.95rem;
+            color: var(--deep-gray);
+            max-width: 600px;
+            margin: 0 auto 1.8rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .tool-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E5E5;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px var(--shadow);
+        }
+
+        .tool-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--purple), var(--violet));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 3px 8px var(--shadow), 0 0 4px var(--gold-shadow);
+        }
+
+        .tool-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .tool-card p {
+            color: var(--deep-gray);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            flex-grow: 1;
+            font-size: 0.9rem;
+        }
+
+        .tool-button {
+            background: transparent;
+            color: var(--purple);
+            border: 2px solid var(--purple);
+            padding: 0.4rem 0.9rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            align-self: flex-start;
+        }
+
+        .tool-button:hover {
+            background: var(--purple);
+            color: white;
+            box-shadow: 0 3px 10px var(--shadow);
+            transform: scale(1.03);
+        }
+
+        /* Featured Tools Section */
+        .featured-tools {
+            padding: 2rem 5%;
+            background-color: var(--soft-gray);
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.2rem;
+        }
+
+        .featured-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 1.2rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E5E5;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px var(--shadow);
+        }
+
+        .featured-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, var(--purple), var(--violet));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            margin: 0 auto 0.8rem;
+            box-shadow: 0 2px 6px var(--shadow);
+        }
+
+        .featured-card h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .featured-card p {
+            font-size: 0.75rem;
+            color: var(--deep-gray);
+        }
+
+        /* Modal Popups */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            width: 90%;
+            max-width: 900px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px var(--shadow), 0 0 15px var(--gold-shadow);
+            padding: 2rem;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--deep-gray);
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--purple);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-navy);
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .modal-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 12px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .modal-item:hover {
+            background-color: var(--soft-gray);
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px var(--shadow);
+            border-color: var(--purple);
+        }
+
+        .modal-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--purple), var(--violet));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            box-shadow: 0 3px 8px var(--shadow), 0 0 3px var(--gold-shadow);
+        }
+
+        .modal-item-content {
+            flex-grow: 1;
+        }
+
+        .modal-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .modal-item p {
+            font-size: 0.9rem;
+            color: var(--deep-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-button {
+            background: transparent;
+            color: var(--purple);
+            border: 1px solid var(--purple);
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-button:hover {
+            background: var(--purple);
+            color: white;
+            box-shadow: 0 3px 10px var(--shadow);
+            transform: scale(1.05);
+        }
+
+        /* Compact Footer */
+        footer {
+            background-color: var(--white);
+            border-top: 2px solid var(--purple);
+            padding: 2rem 5% 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--dark-navy);
+        }
+
+        .footer-column p {
+            color: var(--deep-gray);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--deep-gray);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--purple);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--soft-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--purple);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background: var(--purple);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px var(--shadow);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid #E5E5E5;
+            color: var(--deep-gray);
+            font-size: 0.8rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .featured-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .modal-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 4rem;
+                min-height: auto;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 2rem;
+            }
+            
+            .hero p {
+                max-width: 100%;
+            }
+            
+            .hero-image {
+                max-width: 70%;
+                height: 280px;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                justify-content: center;
+            }
+            
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            header {
+                padding: 0.5rem 5%;
+            }
+            
+            .hero {
+                padding: 3.5rem 5% 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            
+            .hero-image {
+                max-width: 100%;
+                height: 220px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            
+            .tool-card {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ultra Compact Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Tools</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Join</a></li>
+            </ul>
+        </nav>
+        <button class="cta-button">Join Now</button>
+    </header>
+
+    <!-- Ultra Compact Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Tools That Actually Get You.</h1>
+            <p>50+ smart, free online tools for productivity, creativity, and fun.</p>
+            <button class="cta-button">Let's Go</button>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Tools</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1M+</span>
+                    <span class="stat-label">Users</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Free Access</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="person">
+                <!-- Person illustration placeholder -->
+                <i class="fas fa-user" style="font-size: 5rem; color: var(--purple);"></i>
+            </div>
+            <div class="floating-icons">
+                <div class="floating-icon"><i class="fas fa-camera"></i></div>
+                <div class="floating-icon"><i class="fas fa-file-pdf"></i></div>
+                <div class="floating-icon"><i class="fas fa-calculator"></i></div>
+                <div class="floating-icon"><i class="fas fa-robot"></i></div>
+                <div class="floating-icon"><i class="fas fa-video"></i></div>
+                <div class="floating-icon"><i class="fas fa-image"></i></div>
+                <div class="floating-icon"><i class="fas fa-cog"></i></div>
+                <div class="floating-icon"><i class="fas fa-file-alt"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compact Tools Section -->
+    <section class="tools">
+        <div class="container">
+            <div class="section-title">
+                <h2>Your Toolbox, Simplified.</h2>
+                <p>Smart, fast, creative — tools you'll actually love to use.</p>
+            </div>
+            <div class="tools-grid">
+                <!-- Media Tools -->
+                <div class="tool-card" onclick="openModal('media')">
+                    <div class="tool-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3>Media Tools</h3>
+                    <p>Edit, convert, & create like a pro with our comprehensive media toolkit.</p>
+                    <button class="tool-button">Check It Out</button>
+                </div>
+
+                <!-- Calculator Tools -->
+                <div class="tool-card" onclick="openModal('calculator')">
+                    <div class="tool-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Calculator Tools</h3>
+                    <p>Numbers made easy with our collection of specialized calculators.</p>
+                    <button class="tool-button">Check It Out</button>
+                </div>
+
+                <!-- Text & File Tools -->
+                <div class="tool-card" onclick="openModal('text')">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Text & File Tools</h3>
+                    <p>Write, convert, optimize instantly with our text and file utilities.</p>
+                    <button class="tool-button">Check It Out</button>
+                </div>
+
+                <!-- Utility Tools -->
+                <div class="tool-card" onclick="openModal('utility')">
+                    <div class="tool-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Utility Tools</h3>
+                    <p>Everything else you actually need for daily productivity tasks.</p>
+                    <button class="tool-button">Check It Out</button>
+                </div>
+
+                <!-- AI Tools -->
+                <div class="tool-card" onclick="openModal('ai')">
+                    <div class="tool-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI Tools</h3>
+                    <p>Smart tools powered by AI magic to enhance your workflow.</p>
+                    <button class="tool-button">Check It Out</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Tools Section -->
+    <section class="featured-tools">
+        <div class="container">
+            <div class="section-title">
+                <h2>Most Popular Tools</h2>
+                <p>Check out our most frequently used tools by our community</p>
+            </div>
+            <div class="featured-grid">
+                <div class="featured-card">
+                    <div class="featured-icon">
+                        <i class="fas fa-compress-alt"></i>
+                    </div>
+                    <h4>Image Compressor</h4>
+                    <p>Shrink images without losing quality</p>
+                </div>
+                <div class="featured-card">
+                    <div class="featured-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h4>PDF Tools</h4>
+                    <p>Compress, merge & split PDFs</p>
+                </div>
+                <div class="featured-card">
+                    <div class="featured-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h4>QR Generator</h4>
+                    <p>Create QR codes in seconds</p>
+                </div>
+                <div class="featured-card">
+                    <div class="featured-icon">
+                        <i class="fas fa-eraser"></i>
+                    </div>
+                    <h4>BG Remover</h4>
+                    <p>Remove backgrounds instantly</p>
+                </div>
+                <div class="featured-card">
+                    <div class="featured-icon">
+                        <i class="fas fa-text-height"></i>
+                    </div>
+                    <h4>Text Tools</h4>
+                    <p>Convert case, count words</p>
+                </div>
+                <div class="featured-card">
+                    <div class="featured-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h4>Calculators</h4>
+                    <p>EMI, BMI, Currency & more</p>
+                </div>
+                <div class="featured-card">
+                    <div class="featured-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4>AI Tools</h4>
+                    <p>Summarize, paraphrase, enhance</p>
+                </div>
+                <div class="featured-card">
+                    <div class="featured-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h4>Video Tools</h4>
+                    <p>Convert, trim, extract audio</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compact Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Smart tools for smart people. Free. Fast. Fun. Our mission is to simplify your digital life with powerful, easy-to-use tools.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Tools</a></li>
+                        <li><a href="#">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Popups -->
+    <!-- Media Tools Modal -->
+    <div id="media-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('media')">&times;</span>
+            <h3 class="modal-title">Media Tools</h3>
+            <div class="modal-grid">
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-exchange-alt"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Image Converter</h4>
+                        <p>Switch formats in a click</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-compress-alt"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Image Compressor</h4>
+                        <p>Shrink without losing quality</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-crop-alt"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Image Crop</h4>
+                        <p>Perfect frame every time</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-expand-alt"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Image Resizer</h4>
+                        <p>Resize for any screen</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-file-pdf"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Image to PDF</h4>
+                        <p>Turn pics into PDFs fast</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-eraser"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Remove Background</h4>
+                        <p>Bye-bye messy backgrounds</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-text-height"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Image to Text (OCR)</h4>
+                        <p>Snap. Extract. Done.</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-video"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Video Converter</h4>
+                        <p>Convert & share anywhere</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-music"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Video to MP3</h4>
+                        <p>Audio from any video</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-cut"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Audio Trim</h4>
+                        <p>Cut unwanted bits, fast</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-film"></i></div>
+                    <div class="modal-item-content">
+                        <h4>GIF Maker</h4>
+                        <p>Make GIFs in seconds</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calculator Tools Modal -->
+    <div id="calculator-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('calculator')">&times;</span>
+            <h3 class="modal-title">Calculator Tools</h3>
+            <div class="modal-grid">
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-birthday-cake"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Age Calculator</h4>
+                        <p>Know your exact age in seconds</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                    <div class="modal-item-content">
+                        <h4>EMI Calculator</h4>
+                        <p>Plan loans effortlessly</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="modal-item-content">
+                        <h4>SIP Calculator</h4>
+                        <p>Track investments smartly</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-weight"></i></div>
+                    <div class="modal-item-content">
+                        <h4>BMI Calculator</h4>
+                        <p>Check your health in one click</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Loan Calculator</h4>
+                        <p>Calculate interest & payments fast</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-money-check-alt"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Currency Converter</h4>
+                        <p>Convert currencies instantly</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-tags"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Discount Calculator</h4>
+                        <p>Get prices after discount</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-percentage"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Percentage Calculator</h4>
+                        <p>Find percentages quickly</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-receipt"></i></div>
+                    <div class="modal-item-content">
+                        <h4>GST Calculator</h4>
+                        <p>Taxes made simple</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Text & File Tools Modal -->
+    <div id="text-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('text')">&times;</span>
+            <h3 class="modal-title">Text & File Tools</h3>
+            <div class="modal-grid">
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-text-height"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Text Case Converter</h4>
+                        <p>Switch uppercase/lowercase easily</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-font"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Word Counter</h4>
+                        <p>Count words & characters instantly</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-key"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Password Generator</h4>
+                        <p>Create secure passwords fast</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-qrcode"></i></div>
+                    <div class="modal-item-content">
+                        <h4>QR Code Generator</h4>
+                        <p>Generate QR codes in seconds</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-file-pdf"></i></div>
+                    <div class="modal-item-content">
+                        <h4>PDF Compressor</h4>
+                        <p>Reduce PDF size without quality loss</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-copy"></i></div>
+                    <div class="modal-item-content">
+                        <h4>PDF Split & Merge</h4>
+                        <p>Split, merge PDFs easily</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-exchange-alt"></i></div>
+                    <div class="modal-item-content">
+                        <h4>File Converter</h4>
+                        <p>Convert files in multiple formats</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Utility Tools Modal -->
+    <div id="utility-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('utility')">&times;</span>
+            <h3 class="modal-title">Utility Tools</h3>
+            <div class="modal-grid">
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-ruler-combined"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Unit Converter</h4>
+                        <p>Convert units in one click</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-globe"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Timezone Converter</h4>
+                        <p>Plan global meetings easily</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-palette"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Color Picker / HEX Converter</h4>
+                        <p>Pick colors like a pro</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-network-wired"></i></div>
+                    <div class="modal-item-content">
+                        <h4>IP Finder</h4>
+                        <p>Find IPs instantly</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-cloud-sun"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Weather Checker</h4>
+                        <p>Get live weather updates</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-stopwatch"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Stopwatch / Timer</h4>
+                        <p>Track time efficiently</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Tools Modal -->
+    <div id="ai-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('ai')">&times;</span>
+            <h3 class="modal-title">AI Tools</h3>
+            <div class="modal-grid">
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-file-contract"></i></div>
+                    <div class="modal-item-content">
+                        <h4>AI Text Summarizer</h4>
+                        <p>Summarize articles in seconds</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-spell-check"></i></div>
+                    <div class="modal-item-content">
+                        <h4>AI Grammar Checker</h4>
+                        <p>Check grammar instantly</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-paragraph"></i></div>
+                    <div class="modal-item-content">
+                        <h4>AI Paraphraser</h4>
+                        <p>Rephrase text smartly</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-magic"></i></div>
+                    <div class="modal-item-content">
+                        <h4>AI Image Enhancer</h4>
+                        <p>Boost image quality quickly</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+                <div class="modal-item">
+                    <div class="modal-icon"><i class="fas fa-microphone-alt"></i></div>
+                    <div class="modal-item-content">
+                        <h4>Voice-to-Text Converter</h4>
+                        <p>Convert audio to text fast</p>
+                    </div>
+                    <button class="modal-button">Use Tool</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        function openModal(category) {
+            document.getElementById(category + '-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(category) {
+            document.getElementById(category + '-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        }
+
+        // Add parallax effect to floating icons
+        window.addEventListener('scroll', function() {
+            const floatingIcons = document.querySelectorAll('.floating-icon');
+            const scrollY = window.scrollY;
+            
+            floatingIcons.forEach((icon, index) => {
+                const speed = 0.05 + (index * 0.01);
+                const yPos = -(scrollY * speed);
+                icon.style.transform = `translateY(${yPos}px) rotate(${yPos * 0.2}deg)`;
+            });
+        });
+    </script>
+</body>
+</html>
