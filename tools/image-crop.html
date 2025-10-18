@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Image Crop Tool Online | Crop Images Perfectly | Toolgenix</title>
+    <meta name="description" content="Free online image crop tool. Crop your images to the perfect size and aspect ratio. No registration required.">
+    <meta name="keywords" content="image crop, crop images, image editing, free image tools, crop tool, aspect ratio">
+    <meta name="author" content="Toolgenix">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Free Image Crop Tool Online | Toolgenix">
+    <meta property="og:description" content="Crop your images to the perfect size and aspect ratio">
+    <meta property="og:type" content="website">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/image-crop">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Image Crop Tool - Toolgenix",
+      "description": "Free online tool to crop images to perfect size and aspect ratio",
+      "url": "https://toolgenix.com/tools/image-crop",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary: #7A5CFA;
+            --primary-light: #8A63FF;
+            --primary-dark: #6A4EDC;
+            --background: #ffffff;
+            --card-bg: #f8f8f8;
+            --text: #1e1e2f;
+            --text-secondary: #2e2e3f;
+            --border: #e5e5e5;
+            --success: #4caf50;
+            --error: #ff4c4c;
+            --warning: #ff9800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+        }
+        
+        .logo span:first-child {
+            color: #1e1e2f;
+        }
+        
+        .logo span:last-child {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        /* Smaller Join Button */
+        .join-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 0.3rem 0.7rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(122, 92, 250, 0.3), 0 0 6px rgba(255, 215, 0, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .join-btn:hover {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 4px 12px rgba(122, 92, 250, 0.4), 0 0 8px rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Tool Container */
+        .tool-container {
+            max-width: 800px;
+            width: 100%;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
+            margin: 0 auto 3rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .tool-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .tool-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background-color: rgba(122, 92, 250, 0.05);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--primary);
+            background-color: rgba(122, 92, 250, 0.1);
+        }
+
+        .upload-area i {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .upload-area h3 {
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .upload-area p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .file-types {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .file-info {
+            display: none;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .file-info.active {
+            display: block;
+        }
+
+        .file-details {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .file-icon {
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .file-text {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+
+        .file-size {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .remove-file {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .remove-file:hover {
+            color: var(--error);
+        }
+
+        .settings {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border);
+        }
+
+        .setting-item {
+            margin-bottom: 20px;
+        }
+
+        .setting-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .setting-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        select {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background-color: white;
+            color: var(--text);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .cropper-container {
+            margin: 15px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            max-height: 500px;
+        }
+
+        .cropper-container img {
+            max-width: 100% !important;
+            display: block;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .primary-btn {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(122, 92, 250, 0.3);
+        }
+
+        .primary-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 92, 250, 0.4);
+        }
+
+        .secondary-btn {
+            background-color: white;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .secondary-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            display: none;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .result.active {
+            display: block;
+        }
+
+        .preview-container {
+            margin-bottom: 20px;
+        }
+
+        .preview-title {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: var(--text);
+        }
+
+        .image-comparison {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .image-box {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-label {
+            padding: 8px;
+            background-color: white;
+            font-size: 14px;
+            border-top: 1px solid var(--border);
+        }
+
+        .status {
+            text-align: center;
+            margin: 15px 0;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .loading {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(255, 152, 0, 0.2);
+        }
+
+        .error {
+            background-color: rgba(255, 76, 76, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(255, 76, 76, 0.2);
+        }
+
+        .success {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        /* Info Sections */
+        .info-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+        }
+        
+        .info-section h2 {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .info-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .benefit-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background);
+            border-top: 2px solid var(--primary);
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .info-section {
+                padding: 1.5rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-comparison {
+                flex-direction: column;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .tool-container { 
+                padding: 20px; 
+            }
+            
+            .page-header h1 { 
+                font-size: 1.8rem; 
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="https://toolgenix.com">Home</a></li>
+                <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                <li><a href="https://toolgenix.com/join">Join</a></li>
+            </ul>
+        </nav>
+        <button class="join-btn">Join Now</button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com">Home</a> &gt; 
+            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/media-tools">Media Tools</a> &gt; 
+            Image Crop Tool
+        </div>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Free Online Image Crop Tool</h1>
+            <p>Crop your images to the perfect size and aspect ratio. Remove unwanted parts and focus on what matters.</p>
+        </section>
+        
+        <!-- Crop Tool -->
+        <section class="tool-container">
+            <div class="tool-header">
+                <h2>Image Crop Tool</h2>
+                <p>Crop your images to the perfect size and aspect ratio</p>
+            </div>
+
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h3>Upload Your Image</h3>
+                <p>Click to browse or drag & drop your image here</p>
+                <p class="file-types">Supports: JPG, PNG, BMP, GIF, TIFF, WEBP</p>
+                <input type="file" id="imageInput" accept="image/png, image/jpeg, image/jpg, image/bmp, image/gif, image/tiff, image/webp" style="display: none;">
+            </div>
+
+            <div class="file-info" id="fileInfo">
+                <div class="file-details">
+                    <div class="file-icon">
+                        <i class="fas fa-file-image"></i>
+                    </div>
+                    <div class="file-text">
+                        <div class="file-name" id="fileName">image.jpg</div>
+                        <div class="file-size" id="fileSize">0 KB</div>
+                    </div>
+                    <button class="remove-file" id="removeFile">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="settings">
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span>Aspect Ratio</span>
+                    </div>
+                    <select id="aspectRatio">
+                        <option value="NaN">Freeform</option>
+                        <option value="4/3">4:3</option>
+                        <option value="16/9">16:9</option>
+                        <option value="16/10">16:10</option>
+                        <option value="3/2">3:2</option>
+                        <option value="1">1:1 (Square)</option>
+                        <option value="2/3">2:3 (Portrait)</option>
+                        <option value="9/16">9:16 (Mobile)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="cropper-container" id="cropperContainer" style="display: none;"></div>
+
+            <div class="button-group">
+                <button class="primary-btn" id="cropBtn">
+                    <i class="fas fa-crop-alt"></i>
+                    Crop Image
+                </button>
+                <button class="secondary-btn" id="resetBtn">
+                    <i class="fas fa-redo"></i>
+                    Reset
+                </button>
+            </div>
+
+            <div class="status loading" id="loadingStatus">
+                <i class="fas fa-spinner fa-spin"></i> Cropping your image...
+            </div>
+
+            <div class="status error" id="errorStatus"></div>
+
+            <div class="result" id="resultContainer">
+                <div class="preview-container">
+                    <h3 class="preview-title">Cropping Result</h3>
+                    
+                    <div class="image-comparison">
+                        <div class="image-box">
+                            <img id="originalPreview" src="" alt="Original">
+                            <div class="image-label">Original</div>
+                        </div>
+                        <div class="image-box">
+                            <img id="croppedPreview" src="" alt="Cropped">
+                            <div class="image-label">Cropped</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="primary-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i>
+                    Download Cropped Image
+                </button>
+            </div>
+        </section>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2>How to Use Our Image Crop Tool</h2>
+            <ol>
+                <li><strong>Upload your image</strong> by clicking the "Upload Your Image" area or dragging and dropping your file. We support JPG, PNG, BMP, GIF, TIFF, and WebP formats.</li>
+                <li><strong>Select an aspect ratio</strong> from the dropdown menu or use freeform cropping for complete control.</li>
+                <li><strong>Adjust the crop area</strong> by dragging the corners or edges of the crop box. You can reposition the entire box by dragging from the center.</li>
+                <li><strong>Click the "Crop Image" button</strong> to process your image. The cropping happens instantly in your browser.</li>
+                <li><strong>Compare the results</strong> using the side-by-side preview.</li>
+                <li><strong>Download your cropped image</strong> by clicking the "Download Cropped Image" button.</li>
+            </ol>
+            
+            <h3>Why Use Our Image Crop Tool?</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-lock"></i>
+                    <h4>Privacy Guaranteed</h4>
+                    <p>Your images never leave your browser. All processing happens locally.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Fast Processing</h4>
+                    <p>Crop images in seconds with our optimized algorithms.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h4>Completely Free</h4>
+                    <p>No hidden costs, watermarks, or usage limits.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-crop-alt"></i>
+                    <h4>Precise Control</h4>
+                    <p>Multiple aspect ratios and freeform cropping for perfect results.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Use Cases Section -->
+        <section class="info-section">
+            <h2>When to Use Image Cropping</h2>
+            
+            <h3>Social Media Optimization</h3>
+            <p>Different platforms require different image dimensions. Crop your images to fit Instagram, Facebook, Twitter, and other social media platforms perfectly.</p>
+            
+            <h3>Website Design</h3>
+            <p>Create perfectly sized images for website banners, product photos, and profile pictures.</p>
+            
+            <h3>Photo Enhancement</h3>
+            <p>Remove distracting elements from your photos and focus on the main subject.</p>
+            
+            <h3>Print Media</h3>
+            <p>Crop images to specific aspect ratios for brochures, flyers, and other printed materials.</p>
+            
+            <h3>Profile Pictures</h3>
+            <p>Crop images to perfect squares for profile pictures on various platforms.</p>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Will cropping reduce my image quality?</div>
+                <p>No, cropping doesn't reduce image quality. The cropped portion maintains the original quality of your image. However, if you enlarge a small cropped area, it may appear pixelated.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is there a file size limit?</div>
+                <p>We recommend images under 20MB for optimal performance. Larger files may take longer to process.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Are my images secure?</div>
+                <p>Absolutely! All image processing happens directly in your browser. Your images are never uploaded to our servers, ensuring complete privacy and security.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What image formats do you support?</div>
+                <p>We support JPG, PNG, BMP, GIF, TIFF, and WebP formats for both input and output.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I crop multiple images at once?</div>
+                <p>Currently, our crop tool processes one image at a time. For batch cropping, you'll need to crop each image separately.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What's the best aspect ratio for social media?</div>
+                <p>It depends on the platform. Instagram posts typically use 1:1 (square), Instagram stories use 9:16, Facebook posts use various ratios, and Twitter works well with 16:9.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com">Home</a></li>
+                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                        <li><a href="https://toolgenix.com/join">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script>
+        // DOM elements
+        const uploadArea = document.getElementById('uploadArea');
+        const imageInput = document.getElementById('imageInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const removeFileBtn = document.getElementById('removeFile');
+        const aspectRatioSelect = document.getElementById('aspectRatio');
+        const cropBtn = document.getElementById('cropBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const loadingStatus = document.getElementById('loadingStatus');
+        const errorStatus = document.getElementById('errorStatus');
+        const cropperContainer = document.getElementById('cropperContainer');
+        const resultContainer = document.getElementById('resultContainer');
+        const originalPreview = document.getElementById('originalPreview');
+        const croppedPreview = document.getElementById('croppedPreview');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let selectedFile = null;
+        let cropper = null;
+
+        // Event Listeners
+        uploadArea.addEventListener('click', () => imageInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length) {
+                handleFileSelection(e.dataTransfer.files[0]);
+            }
+        });
+
+        imageInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFileSelection(e.target.files[0]);
+            }
+        });
+
+        removeFileBtn.addEventListener('click', () => {
+            resetFileSelection();
+        });
+
+        aspectRatioSelect.addEventListener('change', () => {
+            if (cropper) {
+                const value = aspectRatioSelect.value;
+                cropper.setAspectRatio(value === 'NaN' ? NaN : eval(value));
+            }
+        });
+
+        cropBtn.addEventListener('click', cropImage);
+        resetBtn.addEventListener('click', resetAll);
+        downloadBtn.addEventListener('click', downloadImage);
+
+        // Functions
+        function handleFileSelection(file) {
+            const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/bmp', 'image/gif', 'image/tiff', 'image/webp'];
+            
+            if (!validTypes.includes(file.type)) {
+                showError('Unsupported file type! Please select a valid image file.');
+                return;
+            }
+
+            if (file.size > 20 * 1024 * 1024) {
+                showError('File is too large! Maximum file size is 20MB.');
+                return;
+            }
+
+            selectedFile = file;
+            
+            // Update file info display
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            fileInfo.classList.add('active');
+            
+            // Hide any previous results/errors
+            hideStatus();
+            resultContainer.classList.remove('active');
+            
+            // Create preview of original image
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                originalPreview.src = e.target.result;
+                
+                // Initialize cropper
+                if (cropper) {
+                    cropper.destroy();
+                }
+                
+                cropperContainer.innerHTML = '';
+                const img = document.createElement('img');
+                img.id = 'cropImage';
+                img.src = e.target.result;
+                cropperContainer.appendChild(img);
+                cropperContainer.style.display = 'block';
+                
+                cropper = new Cropper(img, {
+                    aspectRatio: NaN,
+                    viewMode: 1,
+                    background: false,
+                    autoCropArea: 1,
+                    responsive: true,
+                    restore: true,
+                    guides: true,
+                    center: true,
+                    highlight: false,
+                    cropBoxMovable: true,
+                    cropBoxResizable: true,
+                    toggleDragModeOnDblclick: true,
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetFileSelection() {
+            selectedFile = null;
+            fileInfo.classList.remove('active');
+            imageInput.value = '';
+            hideStatus();
+            resultContainer.classList.remove('active');
+            cropperContainer.style.display = 'none';
+            
+            if (cropper) {
+                cropper.destroy();
+                cropper = null;
+            }
+        }
+
+        function cropImage() {
+            if (!cropper) {
+                showError('Please select an image first!');
+                return;
+            }
+
+            showLoading();
+            resultContainer.classList.remove('active');
+
+            setTimeout(() => {
+                try {
+                    const canvas = cropper.getCroppedCanvas();
+                    const croppedDataUrl = canvas.toDataURL('image/png');
+
+                    // Update UI with results
+                    croppedPreview.src = croppedDataUrl;
+                    
+                    // Set download link
+                    downloadBtn.onclick = () => {
+                        const link = document.createElement('a');
+                        link.download = `cropped-${selectedFile.name.replace(/\.[^/.]+$/, "")}.png`;
+                        link.href = croppedDataUrl;
+                        link.click();
+                    };
+                    
+                    hideStatus();
+                    resultContainer.classList.add('active');
+                } catch (error) {
+                    showError('Error cropping image. Please try again.');
+                    console.error(error);
+                }
+            }, 200);
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+            else return (bytes / 1048576).toFixed(1) + ' MB';
+        }
+
+        function showLoading() {
+            loadingStatus.style.display = 'block';
+            errorStatus.style.display = 'none';
+        }
+
+        function showError(message) {
+            errorStatus.textContent = message;
+            errorStatus.style.display = 'block';
+            loadingStatus.style.display = 'none';
+        }
+
+        function hideStatus() {
+            loadingStatus.style.display = 'none';
+            errorStatus.style.display = 'none';
+        }
+
+        function resetAll() {
+            resetFileSelection();
+            aspectRatioSelect.value = 'NaN';
+        }
+
+        function downloadImage() {
+            // This is handled in the cropImage function
+        }
+    </script>
+</body>
+</html>
