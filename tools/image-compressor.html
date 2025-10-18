@@ -3,18 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Compressor - Toolgenix</title>
+    <title>Free Image Compressor Online | Reduce Image File Size | Toolgenix</title>
+    <meta name="description" content="Free online image compressor tool. Reduce image file size without losing quality. Compress JPG, PNG, BMP, GIF, TIFF, and WebP images instantly. No registration required.">
+    <meta name="keywords" content="image compressor, compress images, reduce image size, image optimization, free image tools, JPG compression, PNG compression">
+    <meta name="author" content="Toolgenix">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Free Image Compressor Online | Toolgenix">
+    <meta property="og:description" content="Reduce image file size without losing quality. Compress JPG, PNG, BMP, GIF, TIFF, and WebP images instantly.">
+    <meta property="og:type" content="website">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/image-compressor">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Image Compressor - Toolgenix",
+      "description": "Free online tool to compress images and reduce file size",
+      "url": "https://toolgenix.com/tools/image-compressor",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6c63ff;
-            --primary-light: #8b85ff;
-            --primary-dark: #5548c8;
+            --primary: #7A5CFA;
+            --primary-light: #8A63FF;
+            --primary-dark: #6A4EDC;
             --background: #ffffff;
-            --card-bg: #f8f9ff;
-            --text: #333333;
-            --text-secondary: #666666;
-            --border: #e0e0e0;
+            --card-bg: #f8f8f8;
+            --text: #1e1e2f;
+            --text-secondary: #2e2e3f;
+            --border: #e5e5e5;
             --success: #4caf50;
             --error: #ff4c4c;
             --warning: #ff9800;
@@ -30,27 +61,117 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background);
             color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
             line-height: 1.6;
         }
 
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+        }
+        
+        .logo span:first-child {
+            color: #1e1e2f;
+        }
+        
+        .logo span:last-child {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        /* Smaller Join Button */
+        .join-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 0.3rem 0.7rem; /* Reduced from 0.4rem 0.9rem */
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.7rem; /* Reduced from 0.8rem */
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(122, 92, 250, 0.3), 0 0 6px rgba(255, 215, 0, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .join-btn:hover {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 4px 12px rgba(122, 92, 250, 0.4), 0 0 8px rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        }
+
+        /* Main Content */
         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Tool Container */
+        .tool-container {
             max-width: 500px;
             width: 100%;
             background-color: var(--card-bg);
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
+            margin: 0 auto 3rem;
             position: relative;
             overflow: hidden;
             border: 1px solid var(--border);
         }
 
-        .container::before {
+        .tool-container::before {
             content: '';
             position: absolute;
             top: 0;
@@ -60,26 +181,19 @@
             background: linear-gradient(90deg, var(--primary), var(--primary-light));
         }
 
-        .header {
+        .tool-header {
             text-align: center;
             margin-bottom: 25px;
             position: relative;
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .header h1 {
+        .tool-header h2 {
             font-size: 28px;
             margin-bottom: 10px;
             color: var(--primary);
         }
 
-        .header p {
+        .tool-header p {
             color: var(--text-secondary);
             font-size: 14px;
         }
@@ -97,12 +211,12 @@
 
         .upload-area:hover {
             border-color: var(--primary);
-            background-color: rgba(108, 99, 255, 0.05);
+            background-color: rgba(122, 92, 250, 0.05);
         }
 
         .upload-area.dragover {
             border-color: var(--primary);
-            background-color: rgba(108, 99, 255, 0.1);
+            background-color: rgba(122, 92, 250, 0.1);
         }
 
         .upload-area i {
@@ -258,13 +372,13 @@
         .primary-btn {
             background-color: var(--primary);
             color: white;
-            box-shadow: 0 4px 10px rgba(108, 99, 255, 0.3);
+            box-shadow: 0 4px 10px rgba(122, 92, 250, 0.3);
         }
 
         .primary-btn:hover {
             background-color: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(108, 99, 255, 0.4);
+            box-shadow: 0 6px 15px rgba(122, 92, 250, 0.4);
         }
 
         .secondary-btn {
@@ -383,25 +497,198 @@
             border: 1px solid rgba(76, 175, 80, 0.2);
         }
 
-        .footer {
-            text-align: center;
-            margin-top: 25px;
-            color: var(--text-secondary);
-            font-size: 14px;
+        /* Info Sections */
+        .info-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
         }
-
-        .footer a {
+        
+        .info-section h2 {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .info-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .benefit-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background);
+            border-top: 2px solid var(--primary);
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
             color: var(--primary);
             text-decoration: none;
         }
-
-        .footer a:hover {
+        
+        .breadcrumb a:hover {
             text-decoration: underline;
         }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
+        
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .info-section {
+                padding: 1.5rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
             }
             
             .image-comparison {
@@ -412,109 +699,278 @@
                 flex-direction: column;
             }
         }
+        
+        @media (max-width: 600px) {
+            .tool-container { 
+                padding: 20px; 
+            }
+            
+            .page-header h1 { 
+                font-size: 1.8rem; 
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">TOOLGENIX</div>
-            <h1>Image Compressor</h1>
-            <p>Reduce image file size without losing quality</p>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
         </div>
+        <nav>
+            <ul>
+                <li><a href="https://toolgenix.com">Home</a></li>
+                <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                <li><a href="https://toolgenix.com/join">Join</a></li>
+            </ul>
+        </nav>
+        <button class="join-btn">Join Now</button>
+    </header>
 
-        <div class="upload-area" id="uploadArea">
-            <i class="fas fa-cloud-upload-alt"></i>
-            <h3>Upload Your Image</h3>
-            <p>Click to browse or drag & drop your image here</p>
-            <p class="file-types">Supports: JPG, PNG, BMP, GIF, TIFF, WEBP</p>
-            <input type="file" id="imageInput" accept="image/png, image/jpeg, image/jpg, image/bmp, image/gif, image/tiff, image/webp" style="display: none;">
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com">Home</a> &gt; 
+            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/media-tools">Media Tools</a> &gt; 
+            Image Compressor
         </div>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Free Online Image Compressor</h1>
+            <p>Reduce image file size without losing quality. Compress JPG, PNG, BMP, GIF, TIFF, and WebP images instantly.</p>
+        </section>
+        
+        <!-- Compressor Tool -->
+        <section class="tool-container">
+            <div class="tool-header">
+                <h2>Image Compressor</h2>
+                <p>Reduce image file size without losing quality</p>
+            </div>
 
-        <div class="file-info" id="fileInfo">
-            <div class="file-details">
-                <div class="file-icon">
-                    <i class="fas fa-file-image"></i>
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h3>Upload Your Image</h3>
+                <p>Click to browse or drag & drop your image here</p>
+                <p class="file-types">Supports: JPG, PNG, BMP, GIF, TIFF, WEBP</p>
+                <input type="file" id="imageInput" accept="image/png, image/jpeg, image/jpg, image/bmp, image/gif, image/tiff, image/webp" style="display: none;">
+            </div>
+
+            <div class="file-info" id="fileInfo">
+                <div class="file-details">
+                    <div class="file-icon">
+                        <i class="fas fa-file-image"></i>
+                    </div>
+                    <div class="file-text">
+                        <div class="file-name" id="fileName">image.jpg</div>
+                        <div class="file-size" id="fileSize">0 KB</div>
+                    </div>
+                    <button class="remove-file" id="removeFile">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-                <div class="file-text">
-                    <div class="file-name" id="fileName">image.jpg</div>
-                    <div class="file-size" id="fileSize">0 KB</div>
+            </div>
+
+            <div class="settings">
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span>Compression Quality</span>
+                        <span class="quality-value" id="qualityValue">80%</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" id="quality" min="10" max="100" value="80">
+                    </div>
                 </div>
-                <button class="remove-file" id="removeFile">
-                    <i class="fas fa-times"></i>
+            </div>
+
+            <div class="button-group">
+                <button class="primary-btn" id="compressBtn">
+                    <i class="fas fa-compress-arrows-alt"></i>
+                    Compress Image
+                </button>
+                <button class="secondary-btn" id="resetBtn">
+                    <i class="fas fa-redo"></i>
+                    Reset
                 </button>
             </div>
-        </div>
 
-        <div class="settings">
-            <div class="setting-item">
-                <div class="setting-label">
-                    <span>Compression Quality</span>
-                    <span class="quality-value" id="qualityValue">80%</span>
+            <div class="status loading" id="loadingStatus">
+                <i class="fas fa-spinner fa-spin"></i> Compressing your image...
+            </div>
+
+            <div class="status error" id="errorStatus"></div>
+
+            <div class="result" id="resultContainer">
+                <div class="preview-container">
+                    <h3 class="preview-title">Compression Result</h3>
+                    
+                    <div class="image-comparison">
+                        <div class="image-box">
+                            <img id="originalPreview" src="" alt="Original">
+                            <div class="image-label">Original</div>
+                        </div>
+                        <div class="image-box">
+                            <img id="compressedPreview" src="" alt="Compressed">
+                            <div class="image-label">Compressed</div>
+                        </div>
+                    </div>
+                    
+                    <div class="compression-stats">
+                        <div class="stat">
+                            <div class="stat-value" id="originalSize">0 KB</div>
+                            <div class="stat-label">Original Size</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="compressedSize">0 KB</div>
+                            <div class="stat-label">Compressed Size</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="savings">0%</div>
+                            <div class="stat-label">Savings</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="slider-container">
-                    <input type="range" id="quality" min="10" max="100" value="80">
+                
+                <button class="primary-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i>
+                    Download Compressed Image
+                </button>
+            </div>
+        </section>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2>How to Use Our Image Compressor</h2>
+            <ol>
+                <li><strong>Upload your image</strong> by clicking the "Upload Your Image" area or dragging and dropping your file. We support JPG, PNG, BMP, GIF, TIFF, and WebP formats.</li>
+                <li><strong>Adjust compression quality</strong> using the slider. Higher quality means larger file size but better image quality. Lower quality reduces file size more but may affect image appearance.</li>
+                <li><strong>Click the "Compress Image" button</strong> to process your image. The compression happens instantly in your browser.</li>
+                <li><strong>Compare the results</strong> using the side-by-side preview and check the file size savings.</li>
+                <li><strong>Download your compressed image</strong> by clicking the "Download Compressed Image" button.</li>
+            </ol>
+            
+            <h3>Why Use Our Image Compressor?</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-lock"></i>
+                    <h4>Privacy Guaranteed</h4>
+                    <p>Your images never leave your browser. All processing happens locally.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Fast Processing</h4>
+                    <p>Compress images in seconds with our optimized algorithms.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h4>Completely Free</h4>
+                    <p>No hidden costs, watermarks, or usage limits.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-sliders-h"></i>
+                    <h4>Quality Control</h4>
+                    <p>Adjust compression level to balance quality and file size.</p>
                 </div>
             </div>
-        </div>
-
-        <div class="button-group">
-            <button class="primary-btn" id="compressBtn">
-                <i class="fas fa-compress-arrows-alt"></i>
-                Compress Image
-            </button>
-            <button class="secondary-btn" id="resetBtn">
-                <i class="fas fa-redo"></i>
-                Reset
-            </button>
-        </div>
-
-        <div class="status loading" id="loadingStatus">
-            <i class="fas fa-spinner fa-spin"></i> Compressing your image...
-        </div>
-
-        <div class="status error" id="errorStatus"></div>
-
-        <div class="result" id="resultContainer">
-            <div class="preview-container">
-                <h3 class="preview-title">Compression Result</h3>
-                
-                <div class="image-comparison">
-                    <div class="image-box">
-                        <img id="originalPreview" src="" alt="Original">
-                        <div class="image-label">Original</div>
-                    </div>
-                    <div class="image-box">
-                        <img id="compressedPreview" src="" alt="Compressed">
-                        <div class="image-label">Compressed</div>
-                    </div>
-                </div>
-                
-                <div class="compression-stats">
-                    <div class="stat">
-                        <div class="stat-value" id="originalSize">0 KB</div>
-                        <div class="stat-label">Original Size</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value" id="compressedSize">0 KB</div>
-                        <div class="stat-label">Compressed Size</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value" id="savings">0%</div>
-                        <div class="stat-label">Savings</div>
-                    </div>
-                </div>
+        </section>
+        
+        <!-- Use Cases Section -->
+        <section class="info-section">
+            <h2>When to Use Image Compression</h2>
+            
+            <h3>Website Optimization</h3>
+            <p>Compressed images load faster, improving user experience and SEO rankings. Google considers page speed as a ranking factor.</p>
+            
+            <h3>Email Attachments</h3>
+            <p>Reduce image file sizes to stay within email attachment limits while maintaining acceptable quality.</p>
+            
+            <h3>Social Media</h3>
+            <p>Platforms like Facebook, Instagram, and Twitter often compress uploaded images. Pre-compressing gives you more control over the final quality.</p>
+            
+            <h3>Storage Optimization</h3>
+            <p>Save storage space on your devices by compressing images without noticeable quality loss.</p>
+            
+            <h3>Document Preparation</h3>
+            <p>Reduce file sizes when adding images to documents, presentations, or PDFs.</p>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Will compression reduce my image quality?</div>
+                <p>Some quality reduction is inevitable with compression, but our tool allows you to control the balance between file size and quality. At higher quality settings (80%+), the difference is often barely noticeable.</p>
             </div>
             
-            <button class="primary-btn" id="downloadBtn">
-                <i class="fas fa-download"></i>
-                Download Compressed Image
-            </button>
-        </div>
+            <div class="faq-item">
+                <div class="faq-question">Is there a file size limit?</div>
+                <p>We recommend images under 20MB for optimal performance. Larger files may take longer to process.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Are my images secure?</div>
+                <p>Absolutely! All image processing happens directly in your browser. Your images are never uploaded to our servers, ensuring complete privacy and security.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What image formats do you support?</div>
+                <p>We support JPG, PNG, BMP, GIF, TIFF, and WebP formats for both input and output.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I compress multiple images at once?</div>
+                <p>Currently, our compressor processes one image at a time. For batch compression, you'll need to compress each image separately.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What's the best compression quality setting?</div>
+                <p>For most purposes, we recommend starting with 80% quality. This typically reduces file size significantly while maintaining good visual quality. Adjust based on your specific needs.</p>
+            </div>
+        </section>
+    </main>
 
-        <div class="footer">
-            <p>Powered by <a href="#">Toolgenix</a> • All rights reserved</p>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com">Home</a></li>
+                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                        <li><a href="https://toolgenix.com/join">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
         </div>
-    </div>
+    </footer>
 
     <script>
         // DOM elements
