@@ -18,7 +18,7 @@
   }
 
   .container {
-    max-width: 600px;
+    max-width: 500px;
     width: 100%;
     background-color: #2c2c3e;
     border-radius: 15px;
@@ -91,7 +91,7 @@
   <h1>Background Remover</h1>
 
   <input type="file" id="imageInput" accept="image/png, image/jpeg, image/jpg">
-  
+
   <button id="removeBtn">Remove Background</button>
 
   <div class="loading" id="loading" style="display: none;">Processing image...</div>
@@ -105,9 +105,9 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.6.0/dist/tf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@vladmandic/pix2pix@1.0.1/dist/pix2pix.min.js"></script>
 <script>
+const apiKey = "aXgL8CqhSYpp5y2v99VpxJpA";
+
 const imageInput = document.getElementById('imageInput');
 const removeBtn = document.getElementById('removeBtn');
 const preview = document.getElementById('preview');
@@ -115,72 +115,48 @@ const downloadBtn = document.getElementById('downloadBtn');
 const errorDiv = document.getElementById('error');
 const loading = document.getElementById('loading');
 
-let selectedFile;
-let model;
-
-imageInput.addEventListener('change', (e) => {
-  errorDiv.textContent = '';
-  preview.style.display = 'none';
-  downloadBtn.style.display = 'none';
-
-  if (e.target.files && e.target.files[0]) {
-    const file = e.target.files[0];
-    const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-    if (!validTypes.includes(file.type)) {
-      errorDiv.textContent = 'Unsupported file type!';
-      return;
-    }
-    selectedFile = file;
-  }
-});
-
-// Load U2Net or Pix2Pix model
-async function loadModel() {
-  loading.style.display = 'block';
-  if (!model) {
-    model = await window.pix2pix.load(); // simple pre-trained model
-  }
-  loading.style.display = 'none';
-}
-
 removeBtn.addEventListener('click', async () => {
-  if (!selectedFile) {
+  const file = imageInput.files[0];
+  if (!file) {
     errorDiv.textContent = 'Please select an image first!';
     return;
   }
 
-  loading.style.display = 'block';
   errorDiv.textContent = '';
+  preview.style.display = 'none';
+  downloadBtn.style.display = 'none';
+  loading.style.display = 'block';
 
-  const reader = new FileReader();
-  reader.readAsDataURL(selectedFile);
+  const formData = new FormData();
+  formData.append('image_file', file);
+  formData.append('size', 'auto');
 
-  reader.onload = async (event) => {
-    const img = new Image();
-    img.src = event.target.result;
+  try {
+    const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+      method: 'POST',
+      headers: {
+        'X-Api-Key': apiKey
+      },
+      body: formData
+    });
 
-    img.onload = async () => {
-      await loadModel();
+    if (!response.ok) {
+      throw new Error('Failed to remove background.');
+    }
 
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0);
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
 
-      // Predict and remove background
-      const outputCanvas = await model.predict(canvas);
-      const dataUrl = outputCanvas.toDataURL('image/png');
+    preview.src = url;
+    preview.style.display = 'block';
 
-      preview.src = dataUrl;
-      preview.style.display = 'block';
-
-      downloadBtn.href = dataUrl;
-      downloadBtn.style.display = 'inline-block';
-
-      loading.style.display = 'none';
-    };
-  };
+    downloadBtn.href = url;
+    downloadBtn.style.display = 'inline-block';
+  } catch (err) {
+    errorDiv.textContent = err.message;
+  } finally {
+    loading.style.display = 'none';
+  }
 });
 </script>
 
