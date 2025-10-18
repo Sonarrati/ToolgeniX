@@ -1,216 +1,732 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ToolgeniX - Image Converter</title>
-<style>
-    /* Reset & body styling */
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    body { background-color: #ffffff; color: #1f1f2e; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-
-    /* Container */
-    .converter-container {
-        background-color: #f9f9ff;
-        padding: 30px;
-        border-radius: 16px;
-        width: 90%;
-        max-width: 500px;
-        box-shadow: 0 10px 25px rgba(156, 126, 255, 0.2);
-        text-align: center;
-        transition: transform 0.3s, box-shadow 0.3s;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Image Converter Online | Convert Images to PNG, JPEG, WebP & More | Toolgenix</title>
+    <meta name="description" content="Free online image converter tool. Convert images between PNG, JPEG, WebP, BMP, GIF, TIFF, and PDF formats instantly. No registration required. 100% secure and private.">
+    <meta name="keywords" content="image converter, convert image, png to jpg, jpg to png, webp converter, image format converter, free image tools">
+    <meta name="author" content="Toolgenix">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Free Image Converter Online | Toolgenix">
+    <meta property="og:description" content="Convert images between PNG, JPEG, WebP, BMP, GIF, TIFF, and PDF formats instantly. Free online tool.">
+    <meta property="og:type" content="website">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/image-converter">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://toolgenix.com/favicon.ico">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Image Converter - Toolgenix",
+      "description": "Free online tool to convert images between different formats",
+      "url": "https://toolgenix.com/tools/image-converter",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
     }
-    .converter-container:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(156, 126, 255, 0.3);
-    }
-
-    h1 {
-        margin-bottom: 20px;
-        color: #9c7eff;
-        font-weight: 600;
-    }
-
-    /* File input */
-    input[type="file"] { display: none; }
-    label {
-        background-color: #9c7eff;
-        padding: 10px 25px;
-        border-radius: 10px;
-        cursor: pointer;
-        display: inline-block;
-        margin-bottom: 15px;
-        color: #fff;
-        font-weight: 500;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-    label:hover {
-        background-color: #7c5eff;
-        transform: scale(1.05);
-    }
-
-    /* Format selection */
-    select {
-        padding: 10px 15px;
-        border-radius: 10px;
-        border: 1px solid #e0e0f0;
-        margin-bottom: 20px;
-        font-size: 16px;
-        outline: none;
-        background-color: #ffffff;
-        color: #1f1f2e;
-        transition: border 0.3s;
-    }
-    select:focus { border-color: #9c7eff; }
-
-    /* Convert button */
-    button {
-        background-color: #9c7eff;
-        color: #fff;
-        padding: 12px 30px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: 500;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-    button:hover {
-        background-color: #7c5eff;
-        transform: scale(1.05);
-    }
-
-    /* Processing text */
-    .processing { margin: 15px 0; color: #9c7eff; font-weight: 500; }
-
-    /* Preview image */
-    .preview-container { margin-top: 20px; }
-    .preview-container img { max-width: 100%; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e0e0f0; }
-
-    /* Download button */
-    .download-btn {
-        background-color: #ff5e7e;
-        padding: 10px 25px;
-        border-radius: 10px;
-        color: #fff;
-        text-decoration: none;
-        font-weight: 500;
-        transition: background-color 0.3s, transform 0.2s;
-        display: inline-block;
-    }
-    .download-btn:hover { background-color: #ff7e9e; transform: scale(1.05); }
-
-    /* Responsive */
-    @media(max-width: 600px) {
-        .converter-container { padding: 20px; }
-        h1 { font-size: 22px; }
-    }
-</style>
+    </script>
+    
+    <style>
+        /* Reset & body styling */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Inter', sans-serif; 
+        }
+        
+        body { 
+            background-color: #ffffff; 
+            color: #1e1e2f; 
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+        }
+        
+        .logo span:first-child {
+            color: #1e1e2f;
+        }
+        
+        .logo span:last-child {
+            background: linear-gradient(135deg, #7A5CFA, #8A63FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #2e2e3f;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #7A5CFA;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #7A5CFA, #8A63FF);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(122, 92, 250, 0.15), 0 0 8px rgba(255, 215, 0, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 5px 15px rgba(122, 92, 250, 0.15), 0 0 12px rgba(255, 215, 0, 0.2);
+            background: linear-gradient(135deg, #6A4EDC, #7A4EF5);
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #1e1e2f;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: #2e2e3f;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Converter Container */
+        .converter-container {
+            background-color: #f8f8f8;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            margin: 0 auto 3rem;
+            box-shadow: 0 10px 25px rgba(156, 126, 255, 0.2);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .converter-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(156, 126, 255, 0.3);
+        }
+        
+        .converter-container h2 {
+            margin-bottom: 20px;
+            color: #7A5CFA;
+            font-weight: 600;
+        }
+        
+        /* File input */
+        input[type="file"] { 
+            display: none; 
+        }
+        
+        label {
+            background-color: #7A5CFA;
+            padding: 10px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #fff;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        label:hover {
+            background-color: #6A4EDC;
+            transform: scale(1.05);
+        }
+        
+        /* Format selection */
+        select {
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid #e0e0f0;
+            margin-bottom: 20px;
+            font-size: 16px;
+            outline: none;
+            background-color: #ffffff;
+            color: #1e1e2f;
+            transition: border 0.3s;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        select:focus { 
+            border-color: #7A5CFA; 
+        }
+        
+        /* Convert button */
+        button {
+            background-color: #7A5CFA;
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        button:hover {
+            background-color: #6A4EDC;
+            transform: scale(1.05);
+        }
+        
+        /* Processing text */
+        .processing { 
+            margin: 15px 0; 
+            color: #7A5CFA; 
+            font-weight: 500; 
+        }
+        
+        /* Preview image */
+        .preview-container { 
+            margin-top: 20px; 
+        }
+        
+        .preview-container img { 
+            max-width: 100%; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            border: 1px solid #e0e0f0; 
+            max-height: 300px;
+        }
+        
+        /* Download button */
+        .download-btn {
+            background-color: #FF5E7E;
+            padding: 10px 25px;
+            border-radius: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+            display: inline-block;
+        }
+        
+        .download-btn:hover { 
+            background-color: #FF7E9E; 
+            transform: scale(1.05); 
+        }
+        
+        /* Info Sections */
+        .info-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: #f8f8f8;
+            border-radius: 12px;
+        }
+        
+        .info-section h2 {
+            color: #1e1e2f;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .info-section h3 {
+            color: #7A5CFA;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .info-section p, .info-section li {
+            color: #2e2e3f;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .format-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .format-card h4 {
+            color: #7A5CFA;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e0e0f0;
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: #1e1e2f;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #ffffff;
+            border-top: 2px solid #7A5CFA;
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #1e1e2f;
+        }
+        
+        .footer-column p {
+            color: #2e2e3f;
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: #2e2e3f;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #7A5CFA;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7A5CFA;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: #7A5CFA;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid #E5E5E5;
+            color: #2e2e3f;
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: #2e2e3f;
+        }
+        
+        .breadcrumb a {
+            color: #7A5CFA;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media(max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+        
+        @media(max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .info-section {
+                padding: 1.5rem;
+            }
+            
+            .format-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media(max-width: 600px) {
+            .converter-container { 
+                padding: 20px; 
+            }
+            
+            .page-header h1 { 
+                font-size: 1.8rem; 
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="https://toolgenix.com">Home</a></li>
+                <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                <li><a href="https://toolgenix.com/join">Join</a></li>
+            </ul>
+        </nav>
+        <button class="cta-button">Join Now</button>
+    </header>
 
-<div class="converter-container">
-    <h1>Image Converter</h1>
-    <label for="imageUpload">Choose Image</label>
-    <input type="file" id="imageUpload" accept="image/*">
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com">Home</a> &gt; 
+            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/media-tools">Media Tools</a> &gt; 
+            Image Converter
+        </div>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Free Online Image Converter</h1>
+            <p>Convert images between PNG, JPEG, WebP, BMP, GIF, TIFF, and PDF formats instantly. No registration required. 100% secure and private.</p>
+        </section>
+        
+        <!-- Converter Tool -->
+        <section class="converter-container">
+            <h2>Image Converter</h2>
+            <label for="imageUpload">Choose Image</label>
+            <input type="file" id="imageUpload" accept="image/*">
 
-    <br>
-    <select id="formatSelect">
-        <option value="png">PNG</option>
-        <option value="jpeg">JPEG</option>
-        <option value="bmp">BMP</option>
-        <option value="gif">GIF</option>
-        <option value="webp">WEBP</option>
-        <option value="tiff">TIFF</option>
-        <option value="pdf">PDF</option>
-    </select>
+            <br>
+            <select id="formatSelect">
+                <option value="png">PNG</option>
+                <option value="jpeg">JPEG</option>
+                <option value="bmp">BMP</option>
+                <option value="gif">GIF</option>
+                <option value="webp">WEBP</option>
+                <option value="tiff">TIFF</option>
+                <option value="pdf">PDF</option>
+            </select>
 
-    <br>
-    <button id="convertBtn">Convert</button>
+            <br>
+            <button id="convertBtn">Convert</button>
 
-    <div class="processing" id="processing" style="display:none;">Processing image...</div>
+            <div class="processing" id="processing" style="display:none;">Processing image...</div>
 
-    <div class="preview-container" id="previewContainer" style="display:none;">
-        <img id="previewImage" src="#" alt="Converted Preview">
-        <br>
-        <a id="downloadLink" class="download-btn" href="#" download="converted-image">Download</a>
-    </div>
-</div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <img id="previewImage" src="#" alt="Converted Preview">
+                <br>
+                <a id="downloadLink" class="download-btn" href="#" download="converted-image">Download</a>
+            </div>
+        </section>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2>How to Use Our Image Converter</h2>
+            <ol>
+                <li><strong>Upload your image</strong> by clicking the "Choose Image" button. You can upload PNG, JPEG, BMP, GIF, TIFF, or WebP files.</li>
+                <li><strong>Select your desired output format</strong> from the dropdown menu.</li>
+                <li><strong>Click the "Convert" button</strong> to process your image. The conversion happens instantly in your browser.</li>
+                <li><strong>Download your converted image</strong> by clicking the "Download" button that appears after conversion.</li>
+            </ol>
+            
+            <h3>Why Use Our Image Converter?</h3>
+            <ul>
+                <li><strong>100% Free</strong> - No hidden costs or subscriptions</li>
+                <li><strong>Privacy Guaranteed</strong> - Your images never leave your browser</li>
+                <li><strong>No Registration</strong> - Use immediately without signing up</li>
+                <li><strong>Fast Conversion</strong> - Process images in seconds</li>
+                <li><strong>Multiple Formats</strong> - Convert between 7 popular image formats</li>
+            </ul>
+        </section>
+        
+        <!-- Supported Formats Section -->
+        <section class="info-section">
+            <h2>Supported Image Formats</h2>
+            <div class="format-grid">
+                <div class="format-card">
+                    <h4>PNG</h4>
+                    <p>Lossless compression format ideal for graphics with transparency. Best for logos, icons, and images requiring high quality.</p>
+                </div>
+                <div class="format-card">
+                    <h4>JPEG</h4>
+                    <p>Lossy compression format perfect for photographs. Offers good quality with smaller file sizes.</p>
+                </div>
+                <div class="format-card">
+                    <h4>WebP</h4>
+                    <p>Modern format by Google offering both lossy and lossless compression. Better compression than PNG and JPEG.</p>
+                </div>
+                <div class="format-card">
+                    <h4>GIF</h4>
+                    <p>Supports animation and transparency. Limited to 256 colors, making it ideal for simple graphics.</p>
+                </div>
+                <div class="format-card">
+                    <h4>BMP</h4>
+                    <p>Uncompressed format that preserves maximum quality but results in large file sizes.</p>
+                </div>
+                <div class="format-card">
+                    <h4>TIFF</h4>
+                    <p>High-quality format often used in professional photography and printing industries.</p>
+                </div>
+                <div class="format-card">
+                    <h4>PDF</h4>
+                    <p>Convert your image to a PDF document, useful for sharing or printing multiple images as a single file.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is the image converter really free?</div>
+                <p>Yes, our image converter is completely free to use. There are no hidden fees, subscriptions, or usage limits.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Are my images secure?</div>
+                <p>Absolutely! All image processing happens directly in your browser. Your images are never uploaded to our servers, ensuring complete privacy and security.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What is the maximum file size I can convert?</div>
+                <p>Our converter can handle most standard image sizes. For optimal performance, we recommend images under 10MB.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I convert multiple images at once?</div>
+                <p>Currently, our converter processes one image at a time. For batch conversion, you'll need to convert each image separately.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Do you support RAW camera formats?</div>
+                <p>No, our converter focuses on standard image formats. For RAW camera files, you'll need specialized software.</p>
+            </div>
+        </section>
+    </main>
 
-<script>
-    const imageUpload = document.getElementById('imageUpload');
-    const formatSelect = document.getElementById('formatSelect');
-    const convertBtn = document.getElementById('convertBtn');
-    const processing = document.getElementById('processing');
-    const previewContainer = document.getElementById('previewContainer');
-    const previewImage = document.getElementById('previewImage');
-    const downloadLink = document.getElementById('downloadLink');
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com">Home</a></li>
+                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                        <li><a href="https://toolgenix.com/join">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-    let uploadedImage = null;
+    <script>
+        const imageUpload = document.getElementById('imageUpload');
+        const formatSelect = document.getElementById('formatSelect');
+        const convertBtn = document.getElementById('convertBtn');
+        const processing = document.getElementById('processing');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('previewImage');
+        const downloadLink = document.getElementById('downloadLink');
 
-    imageUpload.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
+        let uploadedImage = null;
 
-        const supportedTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/bmp', 'image/gif', 'image/tiff', 'image/webp'];
-        if (!supportedTypes.includes(file.type)) {
-            alert('Unsupported file type!');
-            return;
-        }
+        imageUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
 
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            uploadedImage = new Image();
-            uploadedImage.src = event.target.result;
-            uploadedImage.onload = function() {
-                previewContainer.style.display = 'none';
+            const supportedTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/bmp', 'image/gif', 'image/tiff', 'image/webp'];
+            if (!supportedTypes.includes(file.type)) {
+                alert('Unsupported file type! Please upload a valid image file (PNG, JPEG, BMP, GIF, TIFF, or WebP).');
+                return;
             }
-        }
-        reader.readAsDataURL(file);
-    });
 
-    convertBtn.addEventListener('click', function() {
-        if (!uploadedImage) {
-            alert('Please upload an image first!');
-            return;
-        }
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                uploadedImage = new Image();
+                uploadedImage.src = event.target.result;
+                uploadedImage.onload = function() {
+                    previewContainer.style.display = 'none';
+                }
+            }
+            reader.readAsDataURL(file);
+        });
 
-        const outputFormat = formatSelect.value;
-        processing.style.display = 'block';
-
-        setTimeout(() => {
-            const canvas = document.createElement('canvas');
-            canvas.width = uploadedImage.width;
-            canvas.height = uploadedImage.height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(uploadedImage, 0, 0);
-
-            let mimeType = 'image/png';
-            if (outputFormat === 'jpeg') mimeType = 'image/jpeg';
-            if (outputFormat === 'bmp') mimeType = 'image/bmp';
-            if (outputFormat === 'gif') mimeType = 'image/gif';
-            if (outputFormat === 'webp') mimeType = 'image/webp';
-            if (outputFormat === 'tiff') mimeType = 'image/tiff';
-
-            let dataURL = canvas.toDataURL(mimeType);
-
-            if (outputFormat === 'pdf') {
-                const pdf = new window.jspdf.jsPDF();
-                pdf.addImage(dataURL, 'PNG', 10, 10, canvas.width / 5, canvas.height / 5);
-                dataURL = pdf.output('dataurlstring');
+        convertBtn.addEventListener('click', function() {
+            if (!uploadedImage) {
+                alert('Please upload an image first!');
+                return;
             }
 
-            previewImage.src = dataURL;
-            downloadLink.href = dataURL;
-            downloadLink.download = `converted-image.${outputFormat}`;
-            previewContainer.style.display = 'block';
-            processing.style.display = 'none';
-        }, 500);
-    });
-</script>
+            const outputFormat = formatSelect.value;
+            processing.style.display = 'block';
 
-<!-- jsPDF for PDF export -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+            setTimeout(() => {
+                const canvas = document.createElement('canvas');
+                canvas.width = uploadedImage.width;
+                canvas.height = uploadedImage.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(uploadedImage, 0, 0);
 
+                let mimeType = 'image/png';
+                if (outputFormat === 'jpeg') mimeType = 'image/jpeg';
+                if (outputFormat === 'bmp') mimeType = 'image/bmp';
+                if (outputFormat === 'gif') mimeType = 'image/gif';
+                if (outputFormat === 'webp') mimeType = 'image/webp';
+                if (outputFormat === 'tiff') mimeType = 'image/tiff';
+
+                let dataURL = canvas.toDataURL(mimeType);
+
+                if (outputFormat === 'pdf') {
+                    const pdf = new window.jspdf.jsPDF();
+                    pdf.addImage(dataURL, 'PNG', 10, 10, canvas.width / 5, canvas.height / 5);
+                    dataURL = pdf.output('dataurlstring');
+                }
+
+                previewImage.src = dataURL;
+                downloadLink.href = dataURL;
+                downloadLink.download = `converted-image.${outputFormat}`;
+                previewContainer.style.display = 'block';
+                processing.style.display = 'none';
+            }, 500);
+        });
+    </script>
+
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>
