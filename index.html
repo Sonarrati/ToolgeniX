@@ -310,6 +310,8 @@
             cursor: pointer;
             transition: all 0.3s;
             align-self: flex-start;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .tool-button:hover {
@@ -340,11 +342,16 @@
             transition: all 0.3s;
             cursor: pointer;
             text-align: center;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .featured-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 12px var(--shadow);
+            text-decoration: none;
+            color: inherit;
         }
 
         .featured-icon {
@@ -493,6 +500,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .modal-button:hover {
@@ -500,6 +509,7 @@
             color: white;
             box-shadow: 0 3px 10px var(--shadow);
             transform: scale(1.05);
+            text-decoration: none;
         }
 
         /* Compact Footer */
@@ -691,11 +701,11 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">Tools</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Join</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="categories.html">Categories</a></li>
+                <li><a href="tools.html">Tools</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="join.html">Join</a></li>
             </ul>
         </nav>
         <button class="cta-button">Join Now</button>
@@ -755,7 +765,7 @@
                     </div>
                     <h3>Media Tools</h3>
                     <p>Edit, convert, & create like a pro with our comprehensive media toolkit.</p>
-                    <button class="tool-button">Check It Out</button>
+                    <button class="tool-button" onclick="openModal('media')">Check It Out</button>
                 </div>
 
                 <!-- Calculator Tools -->
@@ -765,7 +775,7 @@
                     </div>
                     <h3>Calculator Tools</h3>
                     <p>Numbers made easy with our collection of specialized calculators.</p>
-                    <button class="tool-button">Check It Out</button>
+                    <button class="tool-button" onclick="openModal('calculator')">Check It Out</button>
                 </div>
 
                 <!-- Text & File Tools -->
@@ -775,7 +785,7 @@
                     </div>
                     <h3>Text & File Tools</h3>
                     <p>Write, convert, optimize instantly with our text and file utilities.</p>
-                    <button class="tool-button">Check It Out</button>
+                    <button class="tool-button" onclick="openModal('text')">Check It Out</button>
                 </div>
 
                 <!-- Utility Tools -->
@@ -785,7 +795,7 @@
                     </div>
                     <h3>Utility Tools</h3>
                     <p>Everything else you actually need for daily productivity tasks.</p>
-                    <button class="tool-button">Check It Out</button>
+                    <button class="tool-button" onclick="openModal('utility')">Check It Out</button>
                 </div>
 
                 <!-- AI Tools -->
@@ -795,7 +805,7 @@
                     </div>
                     <h3>AI Tools</h3>
                     <p>Smart tools powered by AI magic to enhance your workflow.</p>
-                    <button class="tool-button">Check It Out</button>
+                    <button class="tool-button" onclick="openModal('ai')">Check It Out</button>
                 </div>
             </div>
         </div>
@@ -809,62 +819,62 @@
                 <p>Check out our most frequently used tools by our community</p>
             </div>
             <div class="featured-grid">
-                <div class="featured-card">
+                <a href="tools/image-compressor.html" class="featured-card">
                     <div class="featured-icon">
                         <i class="fas fa-compress-alt"></i>
                     </div>
                     <h4>Image Compressor</h4>
                     <p>Shrink images without losing quality</p>
-                </div>
-                <div class="featured-card">
+                </a>
+                <a href="tools/pdf-tools.html" class="featured-card">
                     <div class="featured-icon">
                         <i class="fas fa-file-pdf"></i>
                     </div>
                     <h4>PDF Tools</h4>
                     <p>Compress, merge & split PDFs</p>
-                </div>
-                <div class="featured-card">
+                </a>
+                <a href="tools/qr-generator.html" class="featured-card">
                     <div class="featured-icon">
                         <i class="fas fa-qrcode"></i>
                     </div>
                     <h4>QR Generator</h4>
                     <p>Create QR codes in seconds</p>
-                </div>
-                <div class="featured-card">
+                </a>
+                <a href="tools/bg-remover.html" class="featured-card">
                     <div class="featured-icon">
                         <i class="fas fa-eraser"></i>
                     </div>
                     <h4>BG Remover</h4>
                     <p>Remove backgrounds instantly</p>
-                </div>
-                <div class="featured-card">
+                </a>
+                <a href="tools/text-tools.html" class="featured-card">
                     <div class="featured-icon">
                         <i class="fas fa-text-height"></i>
                     </div>
                     <h4>Text Tools</h4>
                     <p>Convert case, count words</p>
-                </div>
-                <div class="featured-card">
+                </a>
+                <a href="tools/calculators.html" class="featured-card">
                     <div class="featured-icon">
                         <i class="fas fa-calculator"></i>
                     </div>
                     <h4>Calculators</h4>
                     <p>EMI, BMI, Currency & more</p>
-                </div>
-                <div class="featured-card">
+                </a>
+                <a href="tools/ai-tools.html" class="featured-card">
                     <div class="featured-icon">
                         <i class="fas fa-robot"></i>
                     </div>
                     <h4>AI Tools</h4>
                     <p>Summarize, paraphrase, enhance</p>
-                </div>
-                <div class="featured-card">
+                </a>
+                <a href="tools/video-tools.html" class="featured-card">
                     <div class="featured-icon">
                         <i class="fas fa-film"></i>
                     </div>
                     <h4>Video Tools</h4>
                     <p>Convert, trim, extract audio</p>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -880,11 +890,11 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Categories</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Tools</a></li>
-                        <li><a href="#">Join</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="tools.html">Tools</a></li>
+                        <li><a href="join.html">Join</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -916,7 +926,7 @@
                         <h4>Image Converter</h4>
                         <p>Switch formats in a click</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/image-converter.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-compress-alt"></i></div>
@@ -924,7 +934,7 @@
                         <h4>Image Compressor</h4>
                         <p>Shrink without losing quality</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/image-compressor.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-crop-alt"></i></div>
@@ -932,7 +942,7 @@
                         <h4>Image Crop</h4>
                         <p>Perfect frame every time</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/image-crop.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-expand-alt"></i></div>
@@ -940,7 +950,7 @@
                         <h4>Image Resizer</h4>
                         <p>Resize for any screen</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/image-resizer.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-file-pdf"></i></div>
@@ -948,7 +958,7 @@
                         <h4>Image to PDF</h4>
                         <p>Turn pics into PDFs fast</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/image-to-pdf.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-eraser"></i></div>
@@ -956,7 +966,7 @@
                         <h4>Remove Background</h4>
                         <p>Bye-bye messy backgrounds</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/remove-background.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-text-height"></i></div>
@@ -964,7 +974,7 @@
                         <h4>Image to Text (OCR)</h4>
                         <p>Snap. Extract. Done.</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/image-to-text.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-video"></i></div>
@@ -972,7 +982,7 @@
                         <h4>Video Converter</h4>
                         <p>Convert & share anywhere</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/video-converter.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-music"></i></div>
@@ -980,7 +990,7 @@
                         <h4>Video to MP3</h4>
                         <p>Audio from any video</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/video-to-mp3.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-cut"></i></div>
@@ -988,7 +998,7 @@
                         <h4>Audio Trim</h4>
                         <p>Cut unwanted bits, fast</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/audio-trim.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-film"></i></div>
@@ -996,7 +1006,7 @@
                         <h4>GIF Maker</h4>
                         <p>Make GIFs in seconds</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/gif-maker.html" class="modal-button">Use Tool</a>
                 </div>
             </div>
         </div>
@@ -1014,7 +1024,7 @@
                         <h4>Age Calculator</h4>
                         <p>Know your exact age in seconds</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/age-calculator.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-hand-holding-usd"></i></div>
@@ -1022,7 +1032,7 @@
                         <h4>EMI Calculator</h4>
                         <p>Plan loans effortlessly</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/emi-calculator.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-chart-line"></i></div>
@@ -1030,7 +1040,7 @@
                         <h4>SIP Calculator</h4>
                         <p>Track investments smartly</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/sip-calculator.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-weight"></i></div>
@@ -1038,7 +1048,7 @@
                         <h4>BMI Calculator</h4>
                         <p>Check your health in one click</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/bmi-calculator.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-money-bill-wave"></i></div>
@@ -1046,7 +1056,7 @@
                         <h4>Loan Calculator</h4>
                         <p>Calculate interest & payments fast</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/loan-calculator.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-money-check-alt"></i></div>
@@ -1054,7 +1064,7 @@
                         <h4>Currency Converter</h4>
                         <p>Convert currencies instantly</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/currency-converter.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-tags"></i></div>
@@ -1062,7 +1072,7 @@
                         <h4>Discount Calculator</h4>
                         <p>Get prices after discount</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/discount-calculator.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-percentage"></i></div>
@@ -1070,7 +1080,7 @@
                         <h4>Percentage Calculator</h4>
                         <p>Find percentages quickly</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/percentage-calculator.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-receipt"></i></div>
@@ -1078,7 +1088,7 @@
                         <h4>GST Calculator</h4>
                         <p>Taxes made simple</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/gst-calculator.html" class="modal-button">Use Tool</a>
                 </div>
             </div>
         </div>
@@ -1096,7 +1106,7 @@
                         <h4>Text Case Converter</h4>
                         <p>Switch uppercase/lowercase easily</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/text-case-converter.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-font"></i></div>
@@ -1104,7 +1114,7 @@
                         <h4>Word Counter</h4>
                         <p>Count words & characters instantly</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/word-counter.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-key"></i></div>
@@ -1112,7 +1122,7 @@
                         <h4>Password Generator</h4>
                         <p>Create secure passwords fast</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/password-generator.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-qrcode"></i></div>
@@ -1120,7 +1130,7 @@
                         <h4>QR Code Generator</h4>
                         <p>Generate QR codes in seconds</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/qr-code-generator.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-file-pdf"></i></div>
@@ -1128,7 +1138,7 @@
                         <h4>PDF Compressor</h4>
                         <p>Reduce PDF size without quality loss</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/pdf-compressor.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-copy"></i></div>
@@ -1136,7 +1146,7 @@
                         <h4>PDF Split & Merge</h4>
                         <p>Split, merge PDFs easily</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/pdf-split-merge.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-exchange-alt"></i></div>
@@ -1144,7 +1154,7 @@
                         <h4>File Converter</h4>
                         <p>Convert files in multiple formats</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/file-converter.html" class="modal-button">Use Tool</a>
                 </div>
             </div>
         </div>
@@ -1162,7 +1172,7 @@
                         <h4>Unit Converter</h4>
                         <p>Convert units in one click</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/unit-converter.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-globe"></i></div>
@@ -1170,7 +1180,7 @@
                         <h4>Timezone Converter</h4>
                         <p>Plan global meetings easily</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/timezone-converter.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-palette"></i></div>
@@ -1178,7 +1188,7 @@
                         <h4>Color Picker / HEX Converter</h4>
                         <p>Pick colors like a pro</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/color-picker.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-network-wired"></i></div>
@@ -1186,7 +1196,7 @@
                         <h4>IP Finder</h4>
                         <p>Find IPs instantly</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/ip-finder.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-cloud-sun"></i></div>
@@ -1194,7 +1204,7 @@
                         <h4>Weather Checker</h4>
                         <p>Get live weather updates</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/weather-checker.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-stopwatch"></i></div>
@@ -1202,7 +1212,7 @@
                         <h4>Stopwatch / Timer</h4>
                         <p>Track time efficiently</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/stopwatch-timer.html" class="modal-button">Use Tool</a>
                 </div>
             </div>
         </div>
@@ -1220,7 +1230,7 @@
                         <h4>AI Text Summarizer</h4>
                         <p>Summarize articles in seconds</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/ai-text-summarizer.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-spell-check"></i></div>
@@ -1228,7 +1238,7 @@
                         <h4>AI Grammar Checker</h4>
                         <p>Check grammar instantly</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/ai-grammar-checker.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-paragraph"></i></div>
@@ -1236,7 +1246,7 @@
                         <h4>AI Paraphraser</h4>
                         <p>Rephrase text smartly</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/ai-paraphraser.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-magic"></i></div>
@@ -1244,7 +1254,7 @@
                         <h4>AI Image Enhancer</h4>
                         <p>Boost image quality quickly</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/ai-image-enhancer.html" class="modal-button">Use Tool</a>
                 </div>
                 <div class="modal-item">
                     <div class="modal-icon"><i class="fas fa-microphone-alt"></i></div>
@@ -1252,7 +1262,7 @@
                         <h4>Voice-to-Text Converter</h4>
                         <p>Convert audio to text fast</p>
                     </div>
-                    <button class="modal-button">Use Tool</button>
+                    <a href="tools/voice-to-text.html" class="modal-button">Use Tool</a>
                 </div>
             </div>
         </div>
