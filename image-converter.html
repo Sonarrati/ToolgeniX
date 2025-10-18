@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToolgeniX - Image Converter</title>
+<style>
+    /* Reset & body styling */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background-color: #ffffff; color: #1f1f2e; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+    /* Container */
+    .converter-container {
+        background-color: #f9f9ff;
+        padding: 30px;
+        border-radius: 16px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 10px 25px rgba(156, 126, 255, 0.2);
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .converter-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(156, 126, 255, 0.3);
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        color: #9c7eff;
+        font-weight: 600;
+    }
+
+    /* File input */
+    input[type="file"] { display: none; }
+    label {
+        background-color: #9c7eff;
+        padding: 10px 25px;
+        border-radius: 10px;
+        cursor: pointer;
+        display: inline-block;
+        margin-bottom: 15px;
+        color: #fff;
+        font-weight: 500;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    label:hover {
+        background-color: #7c5eff;
+        transform: scale(1.05);
+    }
+
+    /* Format selection */
+    select {
+        padding: 10px 15px;
+        border-radius: 10px;
+        border: 1px solid #e0e0f0;
+        margin-bottom: 20px;
+        font-size: 16px;
+        outline: none;
+        background-color: #ffffff;
+        color: #1f1f2e;
+        transition: border 0.3s;
+    }
+    select:focus { border-color: #9c7eff; }
+
+    /* Convert button */
+    button {
+        background-color: #9c7eff;
+        color: #fff;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    button:hover {
+        background-color: #7c5eff;
+        transform: scale(1.05);
+    }
+
+    /* Processing text */
+    .processing { margin: 15px 0; color: #9c7eff; font-weight: 500; }
+
+    /* Preview image */
+    .preview-container { margin-top: 20px; }
+    .preview-container img { max-width: 100%; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e0e0f0; }
+
+    /* Download button */
+    .download-btn {
+        background-color: #ff5e7e;
+        padding: 10px 25px;
+        border-radius: 10px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background-color 0.3s, transform 0.2s;
+        display: inline-block;
+    }
+    .download-btn:hover { background-color: #ff7e9e; transform: scale(1.05); }
+
+    /* Responsive */
+    @media(max-width: 600px) {
+        .converter-container { padding: 20px; }
+        h1 { font-size: 22px; }
+    }
+</style>
+</head>
+<body>
+
+<div class="converter-container">
+    <h1>Image Converter</h1>
+    <label for="imageUpload">Choose Image</label>
+    <input type="file" id="imageUpload" accept="image/*">
+
+    <br>
+    <select id="formatSelect">
+        <option value="png">PNG</option>
+        <option value="jpeg">JPEG</option>
+        <option value="bmp">BMP</option>
+        <option value="gif">GIF</option>
+        <option value="webp">WEBP</option>
+        <option value="tiff">TIFF</option>
+        <option value="pdf">PDF</option>
+    </select>
+
+    <br>
+    <button id="convertBtn">Convert</button>
+
+    <div class="processing" id="processing" style="display:none;">Processing image...</div>
+
+    <div class="preview-container" id="previewContainer" style="display:none;">
+        <img id="previewImage" src="#" alt="Converted Preview">
+        <br>
+        <a id="downloadLink" class="download-btn" href="#" download="converted-image">Download</a>
+    </div>
+</div>
+
+<script>
+    const imageUpload = document.getElementById('imageUpload');
+    const formatSelect = document.getElementById('formatSelect');
+    const convertBtn = document.getElementById('convertBtn');
+    const processing = document.getElementById('processing');
+    const previewContainer = document.getElementById('previewContainer');
+    const previewImage = document.getElementById('previewImage');
+    const downloadLink = document.getElementById('downloadLink');
+
+    let uploadedImage = null;
+
+    imageUpload.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const supportedTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/bmp', 'image/gif', 'image/tiff', 'image/webp'];
+        if (!supportedTypes.includes(file.type)) {
+            alert('Unsupported file type!');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            uploadedImage = new Image();
+            uploadedImage.src = event.target.result;
+            uploadedImage.onload = function() {
+                previewContainer.style.display = 'none';
+            }
+        }
+        reader.readAsDataURL(file);
+    });
+
+    convertBtn.addEventListener('click', function() {
+        if (!uploadedImage) {
+            alert('Please upload an image first!');
+            return;
+        }
+
+        const outputFormat = formatSelect.value;
+        processing.style.display = 'block';
+
+        setTimeout(() => {
+            const canvas = document.createElement('canvas');
+            canvas.width = uploadedImage.width;
+            canvas.height = uploadedImage.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(uploadedImage, 0, 0);
+
+            let mimeType = 'image/png';
+            if (outputFormat === 'jpeg') mimeType = 'image/jpeg';
+            if (outputFormat === 'bmp') mimeType = 'image/bmp';
+            if (outputFormat === 'gif') mimeType = 'image/gif';
+            if (outputFormat === 'webp') mimeType = 'image/webp';
+            if (outputFormat === 'tiff') mimeType = 'image/tiff';
+
+            let dataURL = canvas.toDataURL(mimeType);
+
+            if (outputFormat === 'pdf') {
+                const pdf = new window.jspdf.jsPDF();
+                pdf.addImage(dataURL, 'PNG', 10, 10, canvas.width / 5, canvas.height / 5);
+                dataURL = pdf.output('dataurlstring');
+            }
+
+            previewImage.src = dataURL;
+            downloadLink.href = dataURL;
+            downloadLink.download = `converted-image.${outputFormat}`;
+            previewContainer.style.display = 'block';
+            processing.style.display = 'none';
+        }, 500);
+    });
+</script>
+
+<!-- jsPDF for PDF export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</body>
+</html>
