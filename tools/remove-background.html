@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Background Remover - Toolgenix</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1e1e2f;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .container {
+    max-width: 600px;
+    width: 100%;
+    background-color: #2c2c3e;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #f0f0f0;
+  }
+
+  input[type="file"] {
+    display: block;
+    margin: 20px auto;
+    color: #fff;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #6c63ff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #5548c8;
+  }
+
+  #preview-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  #preview {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+
+  #downloadBtn {
+    margin-top: 15px;
+    display: none;
+  }
+
+  .error {
+    color: #ff4c4c;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .loading {
+    text-align: center;
+    margin-top: 10px;
+    color: #ffd700;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Background Remover</h1>
+
+  <input type="file" id="imageInput" accept="image/png, image/jpeg, image/jpg">
+  
+  <button id="removeBtn">Remove Background</button>
+
+  <div class="loading" id="loading" style="display: none;">Processing image...</div>
+  <div class="error" id="error"></div>
+
+  <div id="preview-container">
+    <img id="preview" src="" alt="Processed Preview" style="display:none;">
+    <a id="downloadBtn" href="#" download="no-bg.png">
+      <button>Download Image</button>
+    </a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.6.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vladmandic/pix2pix@1.0.1/dist/pix2pix.min.js"></script>
+<script>
+const imageInput = document.getElementById('imageInput');
+const removeBtn = document.getElementById('removeBtn');
+const preview = document.getElementById('preview');
+const downloadBtn = document.getElementById('downloadBtn');
+const errorDiv = document.getElementById('error');
+const loading = document.getElementById('loading');
+
+let selectedFile;
+let model;
+
+imageInput.addEventListener('change', (e) => {
+  errorDiv.textContent = '';
+  preview.style.display = 'none';
+  downloadBtn.style.display = 'none';
+
+  if (e.target.files && e.target.files[0]) {
+    const file = e.target.files[0];
+    const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+    if (!validTypes.includes(file.type)) {
+      errorDiv.textContent = 'Unsupported file type!';
+      return;
+    }
+    selectedFile = file;
+  }
+});
+
+// Load U2Net or Pix2Pix model
+async function loadModel() {
+  loading.style.display = 'block';
+  if (!model) {
+    model = await window.pix2pix.load(); // simple pre-trained model
+  }
+  loading.style.display = 'none';
+}
+
+removeBtn.addEventListener('click', async () => {
+  if (!selectedFile) {
+    errorDiv.textContent = 'Please select an image first!';
+    return;
+  }
+
+  loading.style.display = 'block';
+  errorDiv.textContent = '';
+
+  const reader = new FileReader();
+  reader.readAsDataURL(selectedFile);
+
+  reader.onload = async (event) => {
+    const img = new Image();
+    img.src = event.target.result;
+
+    img.onload = async () => {
+      await loadModel();
+
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      // Predict and remove background
+      const outputCanvas = await model.predict(canvas);
+      const dataUrl = outputCanvas.toDataURL('image/png');
+
+      preview.src = dataUrl;
+      preview.style.display = 'block';
+
+      downloadBtn.href = dataUrl;
+      downloadBtn.style.display = 'inline-block';
+
+      loading.style.display = 'none';
+    };
+  };
+});
+</script>
+
+</body>
+</html>
