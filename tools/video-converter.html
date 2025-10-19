@@ -1,172 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Toolgenix – Video Converter</title>
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background-color: #0e0e12;
-      color: #fff;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-    h1 {
-      margin-top: 40px;
-      font-size: 2rem;
-      background: linear-gradient(90deg, #8b5cf6, #7dd3fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .converter-box {
-      margin-top: 30px;
-      background-color: #1a1a23;
-      border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
-      width: 90%;
-      max-width: 600px;
-      text-align: center;
-    }
-    input, select, button {
-      width: 100%;
-      margin: 10px 0;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      font-size: 1rem;
-    }
-    input[type=file] {
-      background-color: #2a2a35;
-      color: #aaa;
-    }
-    select {
-      background-color: #2a2a35;
-      color: #fff;
-    }
-    button {
-      background: linear-gradient(90deg, #8b5cf6, #7dd3fc);
-      color: #fff;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover {
-      opacity: 0.85;
-    }
-    #progress {
-      margin-top: 10px;
-      color: #ccc;
-      font-size: 0.9rem;
-    }
-    video {
-      margin-top: 20px;
-      width: 100%;
-      border-radius: 15px;
-      display: none;
-    }
-    #downloadBtn {
-      display: none;
-      margin-top: 15px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Converter Tool</title>
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@latest"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1E1E2F;
+            color: #EAEAEA;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #2B2D42;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #FFD700;
+            color: #1E1E2F;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #E6C200;
+        }
+    </style>
 </head>
 <body>
-  <h1>🎥 Toolgenix Video Converter</h1>
-  <div class="converter-box">
-    <input type="file" id="videoInput" accept="video/*" />
-    <select id="formatSelect">
-      <option value="mp4">MP4</option>
-      <option value="mov">MOV</option>
-      <option value="avi">AVI</option>
-      <option value="mkv">MKV</option>
-      <option value="flv">FLV</option>
-      <option value="wmv">WMV</option>
-      <option value="webm">WEBM</option>
-    </select>
-    <select id="qualitySelect">
-      <option value="23">Quality: Good (CRF 23)</option>
-      <option value="28">Quality: Lower (CRF 28)</option>
-      <option value="18">Quality: High (CRF 18)</option>
-    </select>
-    <button id="convertBtn">Convert Video</button>
-    <p id="progress"></p>
-    <video id="preview" controls></video>
-    <a id="downloadBtn" download><button>Download Converted Video</button></a>
-  </div>
+    <div class="container">
+        <h2>Video Converter</h2>
+        <input type="file" id="videoInput" accept="video/*">
+        <br><br>
+        <label for="formatSelect">Choose Output Format:</label>
+        <select id="formatSelect">
+            <option value="mp4">MP4</option>
+            <option value="mov">MOV</option>
+            <option value="wmv">WMV</option>
+            <option value="avi">AVI</option>
+            <option value="mkv">MKV</option>
+            <option value="flv">FLV</option>
+            <option value="webm">WEBM</option>
+        </select>
+        <br><br>
+        <button class="btn" onclick="convertVideo()">Convert</button>
+        <p id="status"></p>
+        <video id="videoPreview" controls style="display:none; width: 100%; margin-top: 10px;"></video>
+        <a id="downloadLink" style="display:none;" class="btn" download>Download Converted Video</a>
+    </div>
 
-  <!-- FFmpeg.js -->
-  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
-
-  <script>
-    const { createFFmpeg, fetchFile } = FFmpeg;
-    const ffmpeg = createFFmpeg({
-      log: true,
-      corePath: "https://unpkg.com/@ffmpeg/core@0.12.6/dist/ffmpeg-core.js"
-    });
-
-    const input = document.getElementById("videoInput");
-    const format = document.getElementById("formatSelect");
-    const quality = document.getElementById("qualitySelect");
-    const convertBtn = document.getElementById("convertBtn");
-    const progress = document.getElementById("progress");
-    const preview = document.getElementById("preview");
-    const downloadBtn = document.getElementById("downloadBtn");
-
-    convertBtn.addEventListener("click", async () => {
-      if (!input.files.length) {
-        alert("Please select a video file first.");
-        return;
-      }
-
-      const file = input.files[0];
-      const outputFormat = format.value;
-      const crfValue = quality.value;
-      const outputName = `converted_${Date.now()}.${outputFormat}`;
-
-      progress.textContent = "⏳ Loading FFmpeg core...";
-      convertBtn.disabled = true;
-
-      try {
-        if (!ffmpeg.isLoaded()) await ffmpeg.load();
-
-        progress.textContent = "🚀 Converting... please wait.";
-        ffmpeg.setProgress(({ ratio }) => {
-          progress.textContent = `Processing: ${(ratio * 100).toFixed(1)}%`;
-        });
-
-        ffmpeg.FS("writeFile", file.name, await fetchFile(file));
-
-        await ffmpeg.run(
-          "-i", file.name,
-          "-c:v", "libx264",
-          "-crf", crfValue,
-          "-preset", "medium",
-          outputName
-        );
-
-        const data = ffmpeg.FS("readFile", outputName);
-        const blob = new Blob([data.buffer], { type: `video/${outputFormat}` });
-        const url = URL.createObjectURL(blob);
-
-        preview.src = url;
-        preview.style.display = "block";
-        downloadBtn.href = url;
-        downloadBtn.download = outputName;
-        downloadBtn.style.display = "inline-block";
-
-        progress.textContent = "✅ Conversion complete!";
-      } catch (err) {
-        console.error(err);
-        alert("Conversion failed: " + err.message);
-      } finally {
-        convertBtn.disabled = false;
-      }
-    });
-  </script>
+    <script>
+        async function convertVideo() {
+            const { createFFmpeg, fetchFile } = FFmpeg;
+            const ffmpeg = createFFmpeg({ log: true });
+            
+            const inputVideo = document.getElementById('videoInput').files[0];
+            const outputFormat = document.getElementById('formatSelect').value;
+            const statusText = document.getElementById('status');
+            const downloadLink = document.getElementById('downloadLink');
+            const videoPreview = document.getElementById('videoPreview');
+            
+            if (!inputVideo) {
+                alert("Please upload a video file.");
+                return;
+            }
+            
+            statusText.innerText = "Processing video...";
+            await ffmpeg.load();
+            
+            const inputFileName = 'input.' + inputVideo.name.split('.').pop();
+            const outputFileName = `output.${outputFormat}`;
+            
+            ffmpeg.FS('writeFile', inputFileName, await fetchFile(inputVideo));
+            await ffmpeg.run('-i', inputFileName, outputFileName);
+            
+            const data = ffmpeg.FS('readFile', outputFileName);
+            const videoBlob = new Blob([data.buffer], { type: `video/${outputFormat}` });
+            const videoUrl = URL.createObjectURL(videoBlob);
+            
+            downloadLink.href = videoUrl;
+            downloadLink.style.display = 'block';
+            downloadLink.innerText = 'Download Converted Video';
+            
+            videoPreview.src = videoUrl;
+            videoPreview.style.display = 'block';
+            
+            statusText.innerText = "Conversion Completed!";
+        }
+    </script>
 </body>
 </html>
+
+  
