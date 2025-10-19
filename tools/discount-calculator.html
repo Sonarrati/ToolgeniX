@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Discount Report Generator | Business Tool | Toolgenix</title>
+    <meta name="description" content="Free online bulk discount calculator with report generation. Calculate discounts, taxes, and generate professional reports for your business.">
+    <meta name="keywords" content="bulk discount calculator, discount report, business calculator, price calculator, tax calculator">
+    <meta name="author" content="Toolgenix">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Bulk Discount Report Generator | Toolgenix">
+    <meta property="og:description" content="Calculate discounts, taxes, and generate professional reports for your business.">
+    <meta property="og:type" content="website">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/bulk-discount-report">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Bulk Discount Report Generator - Toolgenix",
+      "description": "Free online tool to calculate bulk discounts with report generation",
+      "url": "https://toolgenix.com/tools/bulk-discount-report",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --primary: #7A5CFA;
+            --primary-light: #8A63FF;
+            --primary-dark: #6A4EDC;
+            --background: #ffffff;
+            --card-bg: #f8f8f8;
+            --text: #1e1e2f;
+            --text-secondary: #2e2e3f;
+            --border: #e5e5e5;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #ff4c4c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+        }
+        
+        .logo span:first-child {
+            color: #1e1e2f;
+        }
+        
+        .logo span:last-child {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Tool Container */
+        .tool-container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
+            margin: 0 auto 3rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .tool-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .tool-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .calculator-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+        }
+
+        .setting-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+        }
+
+        .input-with-icon input,
+        .input-with-icon select {
+            padding-left: 35px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background-color: white;
+            color: var(--text);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        button {
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 10px rgba(122, 92, 250, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 92, 250, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .primary-btn {
+            flex: 1;
+        }
+
+        .secondary-btn {
+            background-color: white;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .secondary-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        .result {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .result.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .result-item {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 5px 0;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Product Rows */
+        .product-row {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .product-row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .product-row-header h3 {
+            color: var(--text);
+            font-size: 1.1rem;
+        }
+
+        .remove-btn {
+            background: var(--error);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .remove-btn:hover {
+            background: #d32f2f;
+        }
+
+        .product-inputs {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .add-product-btn {
+            width: 100%;
+            margin-top: 10px;
+            background: var(--success);
+        }
+
+        .add-product-btn:hover {
+            background: #388e3c;
+        }
+
+        /* Charts */
+        .chart-container {
+            margin-top: 25px;
+        }
+
+        .chart-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .chart-inner {
+            width: 100%;
+            height: 300px;
+        }
+
+        /* Table */
+        .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .discount-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .discount-table th, .discount-table td {
+            border: 1px solid var(--border);
+            padding: 10px;
+            text-align: center;
+        }
+
+        .discount-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .discount-table tr:nth-child(even) {
+            background-color: var(--card-bg);
+        }
+
+        .discount-table tr:hover {
+            background-color: rgba(122, 92, 250, 0.05);
+        }
+
+        .table-scroll {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .note {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 15px;
+            padding: 10px;
+            background-color: rgba(255, 152, 0, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--warning);
+        }
+
+        /* Info Sections */
+        .info-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+        }
+        
+        .info-section h2 {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .info-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .benefit-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background);
+            border-top: 2px solid var(--primary);
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .product-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .info-section {
+                padding: 1.5rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .tool-container { 
+                padding: 20px; 
+            }
+            
+            .page-header h1 { 
+                font-size: 1.8rem; 
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .result-value {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="https://toolgenix.com">Home</a></li>
+                <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                <li><a href="https://toolgenix.com/join">Join</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com">Home</a> &gt; 
+            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/business-tools">Business Tools</a> &gt; 
+            Bulk Discount Report
+        </div>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Bulk Discount Report Generator</h1>
+            <p>Calculate discounts, taxes, and generate professional reports for your business.</p>
+        </section>
+        
+        <!-- Bulk Discount Tool -->
+        <section class="tool-container">
+            <div class="tool-header">
+                <h2>Bulk Discount Calculator</h2>
+                <p>Calculate discounts and taxes for multiple products and generate professional reports</p>
+            </div>
+
+            <div class="calculator-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="setting-label" for="customerName">Customer Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="customerName" placeholder="Enter customer name">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="setting-label" for="shopName">Shop Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-store"></i>
+                            <input type="text" id="shopName" placeholder="Enter shop name">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="setting-label" for="shopOwner">Shop Owner Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user-tie"></i>
+                            <input type="text" id="shopOwner" placeholder="Enter shop owner name">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="productsContainer">
+                    <!-- Product rows will be added here -->
+                </div>
+
+                <button class="add-product-btn" id="addProductBtn">
+                    <i class="fas fa-plus"></i> Add Product
+                </button>
+                
+                <div class="button-group">
+                    <button class="primary-btn" id="calculateBtn">
+                        <i class="fas fa-calculator"></i>
+                        Calculate All
+                    </button>
+                    <button class="secondary-btn" id="pdfBtn">
+                        <i class="fas fa-download"></i>
+                        Export PDF
+                    </button>
+                    <button class="secondary-btn" id="excelBtn">
+                        <i class="fas fa-file-excel"></i>
+                        Export Excel
+                    </button>
+                </div>
+            </div>
+
+            <div class="result" id="result">
+                <h3>Discount Calculation Results</h3>
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-label">Total Savings</div>
+                        <div class="result-value" id="totalSavings">₹0</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Total Tax</div>
+                        <div class="result-value" id="totalTax">₹0</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Total Final Price</div>
+                        <div class="result-value" id="totalFinalPrice">₹0</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Products</div>
+                        <div class="result-value" id="productCount">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-box">
+                    <div class="chart-title">Savings by Product</div>
+                    <div class="chart-inner">
+                        <canvas id="chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-title">Discount Calculation Details</div>
+                <div class="table-scroll">
+                    <table class="discount-table" id="discountTable">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Original Price</th>
+                                <th>Discount %</th>
+                                <th>Tax %</th>
+                                <th>Savings (₹)</th>
+                                <th>Tax (₹)</th>
+                                <th>Final Price (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="discountTableBody">
+                            <!-- Table rows will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="note">
+                <i class="fas fa-exclamation-triangle"></i> 
+                Note: This calculator provides estimates. Actual discounts and taxes may vary based on your business policies and local regulations.
+            </div>
+        </section>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2>How to Use Our Bulk Discount Calculator</h2>
+            <ol>
+                <li><strong>Enter customer and shop details</strong> - Fill in the customer name, shop name, and shop owner for your report.</li>
+                <li><strong>Add products</strong> - Click "Add Product" to add each item you want to calculate discounts for.</li>
+                <li><strong>Enter product details</strong> - For each product, enter the name, original price, discount percentage, and tax percentage (if applicable).</li>
+                <li><strong>Calculate discounts</strong> - Click "Calculate All" to see the savings, taxes, and final prices for all products.</li>
+                <li><strong>Review your results</strong> - See your discount calculations in the table and visualize savings with the chart.</li>
+                <li><strong>Export your report</strong> - Download your calculations as a PDF or Excel file for sharing or record keeping.</li>
+            </ol>
+            
+            <h3>Why Use a Bulk Discount Calculator?</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h4>Business Insights</h4>
+                    <p>Understand the financial impact of discounts on your overall revenue.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <h4>Professional Reports</h4>
+                    <p>Generate professional discount reports for customers and stakeholders.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-calculator"></i>
+                    <h4>Time Savings</h4>
+                    <p>Quickly calculate discounts and taxes for multiple products at once.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-balance-scale"></i>
+                    <h4>Accurate Pricing</h4>
+                    <p>Ensure accurate pricing with proper discount and tax calculations.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Understanding Discounts Section -->
+        <section class="info-section">
+            <h2>Understanding Bulk Discounts</h2>
+            
+            <h3>What are Bulk Discounts?</h3>
+            <p>Bulk discounts are price reductions offered to customers who purchase large quantities of products. These discounts incentivize larger purchases and can help businesses move inventory more quickly while maintaining customer loyalty.</p>
+            
+            <h3>Types of Discounts</h3>
+            <ul>
+                <li><strong>Percentage Discounts</strong> - A percentage reduction from the original price (e.g., 10% off)</li>
+                <li><strong>Fixed Amount Discounts</strong> - A specific amount subtracted from the original price (e.g., ₹50 off)</li>
+                <li><strong>Tiered Discounts</strong> - Different discount levels based on purchase quantity (e.g., 5% off for 10+ items, 10% off for 20+ items)</li>
+                <li><strong>Seasonal Discounts</strong> - Time-limited discounts during specific seasons or holidays</li>
+            </ul>
+            
+            <h3>Calculating Discounts</h3>
+            <p>The formula for calculating a percentage discount is:</p>
+            <p><strong>Discount Amount = Original Price × (Discount Percentage / 100)</strong></p>
+            <p><strong>Discounted Price = Original Price - Discount Amount</strong></p>
+            
+            <h3>Considering Taxes</h3>
+            <p>When calculating final prices, it's important to consider applicable taxes. Taxes are typically calculated on the discounted price:</p>
+            <p><strong>Tax Amount = Discounted Price × (Tax Percentage / 100)</strong></p>
+            <p><strong>Final Price = Discounted Price + Tax Amount</strong></p>
+            
+            <h3>Benefits of Offering Bulk Discounts</h3>
+            <ul>
+                <li><strong>Increased Sales Volume</strong> - Encourages customers to purchase more items</li>
+                <li><strong>Inventory Management</strong> - Helps move excess or seasonal inventory</li>
+                <li><strong>Customer Loyalty</strong> - Builds stronger relationships with regular customers</li>
+                <li><strong>Competitive Advantage</strong> - Differentiates your business from competitors</li>
+                <li><strong>Cash Flow Improvement</strong> - Increases immediate revenue through larger purchases</li>
+            </ul>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">How do I calculate the final price after discount and tax?</div>
+                <p>First, calculate the discount amount by multiplying the original price by the discount percentage divided by 100. Subtract this from the original price to get the discounted price. Then, calculate the tax amount by multiplying the discounted price by the tax percentage divided by 100. Add this to the discounted price to get the final price.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Should I apply discount before or after tax?</div>
+                <p>Discounts are typically applied before tax. The discount is calculated on the original price, then tax is applied to the discounted price. However, local regulations may vary, so it's important to check your specific tax requirements.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What's the difference between a discount and a rebate?</div>
+                <p>A discount is an immediate reduction in price at the time of purchase, while a rebate is a partial refund after the purchase has been made. Discounts are applied directly to the sale price, while rebates are typically claimed separately after the sale.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How can I determine the right discount percentage?</div>
+                <p>The right discount percentage depends on your profit margins, business goals, and competitive landscape. Consider factors like your cost of goods, desired profit margin, competitor pricing, and customer expectations when setting discount percentages.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I use this calculator for service-based businesses?</div>
+                <p>Yes, this calculator can be used for service-based businesses as well. Simply enter your service as a "product" with the original service price, and apply discounts and taxes as needed.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How do tiered discounts work?</div>
+                <p>Tiered discounts offer different discount levels based on purchase quantity. For example, you might offer 5% off for orders of 10-19 units, 10% off for 20-29 units, and 15% off for 30+ units. This encourages customers to purchase more to reach the next discount tier.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com">Home</a></li>
+                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                        <li><a href="https://toolgenix.com/join">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const productsContainer = document.getElementById('productsContainer');
+        const addProductBtn = document.getElementById('addProductBtn');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const pdfBtn = document.getElementById('pdfBtn');
+        const excelBtn = document.getElementById('excelBtn');
+        const resultDiv = document.getElementById('result');
+        const chartCanvas = document.getElementById('chart');
+        const discountTableBody = document.getElementById('discountTableBody');
+        const totalSavings = document.getElementById('totalSavings');
+        const totalTax = document.getElementById('totalTax');
+        const totalFinalPrice = document.getElementById('totalFinalPrice');
+        const productCount = document.getElementById('productCount');
+        
+        let productCountVar = 0;
+        let chart = null;
+
+        // Format currency in Indian style
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 2
+            }).format(amount);
+        }
+
+        // Add product row
+        function addProduct() {
+            productCountVar++;
+            const div = document.createElement('div');
+            div.className = 'product-row';
+            div.innerHTML = `
+                <div class="product-row-header">
+                    <h3>Product ${productCountVar}</h3>
+                    <button class="remove-btn">Remove</button>
+                </div>
+                <div class="product-inputs">
+                    <div class="input-with-icon">
+                        <i class="fas fa-tag"></i>
+                        <input type="text" placeholder="Product Name" class="productName" value="Product ${productCountVar}">
+                    </div>
+                    <div class="input-with-icon">
+                        <i class="fas fa-indian-rupee-sign"></i>
+                        <input type="number" placeholder="Original Price (₹)" class="originalPrice" min="0" value="1000">
+                    </div>
+                    <div class="input-with-icon">
+                        <i class="fas fa-percent"></i>
+                        <input type="number" placeholder="Discount %" class="discountPercent" min="0" max="100" value="10">
+                    </div>
+                    <div class="input-with-icon">
+                        <i class="fas fa-receipt"></i>
+                        <input type="number" placeholder="Tax %" class="taxPercent" min="0" max="100" value="5">
+                    </div>
+                </div>`;
+            productsContainer.appendChild(div);
+
+            div.querySelector('.remove-btn').addEventListener('click', () => {
+                div.remove();
+                calculateAll();
+            });
+
+            const inputs = div.querySelectorAll('input');
+            inputs.forEach(inp => inp.addEventListener('input', calculateAll));
+            
+            // Calculate after adding
+            calculateAll();
+        }
+
+        // Calculate all
+        function calculateAll() {
+            const rows = document.querySelectorAll('.product-row');
+            if (rows.length === 0) {
+                resultDiv.classList.remove('active');
+                if (chart) chart.destroy();
+                return;
+            }
+
+            let totalSave = 0, totalTaxAmount = 0, totalFinal = 0;
+            const labels = [], saves = [];
+            let tableHTML = '';
+
+            rows.forEach((row, index) => {
+                const name = row.querySelector('.productName').value || `Product ${index + 1}`;
+                const original = parseFloat(row.querySelector('.originalPrice').value) || 0;
+                const discount = parseFloat(row.querySelector('.discountPercent').value) || 0;
+                const tax = parseFloat(row.querySelector('.taxPercent').value) || 0;
+
+                const discountAmount = (original * discount) / 100;
+                const subtotal = original - discountAmount;
+                const taxAmount = (subtotal * tax) / 100;
+                const finalPrice = subtotal + taxAmount;
+
+                totalSave += discountAmount;
+                totalTaxAmount += taxAmount;
+                totalFinal += finalPrice;
+
+                tableHTML += `
+                    <tr>
+                        <td>${name}</td>
+                        <td>${formatCurrency(original)}</td>
+                        <td>${discount}%</td>
+                        <td>${tax}%</td>
+                        <td>${formatCurrency(discountAmount)}</td>
+                        <td>${formatCurrency(taxAmount)}</td>
+                        <td>${formatCurrency(finalPrice)}</td>
+                    </tr>`;
+
+                labels.push(name);
+                saves.push(discountAmount);
+            });
+
+            // Update results
+            resultDiv.classList.add('active');
+            totalSavings.textContent = formatCurrency(totalSave);
+            totalTax.textContent = formatCurrency(totalTaxAmount);
+            totalFinalPrice.textContent = formatCurrency(totalFinal);
+            productCount.textContent = rows.length;
+
+            // Update table
+            discountTableBody.innerHTML = tableHTML;
+
+            // Update chart
+            if (chart) chart.destroy();
+            chart = new Chart(chartCanvas, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Savings (₹)',
+                        data: saves,
+                        backgroundColor: 'rgba(122, 92, 250, 0.8)',
+                        borderColor: 'rgba(122, 92, 250, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Discount Savings by Product'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Products'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Savings (₹)'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Export PDF
+        pdfBtn.addEventListener('click', () => {
+            const customerName = document.getElementById('customerName').value || '-';
+            const shopName = document.getElementById('shopName').value || '-';
+            const shopOwner = document.getElementById('shopOwner').value || '-';
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Add header
+            doc.setFillColor(122, 92, 250);
+            doc.rect(0, 0, 210, 30, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(20);
+            doc.text("Bulk Discount Report", 105, 15, { align: 'center' });
+            
+            // Add customer details
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(12);
+            doc.text(`Generated: ${new Date().toLocaleString()}`, 10, 40);
+            doc.text(`Customer: ${customerName}`, 10, 50);
+            doc.text(`Shop: ${shopName}`, 10, 60);
+            doc.text(`Shop Owner: ${shopOwner}`, 10, 70);
+
+            const rows = document.querySelectorAll('.product-row');
+            const tableData = [];
+            let totalSave = 0, totalTaxAmount = 0, totalFinal = 0;
+            
+            rows.forEach((row, index) => {
+                const name = row.querySelector('.productName').value || `Product ${index + 1}`;
+                const original = parseFloat(row.querySelector('.originalPrice').value) || 0;
+                const discount = parseFloat(row.querySelector('.discountPercent').value) || 0;
+                const tax = parseFloat(row.querySelector('.taxPercent').value) || 0;
+                const discountAmount = (original * discount) / 100;
+                const subtotal = original - discountAmount;
+                const taxAmount = (subtotal * tax) / 100;
+                const finalPrice = subtotal + taxAmount;
+                
+                totalSave += discountAmount;
+                totalTaxAmount += taxAmount;
+                totalFinal += finalPrice;
+                
+                tableData.push([
+                    name, 
+                    formatCurrency(original), 
+                    `${discount}%`, 
+                    `${tax}%`, 
+                    formatCurrency(discountAmount), 
+                    formatCurrency(taxAmount), 
+                    formatCurrency(finalPrice)
+                ]);
+            });
+            
+            tableData.push(['Total', '-', '-', '-', formatCurrency(totalSave), formatCurrency(totalTaxAmount), formatCurrency(totalFinal)]);
+
+            doc.autoTable({
+                head: [['Product', 'Original Price', 'Discount %', 'Tax %', 'Savings (₹)', 'Tax (₹)', 'Final Price (₹)']],
+                body: tableData,
+                startY: 80,
+                theme: 'grid',
+                headStyles: { fillColor: [122, 92, 250], textColor: 255 },
+                bodyStyles: { textColor: 0 }
+            });
+
+            // Add summary
+            const finalY = doc.lastAutoTable.finalY + 10;
+            doc.setFontSize(14);
+            doc.text("Summary", 10, finalY);
+            doc.setFontSize(12);
+            doc.text(`Total Savings: ${formatCurrency(totalSave)}`, 10, finalY + 10);
+            doc.text(`Total Tax: ${formatCurrency(totalTaxAmount)}`, 10, finalY + 20);
+            doc.text(`Total Final Price: ${formatCurrency(totalFinal)}`, 10, finalY + 30);
+            doc.text(`Number of Products: ${rows.length}`, 10, finalY + 40);
+
+            // Add footer
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text("Generated by Toolgenix Bulk Discount Calculator", 10, 280);
+            
+            doc.save('bulk_discount_report.pdf');
+        });
+
+        // Export Excel
+        excelBtn.addEventListener('click', () => {
+            const customerName = document.getElementById('customerName').value || '-';
+            const shopName = document.getElementById('shopName').value || '-';
+            const shopOwner = document.getElementById('shopOwner').value || '-';
+
+            const rows = document.querySelectorAll('.product-row');
+            if (rows.length === 0) { 
+                alert("Add at least one product"); 
+                return; 
+            }
+
+            const data = [];
+            data.push(['Bulk Discount Report']);
+            data.push(['Generated:', new Date().toLocaleString()]);
+            data.push(['Customer:', customerName]);
+            data.push(['Shop:', shopName]);
+            data.push(['Shop Owner:', shopOwner]);
+            data.push([]);
+            data.push(['Product', 'Original Price', 'Discount %', 'Tax %', 'Savings (₹)', 'Tax (₹)', 'Final Price (₹)']);
+
+            let totalSave = 0, totalTaxAmount = 0, totalFinal = 0;
+            
+            rows.forEach((row, index) => {
+                const name = row.querySelector('.productName').value || `Product ${index + 1}`;
+                const original = parseFloat(row.querySelector('.originalPrice').value) || 0;
+                const discount = parseFloat(row.querySelector('.discountPercent').value) || 0;
+                const tax = parseFloat(row.querySelector('.taxPercent').value) || 0;
+                const discountAmount = (original * discount) / 100;
+                const subtotal = original - discountAmount;
+                const taxAmount = (subtotal * tax) / 100;
+                const finalPrice = subtotal + taxAmount;
+                
+                totalSave += discountAmount;
+                totalTaxAmount += taxAmount;
+                totalFinal += finalPrice;
+
+                data.push([name, original, discount, tax, discountAmount, taxAmount, finalPrice]);
+            });
+            
+            data.push(['Total', '', '', '', totalSave, totalTaxAmount, totalFinal]);
+
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Bulk Discount");
+            XLSX.writeFile(wb, "bulk_discount_report.xlsx");
+        });
+
+        // Event listeners
+        addProductBtn.addEventListener('click', addProduct);
+        calculateBtn.addEventListener('click', calculateAll);
+
+        // Add initial product
+        addProduct();
+    </script>
+</body>
+</html>
