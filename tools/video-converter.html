@@ -1,416 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Video Converter - Toolgenix</title>
 
-<!-- Minimal dark theme styling -->
+<!-- FFmpeg.js -->
+<script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.8/dist/ffmpeg.min.js"></script>
+
 <style>
-  :root{
-    --bg:#171724;
-    --card:#222231;
-    --muted:#9aa0c3;
-    --accent:#6c63ff;
-    --danger:#ff5c6c;
-    --glass: rgba(255,255,255,0.03);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-    background:linear-gradient(180deg,var(--bg),#101018);
-    color:#e7e9f2;
-    min-height:100vh;
-    display:flex;
-    align-items:flex-start;
-    justify-content:center;
-    padding:36px;
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1e1e2f;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
   }
 
-  .card{
-    width:100%;
-    max-width:920px;
-    background:var(--card);
-    border-radius:12px;
-    padding:22px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.6);
-    border:1px solid rgba(255,255,255,0.03);
+  .container {
+    max-width: 600px;
+    width: 100%;
+    background-color: #2c2c3e;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   }
 
-  h1{
-    margin:0 0 10px 0;
-    font-size:20px;
-    letter-spacing:0.2px;
-  }
-  p.lead{margin:0 0 18px 0;color:var(--muted);}
-
-  .grid{
-    display:grid;
-    gap:16px;
-    grid-template-columns: 1fr 360px;
-  }
-  @media(max-width:920px){ .grid{ grid-template-columns:1fr } }
-
-  .panel{
-    background:var(--glass);
-    padding:14px;
-    border-radius:10px;
-    border:1px solid rgba(255,255,255,0.02);
+  h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #f0f0f0;
   }
 
-  label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
-  input[type=file], select, button, input[type=number]{
-    width:100%;
-    padding:10px 12px;
-    border-radius:8px;
-    border:1px solid rgba(255,255,255,0.04);
-    background:#14141a;
-    color:#e7e9f2;
-    font-size:14px;
+  input[type="file"],
+  select {
+    display: block;
+    margin: 15px auto;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    background-color: #3c3c52;
+    color: white;
   }
 
-  .row{display:flex;gap:10px;align-items:center}
-  .row > *{flex:1}
-  .small{max-width:160px}
-
-  button.primary{
-    background:linear-gradient(90deg,var(--accent),#5a4ff0);
-    border:none;
-    color:white;
-    padding:11px 14px;
-    cursor:pointer;
-    border-radius:8px;
-    font-weight:600;
-  }
-  button.ghost{
-    background:transparent;
-    border:1px solid rgba(255,255,255,0.04);
-    color:var(--muted);
+  button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #6c63ff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
   }
 
-  .muted{color:var(--muted);font-size:13px}
-  .danger{color:var(--danger);font-size:13px}
-
-  progress{
-    width:100%;
-    height:12px;
-    appearance:none;
-    border-radius:8px;
-    overflow:hidden;
-  }
-  progress::-webkit-progress-bar{background:#0f0f14}
-  progress::-webkit-progress-value{background:linear-gradient(90deg,var(--accent),#4e45f0)}
-
-  video{
-    width:100%;
-    border-radius:8px;
-    background:#000;
-    display:block;
+  button:hover {
+    background-color: #5548c8;
   }
 
-  .meta{font-size:13px;color:var(--muted);margin-top:8px}
-  .output-actions{display:flex;gap:10px;margin-top:12px}
-  a.download{
-    display:inline-block;padding:10px 12px;background:linear-gradient(90deg,var(--accent),#4f47f6);
-    color:white;border-radius:8px;text-decoration:none;font-weight:600;
+  .loading {
+    text-align: center;
+    margin-top: 10px;
+    color: #ffd700;
   }
 
-  .note{font-size:13px;color:var(--muted);margin-top:12px}
+  .error {
+    color: #ff4c4c;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  video {
+    display: block;
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+
+  #downloadBtn {
+    display: none;
+    margin-top: 15px;
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      padding: 20px;
+    }
+  }
 </style>
 </head>
 <body>
+  <div class="container">
+    <h1>🎬 Video Converter</h1>
 
-<div class="card" role="main">
-  <h1>Video Converter — Toolgenix</h1>
-  <p class="lead">Upload a video, choose the output format and convert it client-side (using ffmpeg.wasm). Best on desktop.</p>
+    <input type="file" id="videoInput" accept="video/*" />
+    
+    <label for="formatSelect">Select Output Format:</label>
+    <select id="formatSelect">
+      <option value="mp4">MP4</option>
+      <option value="mov">MOV</option>
+      <option value="wmv">WMV</option>
+      <option value="avi">AVI</option>
+      <option value="mkv">MKV</option>
+      <option value="flv">FLV</option>
+      <option value="webm">WEBM</option>
+    </select>
 
-  <div class="grid">
-    <!-- LEFT: controls -->
-    <div class="panel">
-      <label for="videoFile">Select Video</label>
-      <input id="videoFile" type="file" accept="video/mp4,video/quicktime,video/x-ms-wmv,video/x-msvideo,video/x-matroska,video/x-flv,video/webm">
+    <label for="quality">Select Quality:</label>
+    <select id="quality">
+      <option value="18">Quality: High (CRF 18)</option>
+      <option value="23" selected>Quality: Good (CRF 23)</option>
+      <option value="28">Quality: Lower (CRF 28)</option>
+    </select>
 
-      <div style="height:12px"></div>
+    <button id="convertBtn">Convert Video</button>
+    <div class="loading" id="loading" style="display: none;">⏳ Processing video, please wait...</div>
+    <div class="error" id="error"></div>
 
-      <label for="format">Output Format</label>
-      <select id="format">
-        <option value="mp4">MP4 (recommended)</option>
-        <option value="mov">MOV</option>
-        <option value="wmv">WMV</option>
-        <option value="avi">AVI</option>
-        <option value="mkv">MKV</option>
-        <option value="flv">FLV</option>
-        <option value="webm">WEBM</option>
-      </select>
-
-      <div style="height:12px"></div>
-
-      <label>Options</label>
-      <div class="row">
-        <input id="width" type="number" placeholder="Width (px) — optional">
-        <input id="height" type="number" placeholder="Height (px) — optional">
-      </div>
-      <div style="height:10px"></div>
-      <div class="row">
-        <select id="quality">
-          <option value="23">Quality: Good (CRF 23)</option>
-          <option value="28">Quality: Lower (CRF 28)</option>
-          <option value="18">Quality: High (CRF 18)</option>
-        </select>
-        <button id="convertBtn" class="primary">Convert</button>
-      </div>
-
-      <div style="height:14px"></div>
-
-      <div id="status" class="muted">FFmpeg status: <span id="ffStatus">idle</span></div>
-      <div style="height:8px"></div>
-      <progress id="progress" value="0" max="1" style="display:none"></progress>
-      <div id="progressText" class="muted" style="margin-top:8px"></div>
-
-      <div class="note">⚠️ Note: conversion runs in your browser. Large files may be slow or may not finish on low-memory devices. Recommended limit: <strong>≤ 200MB</strong>.</div>
-    </div>
-
-    <!-- RIGHT: preview + output -->
-    <div class="panel" id="outputPanel">
-      <div id="previewBox">
-        <label class="muted">Preview</label>
-        <video id="previewVideo" controls playsinline style="height:260px; background:#000;"></video>
-        <div class="meta" id="inputMeta"></div>
-      </div>
-
-      <div id="resultArea" style="display:none; margin-top:12px;">
-        <label class="muted">Converted Video</label>
-        <video id="resultVideo" controls playsinline></video>
-        <div class="meta" id="resultMeta"></div>
-        <div class="output-actions">
-          <a id="downloadLink" class="download" href="#" download>Download</a>
-          <button id="resetBtn" class="ghost">Convert another</button>
-        </div>
-      </div>
-
-    </div>
+    <video id="preview" controls style="display:none;"></video>
+    <a id="downloadBtn" href="#" download="converted-video.mp4">
+      <button>Download Video</button>
+    </a>
   </div>
-</div>
 
-<!-- ffmpeg.wasm - use module import -->
-<script type="module">
-  import { createFFmpeg, fetchFile } from 'https://unpkg.com/@ffmpeg/ffmpeg@0.11.7/dist/ffmpeg.min.js';
+<script>
+const { createFFmpeg, fetchFile } = FFmpeg;
+const ffmpeg = createFFmpeg({ log: true });
+const videoInput = document.getElementById("videoInput");
+const formatSelect = document.getElementById("formatSelect");
+const qualitySelect = document.getElementById("quality");
+const convertBtn = document.getElementById("convertBtn");
+const loading = document.getElementById("loading");
+const errorDiv = document.getElementById("error");
+const preview = document.getElementById("preview");
+const downloadBtn = document.getElementById("downloadBtn");
 
-  const ffmpeg = createFFmpeg({
-    log: true,
-    corePath: 'https://unpkg.com/@ffmpeg/core@0.11.1/dist/ffmpeg-core.js' // ensure core is loaded from CDN
-  });
-
-  const fileInput = document.getElementById('videoFile');
-  const formatSelect = document.getElementById('format');
-  const convertBtn = document.getElementById('convertBtn');
-  const previewVideo = document.getElementById('previewVideo');
-  const inputMeta = document.getElementById('inputMeta');
-  const resultArea = document.getElementById('resultArea');
-  const resultVideo = document.getElementById('resultVideo');
-  const downloadLink = document.getElementById('downloadLink');
-  const resetBtn = document.getElementById('resetBtn');
-  const status = document.getElementById('ffStatus');
-  const progressEl = document.getElementById('progress');
-  const progressText = document.getElementById('progressText');
-  const widthInput = document.getElementById('width');
-  const heightInput = document.getElementById('height');
-  const qualitySelect = document.getElementById('quality');
-
-  let inputFile;
-  let inputUrl;
-  let convertedUrl;
-
-  // configure ffmpeg progress
-  ffmpeg.setProgress(({ ratio }) => {
-    progressEl.style.display = 'block';
-    progressEl.value = ratio;
-    progressText.textContent = `Converting: ${(ratio*100).toFixed(1)}%`;
-  });
-
-  ffmpeg.setLogger(({ type, message }) => {
-    // show some messages
-    if (type === 'info') {
-      status.textContent = 'loading...';
-    }
-    // console.log(`[ffmpeg ${type}]`, message);
-  });
-
-  // Load file preview on selection
-  fileInput.addEventListener('change', (e) => {
-    resetUI();
-    const f = e.target.files[0];
-    if (!f) return;
-    const valid = ['video/mp4','video/quicktime','video/x-ms-wmv','video/x-msvideo','video/x-matroska','video/x-flv','video/webm'];
-    if (!valid.includes(f.type)) {
-      alert('Unsupported file type. Supported: MP4, MOV, WMV, AVI, MKV, FLV, WEBM.');
-      fileInput.value = '';
-      return;
-    }
-
-    // file size warning
-    if (f.size > 200 * 1024 * 1024) { // 200MB
-      if (!confirm('File is larger than 200MB. Conversion may be slow or may fail in browser. Continue?')) {
-        fileInput.value = '';
-        return;
-      }
-    }
-
-    inputFile = f;
-    if (inputUrl) URL.revokeObjectURL(inputUrl);
-    inputUrl = URL.createObjectURL(f);
-    previewVideo.src = inputUrl;
-    previewVideo.load();
-    inputMeta.textContent = `Name: ${f.name} · ${(f.size/1024/1024).toFixed(2)} MB · Type: ${f.type}`;
-  });
-
-  // Convert button
-  convertBtn.addEventListener('click', async () => {
-    if (!inputFile) {
-      alert('Please select a video first.');
-      return;
-    }
-    const outExt = formatSelect.value.trim().toLowerCase();
-    const inputName = 'input' + getExt(inputFile.name);
-    const outputName = 'output.' + outExt;
-    const specifiedWidth = parseInt(widthInput.value) || null;
-    const specifiedHeight = parseInt(heightInput.value) || null;
-    const crf = parseInt(qualitySelect.value); // lower better quality
-
-    try {
-      convertBtn.disabled = true;
-      status.textContent = 'loading ffmpeg...';
-      if (!ffmpeg.isLoaded()) {
-        await ffmpeg.load();
-      }
-      status.textContent = 'ready';
-
-      // write file
-      status.textContent = 'writing file to memory...';
-      ffmpeg.FS('writeFile', inputName, await fetchFile(inputFile));
-
-      // build ffmpeg args
-      // Basic transcode using libx264 for containers that support, and libvpx/vp9 for webm if needed
-      // We attempt sane defaults; if command fails we'll catch and show error.
-      status.textContent = 'starting conversion...';
-      progressEl.value = 0;
-      progressText.textContent = '';
-
-      let args = ['-i', inputName];
-
-      // scaling
-      if (specifiedWidth || specifiedHeight) {
-        const w = specifiedWidth || -1;
-        const h = specifiedHeight || -1;
-        // ffmpeg scale filter: use -1 to keep aspect ratio if one dimension is -1
-        args.push('-vf', `scale=${w}:${h}`);
-      }
-
-      // set codec/format options depending on outExt
-      switch (outExt) {
-        case 'mp4':
-        case 'mov':
-          // use h264 + aac
-          args.push('-c:v','libx264','-crf',String(crf),'-preset','veryfast','-c:a','aac','-b:a','128k');
-          break;
-        case 'webm':
-          // use vp9 (or libvpx) - libvpx may be heavy; use libvpx-vp9 or libvpx depending on build
-          args.push('-c:v','libvpx-vp9','-crf',String(crf),'-b:v','0','-c:a','libopus');
-          break;
-        case 'flv':
-          args.push('-c:v','libx264','-crf',String(crf),'-preset','veryfast','-c:a','aac');
-          break;
-        case 'mkv':
-        case 'avi':
-        case 'wmv':
-          // attempt generic transcode
-          args.push('-c:v','libx264','-crf',String(crf),'-preset','veryfast','-c:a','aac');
-          break;
-        default:
-          args.push('-c:v','libx264','-crf',String(crf),'-preset','veryfast','-c:a','aac');
-      }
-
-      args.push('-movflags','faststart'); // for mp4
-      args.push(outputName);
-
-      // run ffmpeg
-      await ffmpeg.run(...args);
-
-      status.textContent = 'reading output...';
-      const data = ffmpeg.FS('readFile', outputName);
-      const blob = new Blob([data.buffer], { type: mimeForExt(outExt) });
-      if (convertedUrl) URL.revokeObjectURL(convertedUrl);
-      convertedUrl = URL.createObjectURL(blob);
-
-      // show result
-      resultArea.style.display = 'block';
-      resultVideo.src = convertedUrl;
-      resultVideo.load();
-      downloadLink.href = convertedUrl;
-      downloadLink.download = inputFile.name.replace(/\.[^/.]+$/, '') + '.' + outExt;
-      resultMeta.textContent = `Name: ${downloadLink.download} · ${(blob.size/1024/1024).toFixed(2)} MB · Format: ${outExt.toUpperCase()}`;
-
-      status.textContent = 'done';
-      progressText.textContent = 'Conversion completed';
-    } catch (err) {
-      console.error(err);
-      status.textContent = 'error';
-      alert('Conversion failed: ' + (err.message || err));
-    } finally {
-      convertBtn.disabled = false;
-      progressEl.style.display = 'none';
-    }
-  });
-
-  // Reset button
-  resetBtn.addEventListener('click', () => {
-    cleanup();
-    fileInput.value = '';
-    widthInput.value = '';
-    heightInput.value = '';
-    resultArea.style.display = 'none';
-    previewVideo.src = '';
-    inputMeta.textContent = '';
-  });
-
-  // helpers
-  function getExt(name){
-    const idx = name.lastIndexOf('.');
-    return idx >= 0 ? name.slice(idx) : '';
-  }
-  function mimeForExt(ext){
-    switch (ext){
-      case 'mp4': return 'video/mp4';
-      case 'mov': return 'video/quicktime';
-      case 'webm': return 'video/webm';
-      case 'flv': return 'video/x-flv';
-      case 'mkv': return 'video/x-matroska';
-      case 'avi': return 'video/x-msvideo';
-      case 'wmv': return 'video/x-ms-wmv';
-      default: return 'application/octet-stream';
-    }
+convertBtn.addEventListener("click", async () => {
+  const file = videoInput.files[0];
+  if (!file) {
+    errorDiv.textContent = "Please upload a video first!";
+    return;
   }
 
-  function resetUI(){
-    status.textContent = 'idle';
-    progressEl.style.display = 'none';
-    progressEl.value = 0;
-    progressText.textContent = '';
-    resultArea.style.display = 'none';
-    if (convertedUrl){ URL.revokeObjectURL(convertedUrl); convertedUrl = null; }
-  }
+  const outputFormat = formatSelect.value;
+  const crfValue = qualitySelect.value;
+  errorDiv.textContent = "";
+  preview.style.display = "none";
+  downloadBtn.style.display = "none";
+  loading.style.display = "block";
 
-  function cleanup(){
-    try {
-      // remove FS files (best effort)
-      const files = ffmpeg.FS ? ffmpeg.FS('readdir','/') : [];
-      // ignore for now (not enumerating)
-    } catch(e){}
-  }
+  try {
+    if (!ffmpeg.isLoaded()) {
+      await ffmpeg.load();
+    }
 
-  // small UI init
-  resetUI();
+    const inputName = file.name;
+    const outputName = `output.${outputFormat}`;
+    ffmpeg.FS("writeFile", inputName, await fetchFile(file));
+
+    await ffmpeg.run(
+      "-i",
+      inputName,
+      "-vcodec",
+      "libx264",
+      "-crf",
+      crfValue,
+      "-preset",
+      "medium",
+      outputName
+    );
+
+    const data = ffmpeg.FS("readFile", outputName);
+    const videoBlob = new Blob([data.buffer], { type: `video/${outputFormat}` });
+    const videoUrl = URL.createObjectURL(videoBlob);
+
+    preview.src = videoUrl;
+    preview.style.display = "block";
+
+    downloadBtn.href = videoUrl;
+    downloadBtn.download = `converted-video.${outputFormat}`;
+    downloadBtn.style.display = "inline-block";
+  } catch (err) {
+    console.error(err);
+    errorDiv.textContent = "Conversion failed. Please try another format or smaller file.";
+  } finally {
+    loading.style.display = "none";
+  }
+});
 </script>
 </body>
 </html>
