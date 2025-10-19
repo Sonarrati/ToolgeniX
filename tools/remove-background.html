@@ -1,164 +1,1022 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Background Remover - Toolgenix</title>
-<style>
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #1e1e2f;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    padding: 40px 20px;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Background Remover Tool Online | Remove Image Background | Toolgenix</title>
+    <meta name="description" content="Free online background remover tool. Remove backgrounds from images instantly with AI-powered technology. No registration required.">
+    <meta name="keywords" content="background remover, remove background, transparent background, image editing, free image tools, remove.bg alternative">
+    <meta name="author" content="Toolgenix">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Free Background Remover Tool Online | Toolgenix">
+    <meta property="og:description" content="Remove backgrounds from images instantly with AI-powered technology">
+    <meta property="og:type" content="website">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/background-remover">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Background Remover Tool - Toolgenix",
+      "description": "Free online tool to remove backgrounds from images",
+      "url": "https://toolgenix.com/tools/background-remover",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7A5CFA;
+            --primary-light: #8A63FF;
+            --primary-dark: #6A4EDC;
+            --background: #ffffff;
+            --card-bg: #f8f8f8;
+            --text: #1e1e2f;
+            --text-secondary: #2e2e3f;
+            --border: #e5e5e5;
+            --success: #4caf50;
+            --error: #ff4c4c;
+            --warning: #ff9800;
+        }
 
-  .container {
-    max-width: 500px;
-    width: 100%;
-    background-color: #2c2c3e;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-  }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  h1 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #f0f0f0;
-  }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
 
-  input[type="file"] {
-    display: block;
-    margin: 20px auto;
-    color: #fff;
-  }
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+        }
+        
+        .logo span:first-child {
+            color: #1e1e2f;
+        }
+        
+        .logo span:last-child {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
 
-  button {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 8px;
-    background-color: #6c63ff;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
 
-  button:hover {
-    background-color: #5548c8;
-  }
+        /* Tool Container */
+        .tool-container {
+            max-width: 800px;
+            width: 100%;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
+            margin: 0 auto 3rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
 
-  #preview-container {
-    margin-top: 20px;
-    text-align: center;
-  }
+        .tool-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
 
-  #preview {
-    max-width: 100%;
-    border-radius: 10px;
-    margin-top: 10px;
-  }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
 
-  #downloadBtn {
-    margin-top: 15px;
-    display: none;
-  }
+        .tool-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
 
-  .error {
-    color: #ff4c4c;
-    text-align: center;
-    margin-top: 10px;
-  }
+        .tool-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
 
-  .loading {
-    text-align: center;
-    margin-top: 10px;
-    color: #ffd700;
-  }
-</style>
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background-color: rgba(122, 92, 250, 0.05);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--primary);
+            background-color: rgba(122, 92, 250, 0.1);
+        }
+
+        .upload-area i {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .upload-area h3 {
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .upload-area p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .file-types {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .file-info {
+            display: none;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .file-info.active {
+            display: block;
+        }
+
+        .file-details {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .file-icon {
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .file-text {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+
+        .file-size {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .remove-file {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .remove-file:hover {
+            color: var(--error);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .primary-btn {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(122, 92, 250, 0.3);
+        }
+
+        .primary-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 92, 250, 0.4);
+        }
+
+        .secondary-btn {
+            background-color: white;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .secondary-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            display: none;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .result.active {
+            display: block;
+        }
+
+        .preview-container {
+            margin-bottom: 20px;
+        }
+
+        .preview-title {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: var(--text);
+        }
+
+        .image-comparison {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .image-box {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            display: block;
+            background-color: #f8f8f8;
+            background-image: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
+                              linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
+                              linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        .image-label {
+            padding: 8px;
+            background-color: white;
+            font-size: 14px;
+            border-top: 1px solid var(--border);
+        }
+
+        .status {
+            text-align: center;
+            margin: 15px 0;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .loading {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(255, 152, 0, 0.2);
+        }
+
+        .error {
+            background-color: rgba(255, 76, 76, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(255, 76, 76, 0.2);
+        }
+
+        .success {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        /* Info Sections */
+        .info-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+        }
+        
+        .info-section h2 {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .info-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .benefit-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background);
+            border-top: 2px solid var(--primary);
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .info-section {
+                padding: 1.5rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-comparison {
+                flex-direction: column;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .tool-container { 
+                padding: 20px; 
+            }
+            
+            .page-header h1 { 
+                font-size: 1.8rem; 
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="https://toolgenix.com">Home</a></li>
+                <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                <li><a href="https://toolgenix.com/join">Join</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<div class="container">
-  <h1>Background Remover</h1>
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com">Home</a> &gt; 
+            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/media-tools">Media Tools</a> &gt; 
+            Background Remover
+        </div>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Free Online Background Remover</h1>
+            <p>Remove backgrounds from images instantly with AI-powered technology. Create professional transparent images in seconds.</p>
+        </section>
+        
+        <!-- Background Remover Tool -->
+        <section class="tool-container">
+            <div class="tool-header">
+                <h2>Background Remover</h2>
+                <p>Remove backgrounds from your images with AI technology</p>
+            </div>
 
-  <input type="file" id="imageInput" accept="image/png, image/jpeg, image/jpg">
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h3>Upload Your Image</h3>
+                <p>Click to browse or drag & drop your image here</p>
+                <p class="file-types">Supports: JPG, PNG</p>
+                <input type="file" id="imageInput" accept="image/png, image/jpeg, image/jpg" style="display: none;">
+            </div>
 
-  <button id="removeBtn">Remove Background</button>
+            <div class="file-info" id="fileInfo">
+                <div class="file-details">
+                    <div class="file-icon">
+                        <i class="fas fa-file-image"></i>
+                    </div>
+                    <div class="file-text">
+                        <div class="file-name" id="fileName">image.jpg</div>
+                        <div class="file-size" id="fileSize">0 KB</div>
+                    </div>
+                    <button class="remove-file" id="removeFile">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
 
-  <div class="loading" id="loading" style="display: none;">Processing image...</div>
-  <div class="error" id="error"></div>
+            <div class="button-group">
+                <button class="primary-btn" id="removeBtn">
+                    <i class="fas fa-magic"></i>
+                    Remove Background
+                </button>
+                <button class="secondary-btn" id="resetBtn">
+                    <i class="fas fa-redo"></i>
+                    Reset
+                </button>
+            </div>
 
-  <div id="preview-container">
-    <img id="preview" src="" alt="Processed Preview" style="display:none;">
-    <a id="downloadBtn" href="#" download="no-bg.png">
-      <button>Download Image</button>
-    </a>
-  </div>
-</div>
+            <div class="status loading" id="loadingStatus">
+                <i class="fas fa-spinner fa-spin"></i> Removing background...
+            </div>
 
-<script>
-const apiKey = "aXgL8CqhSYpp5y2v99VpxJpA";
+            <div class="status error" id="errorStatus"></div>
 
-const imageInput = document.getElementById('imageInput');
-const removeBtn = document.getElementById('removeBtn');
-const preview = document.getElementById('preview');
-const downloadBtn = document.getElementById('downloadBtn');
-const errorDiv = document.getElementById('error');
-const loading = document.getElementById('loading');
+            <div class="result" id="resultContainer">
+                <div class="preview-container">
+                    <h3 class="preview-title">Background Removal Result</h3>
+                    
+                    <div class="image-comparison">
+                        <div class="image-box">
+                            <img id="originalPreview" src="" alt="Original">
+                            <div class="image-label">Original</div>
+                        </div>
+                        <div class="image-box">
+                            <img id="processedPreview" src="" alt="Background Removed">
+                            <div class="image-label">Background Removed</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="primary-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i>
+                    Download Image
+                </button>
+            </div>
+        </section>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2>How to Use Our Background Remover</h2>
+            <ol>
+                <li><strong>Upload your image</strong> by clicking the "Upload Your Image" area or dragging and dropping your file. We support JPG and PNG formats.</li>
+                <li><strong>Click the "Remove Background" button</strong> to process your image. Our AI technology will automatically detect and remove the background.</li>
+                <li><strong>Wait for processing</strong> - this usually takes just a few seconds depending on image complexity.</li>
+                <li><strong>Compare the results</strong> using the side-by-side preview. The processed image will have a transparent background.</li>
+                <li><strong>Download your image</strong> by clicking the "Download Image" button. The image will be saved as a PNG file with transparency.</li>
+            </ol>
+            
+            <h3>Why Use Our Background Remover?</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-brain"></i>
+                    <h4>AI-Powered</h4>
+                    <p>Uses advanced AI to accurately detect and remove backgrounds.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Fast Processing</h4>
+                    <p>Remove backgrounds in seconds with our optimized technology.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h4>Completely Free</h4>
+                    <p>No hidden costs, watermarks, or usage limits.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Secure Processing</h4>
+                    <p>Your images are processed securely and deleted after processing.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Use Cases Section -->
+        <section class="info-section">
+            <h2>When to Use Background Removal</h2>
+            
+            <h3>E-commerce Product Images</h3>
+            <p>Create clean, professional product images with transparent backgrounds for your online store.</p>
+            
+            <h3>Graphic Design Projects</h3>
+            <p>Remove backgrounds to isolate subjects for use in posters, banners, and other design work.</p>
+            
+            <h3>Social Media Content</h3>
+            <p>Create engaging content with transparent images that can be placed on any background.</p>
+            
+            <h3>Photography Enhancement</h3>
+            <p>Remove distracting backgrounds to focus attention on your main subject.</p>
+            
+            <h3>Marketing Materials</h3>
+            <p>Create professional marketing materials with clean, isolated images.</p>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">How accurate is the background removal?</div>
+                <p>Our AI technology provides highly accurate background removal for most images. Complex backgrounds or images with fine details like hair may require additional manual touch-ups.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is there a file size limit?</div>
+                <p>We recommend images under 10MB for optimal performance. Larger files may take longer to process.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Are my images secure?</div>
+                <p>Yes! Your images are processed securely and automatically deleted from our servers after processing. We do not store your images.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What image formats do you support?</div>
+                <p>We support JPG and PNG formats for input. The output is always a PNG file with transparency.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I remove backgrounds from multiple images at once?</div>
+                <p>Currently, our tool processes one image at a time. For batch processing, you'll need to remove backgrounds from each image separately.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What's the best type of image for background removal?</div>
+                <p>Images with clear contrast between the subject and background work best. Simple backgrounds and well-lit subjects typically produce the best results.</p>
+            </div>
+        </section>
+    </main>
 
-removeBtn.addEventListener('click', async () => {
-  const file = imageInput.files[0];
-  if (!file) {
-    errorDiv.textContent = 'Please select an image first!';
-    return;
-  }
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com">Home</a></li>
+                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                        <li><a href="https://toolgenix.com/join">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-  errorDiv.textContent = '';
-  preview.style.display = 'none';
-  downloadBtn.style.display = 'none';
-  loading.style.display = 'block';
+    <script>
+        // DOM elements
+        const uploadArea = document.getElementById('uploadArea');
+        const imageInput = document.getElementById('imageInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const removeFileBtn = document.getElementById('removeFile');
+        const removeBtn = document.getElementById('removeBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const loadingStatus = document.getElementById('loadingStatus');
+        const errorStatus = document.getElementById('errorStatus');
+        const resultContainer = document.getElementById('resultContainer');
+        const originalPreview = document.getElementById('originalPreview');
+        const processedPreview = document.getElementById('processedPreview');
+        const downloadBtn = document.getElementById('downloadBtn');
 
-  const formData = new FormData();
-  formData.append('image_file', file);
-  formData.append('size', 'auto');
+        let selectedFile = null;
 
-  try {
-    const response = await fetch('https://api.remove.bg/v1.0/removebg', {
-      method: 'POST',
-      headers: {
-        'X-Api-Key': apiKey
-      },
-      body: formData
-    });
+        // Event Listeners
+        uploadArea.addEventListener('click', () => imageInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length) {
+                handleFileSelection(e.dataTransfer.files[0]);
+            }
+        });
 
-    if (!response.ok) {
-      throw new Error('Failed to remove background.');
-    }
+        imageInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFileSelection(e.target.files[0]);
+            }
+        });
 
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
+        removeFileBtn.addEventListener('click', () => {
+            resetFileSelection();
+        });
 
-    preview.src = url;
-    preview.style.display = 'block';
+        removeBtn.addEventListener('click', removeBackground);
+        resetBtn.addEventListener('click', resetAll);
+        downloadBtn.addEventListener('click', downloadImage);
 
-    downloadBtn.href = url;
-    downloadBtn.style.display = 'inline-block';
-  } catch (err) {
-    errorDiv.textContent = err.message;
-  } finally {
-    loading.style.display = 'none';
-  }
-});
-</script>
+        // Functions
+        function handleFileSelection(file) {
+            const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+            
+            if (!validTypes.includes(file.type)) {
+                showError('Unsupported file type! Please select a JPG or PNG image.');
+                return;
+            }
 
+            if (file.size > 10 * 1024 * 1024) {
+                showError('File is too large! Maximum file size is 10MB.');
+                return;
+            }
+
+            selectedFile = file;
+            
+            // Update file info display
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            fileInfo.classList.add('active');
+            
+            // Hide any previous results/errors
+            hideStatus();
+            resultContainer.classList.remove('active');
+            
+            // Create preview of original image
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                originalPreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetFileSelection() {
+            selectedFile = null;
+            fileInfo.classList.remove('active');
+            imageInput.value = '';
+            hideStatus();
+            resultContainer.classList.remove('active');
+        }
+
+        async function removeBackground() {
+            if (!selectedFile) {
+                showError('Please select an image first!');
+                return;
+            }
+
+            showLoading();
+            resultContainer.classList.remove('active');
+
+            const formData = new FormData();
+            formData.append('image_file', selectedFile);
+            formData.append('size', 'auto');
+
+            try {
+                const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+                    method: 'POST',
+                    headers: {
+                        'X-Api-Key': 'aXgL8CqhSYpp5y2v99VpxJpA'
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to remove background. Please try again.');
+                }
+
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+
+                processedPreview.src = url;
+                
+                // Set download link
+                downloadBtn.onclick = () => {
+                    const link = document.createElement('a');
+                    link.download = `no-background-${selectedFile.name.replace(/\.[^/.]+$/, "")}.png`;
+                    link.href = url;
+                    link.click();
+                };
+                
+                hideStatus();
+                resultContainer.classList.add('active');
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+            else return (bytes / 1048576).toFixed(1) + ' MB';
+        }
+
+        function showLoading() {
+            loadingStatus.style.display = 'block';
+            errorStatus.style.display = 'none';
+        }
+
+        function showError(message) {
+            errorStatus.textContent = message;
+            errorStatus.style.display = 'block';
+            loadingStatus.style.display = 'none';
+        }
+
+        function hideStatus() {
+            loadingStatus.style.display = 'none';
+            errorStatus.style.display = 'none';
+        }
+
+        function resetAll() {
+            resetFileSelection();
+        }
+
+        function downloadImage() {
+            // This is handled in the removeBackground function
+        }
+    </script>
 </body>
 </html>
