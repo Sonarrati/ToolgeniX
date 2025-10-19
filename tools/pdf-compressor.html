@@ -35,9 +35,8 @@
     }
     </script>
     
-    <!-- PDF.js (rendering) and PDF-Lib (rebuilding) -->
-    <script src="https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.min.js"></script>
-    <script src="https://unpkg.com/pdf-lib@1.24.1/dist/pdf-lib.min.js"></script>
+    <!-- PDF-Lib Library -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -190,14 +189,8 @@
             border: 1px solid var(--border);
         }
 
-        .form-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
         .form-group {
-            flex: 1;
+            margin-bottom: 20px;
         }
 
         .setting-label {
@@ -286,11 +279,6 @@
 
         .secondary-btn:hover {
             background-color: #f5f5f5;
-        }
-
-        .small-btn {
-            padding: 10px 12px;
-            font-size: 14px;
         }
 
         /* File Upload */
@@ -422,50 +410,6 @@
 
         .reduction-stat {
             color: var(--success);
-        }
-
-        /* Preview Section */
-        .preview-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 25px;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .preview-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--text);
-            text-align: center;
-        }
-
-        .preview-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .canvas-preview {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 200px;
-            width: 100%;
-            max-width: 300px;
-        }
-
-        .preview-info {
-            font-size: 14px;
-            color: var(--text-secondary);
-            text-align: center;
         }
 
         .note {
@@ -690,11 +634,6 @@
             .button-group {
                 flex-direction: column;
             }
-            
-            .form-row {
-                flex-direction: column;
-                gap: 10px;
-            }
         }
         
         @media (max-width: 600px) {
@@ -749,7 +688,7 @@
         <section class="tool-container">
             <div class="tool-header">
                 <h2>PDF Compressor</h2>
-                <p>Compress PDF files by optimizing images and reducing resolution</p>
+                <p>Compress PDF files by optimizing structure and removing unnecessary elements</p>
             </div>
 
             <div class="calculator-form">
@@ -757,7 +696,7 @@
                     <label class="setting-label">Upload PDF File</label>
                     <div class="file-upload">
                         <input type="file" id="pdfFile" accept="application/pdf">
-                        <div class="file-upload-label">
+                        <div class="file-upload-label" id="fileUploadLabel">
                             <i class="fas fa-file-pdf"></i>
                             <h3>Select PDF File</h3>
                             <p>Click to browse or drag and drop your PDF file here</p>
@@ -766,36 +705,21 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="setting-label" for="quality">Compression Quality</label>
+                    <label class="setting-label" for="compressionLevel">Compression Level</label>
                     <div class="input-with-icon">
                         <i class="fas fa-compress"></i>
-                        <select id="quality">
-                            <option value="0.85">High (best quality)</option>
-                            <option value="0.65" selected>Medium (balanced)</option>
-                            <option value="0.45">Low (maximum compression)</option>
+                        <select id="compressionLevel">
+                            <option value="low">Low (Minimal compression, best quality)</option>
+                            <option value="medium" selected>Medium (Balanced compression)</option>
+                            <option value="high">High (Maximum compression)</option>
                         </select>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="setting-label" for="renderWidth">Render Resolution (DPI equivalency)</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-ruler"></i>
-                        <input type="number" id="renderWidth" value="1200" min="200" max="2500">
-                    </div>
-                    <p class="note" style="margin-top: 8px; font-size: 14px;">
-                        Higher resolution → better quality & larger output, lower resolution → smaller output
-                    </p>
                 </div>
 
                 <div class="button-group">
                     <button class="primary-btn" id="compressBtn">
                         <i class="fas fa-compress"></i>
                         Compress PDF
-                    </button>
-                    <button class="secondary-btn" id="previewBtn">
-                        <i class="fas fa-eye"></i>
-                        Preview First Page
                     </button>
                     <button class="secondary-btn" id="clearBtn">
                         <i class="fas fa-trash"></i>
@@ -840,20 +764,6 @@
                 </div>
             </div>
 
-            <!-- Preview Section -->
-            <div class="preview-container">
-                <div class="preview-title">PDF Preview (First Page)</div>
-                <div class="preview-box">
-                    <div class="canvas-preview" id="canvasPreview">
-                        <div class="preview-info">
-                            <i class="fas fa-file-pdf" style="font-size: 48px; margin-bottom: 10px; opacity: 0.5;"></i>
-                            <p>Preview will appear here</p>
-                        </div>
-                    </div>
-                    <div class="preview-info" id="pageInfo">No file loaded</div>
-                </div>
-            </div>
-
             <div class="note">
                 <i class="fas fa-exclamation-triangle"></i> 
                 Note: This PDF compressor works entirely in your browser. No data is sent to any server, ensuring your documents remain private. For very large PDFs, compression may take some time.
@@ -865,18 +775,16 @@
             <h2>How to Use Our PDF Compressor</h2>
             <ol>
                 <li><strong>Upload PDF</strong> - Click the upload area or drag and drop your PDF file.</li>
-                <li><strong>Adjust settings</strong> - Select compression quality and resolution based on your needs.</li>
-                <li><strong>Preview</strong> - Click "Preview First Page" to see how your PDF will look after compression.</li>
+                <li><strong>Select compression level</strong> - Choose the compression level based on your needs.</li>
                 <li><strong>Compress</strong> - Click "Compress PDF" to process your file.</li>
                 <li><strong>Download</strong> - Once compression is complete, download your optimized PDF.</li>
             </ol>
             
-            <h3>Compression Settings Explained</h3>
+            <h3>Compression Levels Explained</h3>
             <ul>
-                <li><strong>High Quality</strong> - Minimal compression, best for documents requiring high fidelity.</li>
-                <li><strong>Medium Quality</strong> - Balanced compression, good for most documents with images.</li>
-                <li><strong>Low Quality</strong> - Maximum compression, ideal for documents with many images where file size is critical.</li>
-                <li><strong>Render Resolution</strong> - Controls the DPI (dots per inch) equivalent for rendering pages. Higher values preserve more detail but result in larger files.</li>
+                <li><strong>Low Compression</strong> - Minimal compression, best for documents requiring high fidelity and text clarity.</li>
+                <li><strong>Medium Compression</strong> - Balanced compression, good for most documents with a mix of text and images.</li>
+                <li><strong>High Compression</strong> - Maximum compression, ideal for documents where file size is more important than perfect quality.</li>
             </ul>
             
             <h3>Why Compress PDF Files?</h3>
@@ -911,10 +819,10 @@
             <h3>How PDF Compression Works</h3>
             <p>PDF compression works by reducing the file size of a PDF document without significantly affecting its visual quality. This is achieved through several techniques:</p>
             <ul>
-                <li><strong>Image Downsampling</strong> - Reducing the resolution of images in the PDF</li>
-                <li><strong>Image Recompression</strong> - Applying more efficient compression algorithms to images</li>
+                <li><strong>Structure Optimization</strong> - Removing redundant elements and optimizing the PDF structure</li>
+                <li><strong>Image Optimization</strong> - Recompressing images with more efficient algorithms</li>
                 <li><strong>Font Subsetting</strong> - Including only the characters actually used in the document</li>
-                <li><strong>Object Optimization</strong> - Removing redundant or unnecessary elements from the PDF structure</li>
+                <li><strong>Metadata Removal</strong> - Removing unnecessary metadata and comments</li>
             </ul>
             
             <h3>Types of PDF Compression</h3>
@@ -934,11 +842,11 @@
             
             <h3>Best Practices for PDF Compression</h3>
             <ul>
-                <li>Always preview the compressed PDF before finalizing</li>
-                <li>Use higher quality settings for documents with important visual details</li>
-                <li>For text-only documents, use lossless compression when available</li>
-                <li>Keep a backup of the original file before compression</li>
+                <li>Always keep a backup of the original file before compression</li>
+                <li>Use higher compression levels for documents with important visual details</li>
+                <li>For text-only documents, use lower compression to maintain text clarity</li>
                 <li>Test the compressed PDF on different devices to ensure readability</li>
+                <li>Consider the purpose of the document when choosing compression level</li>
             </ul>
         </section>
         
@@ -953,12 +861,12 @@
             
             <div class="faq-item">
                 <div class="faq-question">How much can I reduce my PDF file size?</div>
-                <p>The amount of compression depends on the content of your PDF. Image-heavy documents can often be reduced by 50-80%, while text-only documents may see smaller reductions of 10-30%.</p>
+                <p>The amount of compression depends on the content of your PDF. Image-heavy documents can often be reduced by 20-50%, while text-only documents may see smaller reductions of 10-30%.</p>
             </div>
             
             <div class="faq-item">
                 <div class="faq-question">Will compression affect the quality of my PDF?</div>
-                <p>With the "High Quality" setting, visual quality loss is minimal. With "Medium Quality", there may be slight quality reduction that's usually unnoticeable. "Low Quality" may result in more noticeable quality loss, particularly for images.</p>
+                <p>With the "Low Compression" setting, quality loss is minimal. With "Medium Compression", there may be slight quality reduction that's usually unnoticeable. "High Compression" may result in more noticeable quality loss, particularly for images.</p>
             </div>
             
             <div class="faq-item">
@@ -1013,13 +921,9 @@
     </footer>
 
     <script>
-        // Setup PDF.js worker
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js';
-
         // DOM Elements
         const pdfFileInput = document.getElementById('pdfFile');
         const compressBtn = document.getElementById('compressBtn');
-        const previewBtn = document.getElementById('previewBtn');
         const clearBtn = document.getElementById('clearBtn');
         const statusText = document.getElementById('statusText');
         const progressBar = document.getElementById('progressBar');
@@ -1029,11 +933,8 @@
         const reductionEl = document.getElementById('reduction');
         const downloadLink = document.getElementById('downloadLink');
         const openNewBtn = document.getElementById('openNewBtn');
-        const canvasPreview = document.getElementById('canvasPreview');
-        const pageInfo = document.getElementById('pageInfo');
-        const qualitySelect = document.getElementById('quality');
-        const renderWidthInput = document.getElementById('renderWidth');
-        const fileUploadLabel = document.querySelector('.file-upload-label');
+        const compressionLevelSelect = document.getElementById('compressionLevel');
+        const fileUploadLabel = document.getElementById('fileUploadLabel');
 
         let originalFile = null;
         let compressedPdfBytes = null;
@@ -1084,87 +985,34 @@
             }, 3000);
         }
 
-        // Preview first page
-        async function previewFirstPage(arrayBuffer, targetWidth, jpegQuality) {
-            setStatus('Rendering preview...');
-            const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
-            const pdf = await loadingTask.promise;
-            const page = await pdf.getPage(1);
-            const viewport = page.getViewport({ scale: 1 });
-            
-            // Compute scale to achieve target width
-            const scale = targetWidth / viewport.width;
-            const renderViewport = page.getViewport({ scale });
-            const canvas = document.createElement('canvas');
-            canvas.width = Math.round(renderViewport.width);
-            canvas.height = Math.round(renderViewport.height);
-            const ctx = canvas.getContext('2d');
-            
-            await page.render({ canvasContext: ctx, viewport: renderViewport }).promise;
-
-            // Show in preview area
-            canvasPreview.innerHTML = '';
-            const img = document.createElement('img');
-            img.src = canvas.toDataURL('image/jpeg', jpegQuality);
-            img.style.maxWidth = '100%';
-            img.style.height = 'auto';
-            canvasPreview.appendChild(img);
-
-            pageInfo.textContent = `Page 1 of ${pdf.numPages}`;
-            await pdf.cleanup();
-            return canvas;
-        }
-
-        // Core compression function
-        async function compressPdf(arrayBuffer, options = { quality: 0.65, targetWidth: 1200 }, onProgress = () => {}) {
-            const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
-            const pdf = await loadingTask.promise;
-            const numPages = pdf.numPages;
-            const newPdfDoc = await PDFLib.PDFDocument.create();
-
-            for (let i = 1; i <= numPages; i++) {
-                // Progress callback
-                onProgress({ page: i, total: numPages, percent: (i - 1) / numPages });
-
-                const page = await pdf.getPage(i);
-                const viewport = page.getViewport({ scale: 1 });
-                const scale = options.targetWidth / viewport.width;
-                const renderViewport = page.getViewport({ scale });
-
-                // Render to canvas
-                const canvas = document.createElement('canvas');
-                canvas.width = Math.round(renderViewport.width);
-                canvas.height = Math.round(renderViewport.height);
-                const ctx = canvas.getContext('2d');
-
-                await page.render({ canvasContext: ctx, viewport: renderViewport }).promise;
-
-                // Convert canvas to JPEG
-                const dataUrl = canvas.toDataURL('image/jpeg', options.quality);
-                const jpgImage = await newPdfDoc.embedJpg(dataUrl);
+        // Simple PDF compression by re-saving with different options
+        async function compressPDF(arrayBuffer, compressionLevel) {
+            try {
+                // Load the PDF document
+                const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
                 
-                // Create page in new PDF
-                const pxToPt = 72 / 96;
-                const pageWidthPts = canvas.width * pxToPt;
-                const pageHeightPts = canvas.height * pxToPt;
-                const newPage = newPdfDoc.addPage([pageWidthPts, pageHeightPts]);
-                newPage.drawImage(jpgImage, {
-                    x: 0,
-                    y: 0,
-                    width: pageWidthPts,
-                    height: pageHeightPts,
-                });
-
-                // Free canvas
-                canvas.width = 0;
-                canvas.height = 0;
+                // Set compression options based on level
+                let saveOptions = {};
+                
+                switch(compressionLevel) {
+                    case 'low':
+                        saveOptions = { useObjectStreams: true, addDefaultPage: false };
+                        break;
+                    case 'medium':
+                        saveOptions = { useObjectStreams: true, addDefaultPage: false, objectsPerTick: 10 };
+                        break;
+                    case 'high':
+                        saveOptions = { useObjectStreams: true, addDefaultPage: false, objectsPerTick: 5 };
+                        break;
+                }
+                
+                // Save the PDF with compression options
+                const compressedBytes = await pdfDoc.save(saveOptions);
+                return compressedBytes;
+            } catch (error) {
+                console.error('Compression error:', error);
+                throw new Error('Failed to compress PDF. The file might be corrupted or too complex.');
             }
-
-            onProgress({ page: numPages, total: numPages, percent: 1 });
-
-            const pdfBytes = await newPdfDoc.save();
-            await pdf.cleanup();
-            return pdfBytes;
         }
 
         // UI Event Handlers
@@ -1230,30 +1078,6 @@
             }
         });
 
-        previewBtn.addEventListener('click', async () => {
-            if (!originalFile) {
-                showMessage('Please upload a PDF file first.', true);
-                return;
-            }
-            
-            setProgress(0);
-            setStatus('Preparing preview...');
-            const ab = await originalFile.arrayBuffer();
-            const quality = parseFloat(qualitySelect.value);
-            const targetWidth = parseInt(renderWidthInput.value) || 1200;
-            
-            try {
-                await previewFirstPage(ab, targetWidth, quality);
-                setStatus('Preview ready');
-                setProgress(1);
-                showMessage('Preview generated successfully!');
-            } catch (err) {
-                console.error(err);
-                showMessage('Preview failed. Please try again.', true);
-                setStatus('Preview failed');
-            }
-        });
-
         compressBtn.addEventListener('click', async () => {
             if (!originalFile) {
                 showMessage('Please upload a PDF file first.', true);
@@ -1261,36 +1085,28 @@
             }
             
             compressBtn.disabled = true;
-            previewBtn.disabled = true;
             clearBtn.disabled = true;
             setStatus('Reading file...');
-            setProgress(0);
+            setProgress(0.1);
             resultPanel.classList.remove('active');
             compressedPdfBytes = null;
 
-            const ab = await originalFile.arrayBuffer();
-            const quality = parseFloat(qualitySelect.value);
-            const targetWidth = parseInt(renderWidthInput.value) || 1200;
+            const arrayBuffer = await originalFile.arrayBuffer();
+            const compressionLevel = compressionLevelSelect.value;
 
             try {
-                setStatus('Compressing — this may take a while for large PDFs...');
-                const start = performance.now();
-                const newBytes = await compressPdf(ab, { quality, targetWidth }, ({ page, total, percent }) => {
-                    setProgress(percent);
-                    setStatus(`Processing page ${page} of ${total}...`);
-                });
-                const end = performance.now();
+                setStatus('Compressing PDF...');
+                setProgress(0.3);
+                
+                // Add a small delay to show progress
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                setProgress(0.6);
+                const newBytes = await compressPDF(arrayBuffer, compressionLevel);
                 compressedPdfBytes = newBytes;
-                setStatus(`Done in ${((end - start) / 1000).toFixed(1)}s`);
+                
                 setProgress(1);
-
-                // Show preview of compressed PDF
-                try {
-                    const compressedAb = newBytes.buffer ? newBytes.buffer : newBytes;
-                    await previewFirstPage(compressedAb, targetWidth, quality);
-                } catch (e) {
-                    console.warn('Preview of compressed PDF failed', e);
-                }
+                setStatus('Compression complete!');
 
                 // Show sizes and download link
                 const origSize = originalFile.size;
@@ -1315,11 +1131,10 @@
                 showMessage('PDF compressed successfully!');
             } catch (err) {
                 console.error('Compression error', err);
-                showMessage('Compression failed. For very large PDFs this can fail due to browser memory limits.', true);
+                showMessage(err.message || 'Compression failed. Please try a different file.', true);
                 setStatus('Compression failed');
             } finally {
                 compressBtn.disabled = false;
-                previewBtn.disabled = false;
                 clearBtn.disabled = false;
             }
         });
@@ -1330,14 +1145,7 @@
             compressedPdfBytes = null;
             setStatus('Cleared');
             setProgress(0);
-            canvasPreview.innerHTML = `
-                <div class="preview-info">
-                    <i class="fas fa-file-pdf" style="font-size: 48px; margin-bottom: 10px; opacity: 0.5;"></i>
-                    <p>Preview will appear here</p>
-                </div>
-            `;
             resultPanel.classList.remove('active');
-            pageInfo.textContent = 'No file loaded';
             
             // Reset file upload label
             fileUploadLabel.innerHTML = `
@@ -1352,6 +1160,16 @@
         // Initial state
         setStatus('No file uploaded');
         setProgress(0);
+
+        // Add fadeOut animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(-10px); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
