@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video to MP3 | Toolgenix</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #1e1e2f;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: #2c2c3e;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      color: #f0f0f0;
+    }
+    input[type=file], button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-top: 15px;
+    }
+    input[type=file] {
+      background: #3c3c52;
+      color: #fff;
+    }
+    button {
+      background: #6c63ff;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #5548c8;
+    }
+    .loading {
+      margin-top: 10px;
+      text-align: center;
+      color: #ffd700;
+    }
+    .error {
+      margin-top: 10px;
+      text-align: center;
+      color: #ff4c4c;
+    }
+    #downloadBtn {
+      display: none;
+      margin-top: 20px;
+    }
+    audio {
+      width: 100%;
+      margin-top: 20px;
+      display: none;
+    }
+    .note {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #aaa;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Video → MP3 Converter</h1>
+    <input type="file" id="videoInput" accept="video/mp4,video/quicktime,video/x-msvideo,video/x-matroska,video/x-flv,video/webm">
+    <button id="convertBtn">Extract MP3</button>
+    <div class="loading" id="loading" style="display:none;">Loading & converting… please wait</div>
+    <div class="error" id="errorMsg"></div>
+    <audio id="previewAudio" controls></audio>
+    <a id="downloadBtn" href="#" download="audio.mp3"><button>Download MP3</button></a>
+    <p class="note">⚠️ Works best with smaller video files. Large videos may fail in browser.</p>
+  </div>
+
+  <script type="module">
+    import { createFFmpeg, fetchFile } from 'https://unpkg.com/@ffmpeg/ffmpeg@0.11.7/dist/ffmpeg.min.js';
+
+    const ffmpeg = createFFmpeg({ log: true });
+    const videoInput = document.getElementById('videoInput');
+    const convertBtn = document.getElementById('convertBtn');
+    const loadingEl = document.getElementById('loading');
+    const errorMsg = document.getElementById('errorMsg');
+    const previewAudio = document.getElementById('previewAudio');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    convertBtn.addEventListener('click', async () => {
+      const file = videoInput.files[0];
+      if (!file) {
+        errorMsg.textContent = "Please select a video first.";
+        return;
+      }
+      errorMsg.textContent = '';
+      previewAudio.style.display = 'none';
+      downloadBtn.style.display = 'none';
+      loadingEl.style.display = 'block';
+
+      try {
+        if (!ffmpeg.isLoaded()) {
+          await ffmpeg.load();
+        }
+        const inputName = 'input.' + file.name.split('.').pop();
+        const outputName = 'output.mp3';
+
+        ffmpeg.FS('writeFile', inputName, await fetchFile(file));
+        await ffmpeg.run('-i', inputName, '-q:a', '0', '-map', 'a', outputName);
+        const data = ffmpeg.FS('readFile', outputName);
+        const blob = new Blob([data.buffer], { type: 'audio/mp3' });
+        const url = URL.createObjectURL(blob);
+
+        previewAudio.src = url;
+        previewAudio.style.display = 'block';
+        downloadBtn.href = url;
+        downloadBtn.download = file.name.replace(/\.[^/.]+$/, '') + '.mp3';
+        downloadBtn.style.display = 'inline-block';
+
+      } catch (err) {
+        console.error(err);
+        errorMsg.textContent = "Conversion failed. Try smaller file or another format.";
+      } finally {
+        loadingEl.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
