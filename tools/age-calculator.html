@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Age Calculator Online | Calculate Your Exact Age | Toolgenix</title>
+    <meta name="description" content="Free online age calculator tool. Calculate your exact age in years, months, days, hours, and minutes. Find out how many days until your next birthday.">
+    <meta name="keywords" content="age calculator, calculate age, birthday calculator, how old am I, age in days, next birthday">
+    <meta name="author" content="Toolgenix">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Free Age Calculator Online | Toolgenix">
+    <meta property="og:description" content="Calculate your exact age in years, months, days, hours, and minutes">
+    <meta property="og:type" content="website">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/age-calculator">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Age Calculator Tool - Toolgenix",
+      "description": "Free online tool to calculate exact age in years, months, days, hours, and minutes",
+      "url": "https://toolgenix.com/tools/age-calculator",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7A5CFA;
+            --primary-light: #8A63FF;
+            --primary-dark: #6A4EDC;
+            --background: #ffffff;
+            --card-bg: #f8f8f8;
+            --text: #1e1e2f;
+            --text-secondary: #2e2e3f;
+            --border: #e5e5e5;
+            --success: #4caf50;
+            --error: #ff4c4c;
+            --warning: #ff9800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+        }
+        
+        .logo span:first-child {
+            color: #1e1e2f;
+        }
+        
+        .logo span:last-child {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Tool Container */
+        .tool-container {
+            max-width: 800px;
+            width: 100%;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
+            margin: 0 auto 3rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .tool-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .tool-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .calculator-form {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        input[type="date"], input[type="time"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background-color: white;
+            color: var(--text);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="date"]:focus, input[type="time"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .primary-btn {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(122, 92, 250, 0.3);
+        }
+
+        .primary-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 92, 250, 0.4);
+        }
+
+        .secondary-btn {
+            background-color: white;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .secondary-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        .error {
+            color: var(--error);
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        .error.active {
+            display: block;
+        }
+
+        .result {
+            display: none;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .result.active {
+            display: block;
+        }
+
+        .result-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .result-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .age-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .age-item {
+            text-align: center;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+        }
+
+        .age-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .age-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .countdown-container {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .countdown-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .countdown-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .countdown-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Info Sections */
+        .info-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+        }
+        
+        .info-section h2 {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .info-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .benefit-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background);
+            border-top: 2px solid var(--primary);
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .info-section {
+                padding: 1.5rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .age-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .tool-container { 
+                padding: 20px; 
+            }
+            
+            .page-header h1 { 
+                font-size: 1.8rem; 
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .age-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="https://toolgenix.com">Home</a></li>
+                <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                <li><a href="https://toolgenix.com/join">Join</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com">Home</a> &gt; 
+            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/life-tools">Life Tools</a> &gt; 
+            Age Calculator
+        </div>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Free Online Age Calculator</h1>
+            <p>Calculate your exact age in years, months, days, hours, and minutes. Find out how many days until your next birthday.</p>
+        </section>
+        
+        <!-- Age Calculator Tool -->
+        <section class="tool-container">
+            <div class="tool-header">
+                <h2>Age Calculator</h2>
+                <p>Calculate your exact age and countdown to your next birthday</p>
+            </div>
+
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label class="form-label" for="dob">Date of Birth</label>
+                    <input type="date" id="dob" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="tob">Time of Birth (Optional)</label>
+                    <input type="time" id="tob" />
+                </div>
+
+                <div class="button-group">
+                    <button class="primary-btn" id="calcBtn">
+                        <i class="fas fa-calculator"></i>
+                        Calculate Age
+                    </button>
+                    <button class="secondary-btn" id="resetBtn">
+                        <i class="fas fa-redo"></i>
+                        Reset
+                    </button>
+                </div>
+
+                <div class="error" id="errorMsg"></div>
+            </div>
+
+            <div class="result" id="resultBox">
+                <div class="result-container">
+                    <h3 class="result-title">Your Age</h3>
+                    
+                    <div class="age-details">
+                        <div class="age-item">
+                            <div class="age-value" id="years">0</div>
+                            <div class="age-label">Years</div>
+                        </div>
+                        <div class="age-item">
+                            <div class="age-value" id="months">0</div>
+                            <div class="age-label">Months</div>
+                        </div>
+                        <div class="age-item">
+                            <div class="age-value" id="days">0</div>
+                            <div class="age-label">Days</div>
+                        </div>
+                        <div class="age-item">
+                            <div class="age-value" id="hours">0</div>
+                            <div class="age-label">Hours</div>
+                        </div>
+                        <div class="age-item">
+                            <div class="age-value" id="minutes">0</div>
+                            <div class="age-label">Minutes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="countdown-container">
+                    <div class="countdown-title">Next Birthday Countdown</div>
+                    <div class="countdown-value" id="countdownDays">0</div>
+                    <div class="countdown-label">Days until your next birthday 🎉</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2>How to Use Our Age Calculator</h2>
+            <ol>
+                <li><strong>Enter your date of birth</strong> in the date field. This is required to calculate your age.</li>
+                <li><strong>Optionally enter your time of birth</strong> for more precise calculations including hours and minutes.</li>
+                <li><strong>Click the "Calculate Age" button</strong> to see your exact age and countdown to your next birthday.</li>
+                <li><strong>Review the results</strong> which show your age in years, months, days, hours, and minutes.</li>
+                <li><strong>Check the countdown</strong> to see how many days are left until your next birthday celebration.</li>
+            </ol>
+            
+            <h3>Why Use Our Age Calculator?</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-clock"></i>
+                    <h4>Precise Calculations</h4>
+                    <p>Get your exact age down to the minute with our accurate calculator.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-birthday-cake"></i>
+                    <h4>Birthday Countdown</h4>
+                    <p>See exactly how many days are left until your next birthday.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h4>Completely Free</h4>
+                    <p>No hidden costs, registration, or usage limits.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-lock"></i>
+                    <h4>Privacy Guaranteed</h4>
+                    <p>Your birth date is processed locally and never stored.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Use Cases Section -->
+        <section class="info-section">
+            <h2>When to Use an Age Calculator</h2>
+            
+            <h3>Personal Milestones</h3>
+            <p>Track your exact age for personal milestones, anniversaries, or special occasions.</p>
+            
+            <h3>Parenting</h3>
+            <p>Calculate your child's exact age for developmental tracking, vaccination schedules, or school enrollment.</p>
+            
+            <h3>Legal and Administrative</h3>
+            <p>Determine exact age for legal documents, retirement planning, or eligibility for benefits.</p>
+            
+            <h3>Health and Fitness</h3>
+            <p>Calculate age for medical assessments, fitness goals, or health tracking.</p>
+            
+            <h3>Event Planning</h3>
+            <p>Plan birthday celebrations by knowing exactly how many days are left until the next birthday.</p>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">How accurate is the age calculation?</div>
+                <p>Our age calculator is extremely accurate, calculating your age down to the minute if you provide your time of birth. Without the time, it calculates based on the start of the day.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Do I need to enter my time of birth?</div>
+                <p>No, the time of birth is optional. If you don't enter it, the calculation will assume your birth time was 00:00 (midnight).</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I calculate age for future dates?</div>
+                <p>No, the calculator only works for dates in the past. Future dates will show an error message.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is my birth date stored anywhere?</div>
+                <p>No, all calculations happen locally in your browser. Your birth date is never sent to our servers or stored anywhere.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How does the birthday countdown work?</div>
+                <p>The countdown calculates the number of days from today until your next birthday. If your birthday has already passed this year, it counts to your birthday next year.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I calculate someone else's age?</div>
+                <p>Yes, you can use this calculator to determine anyone's age by entering their date of birth.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com">Home</a></li>
+                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                        <li><a href="https://toolgenix.com/join">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM elements
+        const dobInput = document.getElementById('dob');
+        const tobInput = document.getElementById('tob');
+        const calcBtn = document.getElementById('calcBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const errorMsg = document.getElementById('errorMsg');
+        const resultBox = document.getElementById('resultBox');
+        const yearsEl = document.getElementById('years');
+        const monthsEl = document.getElementById('months');
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const countdownDaysEl = document.getElementById('countdownDays');
+
+        // Event Listeners
+        calcBtn.addEventListener('click', calculateAge);
+        resetBtn.addEventListener('click', resetCalculator);
+
+        // Functions
+        function calculateAge() {
+            const dob = dobInput.value;
+            const tob = tobInput.value;
+            
+            // Reset error and hide result
+            errorMsg.classList.remove('active');
+            resultBox.classList.remove('active');
+
+            // Validate input
+            if (!dob) {
+                showError('Please enter your date of birth.');
+                return;
+            }
+
+            const birthDate = new Date(dob + (tob ? "T" + tob : "T00:00"));
+            const now = new Date();
+
+            if (birthDate > now) {
+                showError('Birth date cannot be in the future.');
+                return;
+            }
+
+            // Calculate age
+            let years = now.getFullYear() - birthDate.getFullYear();
+            let months = now.getMonth() - birthDate.getMonth();
+            let days = now.getDate() - birthDate.getDate();
+            let hours = now.getHours() - birthDate.getHours();
+            let minutes = now.getMinutes() - birthDate.getMinutes();
+
+            // Adjust for negative values
+            if (minutes < 0) {
+                hours--;
+                minutes += 60;
+            }
+            
+            if (hours < 0) {
+                days--;
+                hours += 24;
+            }
+            
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+                days += prevMonth;
+            }
+            
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            // Calculate total time
+            let totalMilliseconds = now - birthDate;
+            let totalMinutes = Math.floor(totalMilliseconds / (1000 * 60));
+            let totalHours = Math.floor(totalMinutes / 60);
+            let remainingMinutes = totalMinutes % 60;
+
+            // Next Birthday Countdown
+            const nextBirthday = new Date(
+                now.getFullYear(),
+                birthDate.getMonth(),
+                birthDate.getDate(),
+                birthDate.getHours(),
+                birthDate.getMinutes()
+            );
+            
+            if (nextBirthday < now) {
+                nextBirthday.setFullYear(now.getFullYear() + 1);
+            }
+            
+            const daysLeft = Math.ceil((nextBirthday - now) / (1000 * 60 * 60 * 24));
+
+            // Update UI with results
+            yearsEl.textContent = years;
+            monthsEl.textContent = months;
+            daysEl.textContent = days;
+            hoursEl.textContent = totalHours;
+            minutesEl.textContent = remainingMinutes;
+            countdownDaysEl.textContent = daysLeft;
+
+            // Show result
+            resultBox.classList.add('active');
+        }
+
+        function resetCalculator() {
+            dobInput.value = '';
+            tobInput.value = '';
+            errorMsg.classList.remove('active');
+            resultBox.classList.remove('active');
+        }
+
+        function showError(message) {
+            errorMsg.textContent = message;
+            errorMsg.classList.add('active');
+        }
+
+        // Set maximum date to today
+        const today = new Date().toISOString().split('T')[0];
+        dobInput.setAttribute('max', today);
+    </script>
+</body>
+</html>
