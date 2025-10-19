@@ -3,30 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDF Split & Merge Tool</title>
+<title>Advanced PDF Split & Merge Tool</title>
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.11.1/jszip.min.js"></script>
 <style>
   body { background-color: #1e1e2f; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-  h1 { text-align: center; margin-bottom: 20px; }
-  .container { max-width: 800px; margin: auto; }
-  input[type=file] { display: block; margin: 10px 0; }
+  h1, h2 { text-align: center; }
+  .container { max-width: 900px; margin: auto; }
+  input[type=file], input[type=text] { display: block; margin: 10px 0; padding: 8px; width: 100%; border-radius: 6px; border: none; }
   button { background-color: #7c4dff; border: none; color: white; padding: 10px 20px; margin: 10px 0; cursor: pointer; border-radius: 6px; }
   button:hover { background-color: #5e2edc; }
   .output { margin-top: 20px; }
+  .pdf-file { padding: 10px; background-color: #2e2e44; margin: 5px 0; border-radius: 6px; cursor: move; }
+  .range-input { width: 100%; margin: 5px 0; }
+  .flex { display: flex; gap: 10px; flex-wrap: wrap; }
+  .flex input { flex: 1; }
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>PDF Split & Merge Tool</h1>
+  <h1>Advanced PDF Split & Merge Tool</h1>
 
-  <!-- Split Section -->
+  <!-- SPLIT PDF SECTION -->
   <h2>Split PDF</h2>
   <input type="file" id="splitFile" accept="application/pdf">
+  <div class="flex">
+    <input type="text" id="pageFrom" placeholder="Start Page (e.g. 1)">
+    <input type="text" id="pageTo" placeholder="End Page (e.g. 3)">
+  </div>
   <button onclick="splitPDF()">Split PDF</button>
 
-  <!-- Merge Section -->
+  <!-- MERGE PDF SECTION -->
   <h2>Merge PDFs</h2>
   <input type="file" id="mergeFiles" accept="application/pdf" multiple>
+  <p>Drag & drop PDFs in order after selecting files</p>
+  <div id="mergeList"></div>
   <button onclick="mergePDFs()">Merge PDFs</button>
 
   <div class="output" id="output"></div>
@@ -34,53 +45,88 @@
 
 <script>
 const { PDFDocument } = PDFLib;
+const JSZipInstance = new JSZip();
 
-// Split PDF function
+const mergeList = document.getElementById('mergeList');
+let mergeFilesArray = [];
+
+// Handle Merge File Input
+document.getElementById('mergeFiles').addEventListener('change', (e) => {
+  mergeList.innerHTML = '';
+  mergeFilesArray = Array.from(e.target.files);
+  mergeFilesArray.forEach((file, index) => {
+    const div = document.createElement('div');
+    div.className = 'pdf-file';
+    div.draggable = true;
+    div.innerText = file.name;
+    div.dataset.index = index;
+    mergeList.appendChild(div);
+  });
+});
+
+// Drag & Drop Reordering
+let dragSrcEl = null;
+mergeList.addEventListener('dragstart', function(e) {
+  dragSrcEl = e.target;
+});
+mergeList.addEventListener('dragover', function(e) {
+  e.preventDefault();
+});
+mergeList.addEventListener('drop', function(e) {
+  e.preventDefault();
+  if (e.target.className === 'pdf-file' && dragSrcEl !== e.target) {
+    const srcIndex = dragSrcEl.dataset.index;
+    const tgtIndex = e.target.dataset.index;
+    mergeList.insertBefore(dragSrcEl, e.target.nextSibling);
+    [mergeFilesArray[srcIndex], mergeFilesArray[tgtIndex]] = [mergeFilesArray[tgtIndex], mergeFilesArray[srcIndex]];
+    mergeList.querySelectorAll('.pdf-file').forEach((el, i) => el.dataset.index = i);
+  }
+});
+
+// SPLIT PDF FUNCTION
 async function splitPDF() {
   const fileInput = document.getElementById('splitFile');
-  if (fileInput.files.length === 0) {
-    alert('Please select a PDF file to split.');
-    return;
-  }
+  if (!fileInput.files.length) { alert('Please select a PDF to split'); return; }
 
   const file = fileInput.files[0];
   const arrayBuffer = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(arrayBuffer);
 
-  const outputDiv = document.getElementById('output');
-  outputDiv.innerHTML = '<h3>Split PDFs:</h3>';
+  let pageFrom = parseInt(document.getElementById('pageFrom').value) || 1;
+  let pageTo = parseInt(document.getElementById('pageTo').value) || pdfDoc.getPageCount();
 
-  for (let i = 0; i < pdfDoc.getPageCount(); i++) {
+  if (pageFrom < 1) pageFrom = 1;
+  if (pageTo > pdfDoc.getPageCount()) pageTo = pdfDoc.getPageCount();
+
+  const zip = new JSZip();
+
+  for (let i = pageFrom - 1; i < pageTo; i++) {
     const newPdf = await PDFDocument.create();
     const [copiedPage] = await newPdf.copyPages(pdfDoc, [i]);
     newPdf.addPage(copiedPage);
 
     const pdfBytes = await newPdf.save();
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${file.name.replace('.pdf','')}_page_${i+1}.pdf`;
-    link.innerText = `Download Page ${i+1}`;
-    link.style.display = 'block';
-    link.style.margin = '5px 0';
-
-    outputDiv.appendChild(link);
+    zip.file(`${file.name.replace('.pdf','')}_page_${i+1}.pdf`, pdfBytes);
   }
+
+  zip.generateAsync({ type: 'blob' }).then(function(content) {
+    const outputDiv = document.getElementById('output');
+    outputDiv.innerHTML = `<h3>Split PDF Download:</h3>`;
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(content);
+    link.download = `${file.name.replace('.pdf','')}_split.zip`;
+    link.innerText = 'Download Split PDFs (ZIP)';
+    link.style.display = 'block';
+    outputDiv.appendChild(link);
+  });
 }
 
-// Merge PDFs function
+// MERGE PDF FUNCTION
 async function mergePDFs() {
-  const fileInput = document.getElementById('mergeFiles');
-  if (fileInput.files.length < 2) {
-    alert('Please select at least 2 PDF files to merge.');
-    return;
-  }
-
+  if (!mergeFilesArray.length) { alert('Please select PDFs to merge'); return; }
   const mergedPdf = await PDFDocument.create();
 
-  for (let file of fileInput.files) {
+  for (let file of mergeFilesArray) {
     const arrayBuffer = await file.arrayBuffer();
     const pdfDoc = await PDFDocument.load(arrayBuffer);
     const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
@@ -93,14 +139,11 @@ async function mergePDFs() {
 
   const outputDiv = document.getElementById('output');
   outputDiv.innerHTML = '<h3>Merged PDF:</h3>';
-
   const link = document.createElement('a');
   link.href = url;
-  link.download = `merged.pdf`;
-  link.innerText = `Download Merged PDF`;
+  link.download = 'merged.pdf';
+  link.innerText = 'Download Merged PDF';
   link.style.display = 'block';
-  link.style.margin = '5px 0';
-
   outputDiv.appendChild(link);
 }
 </script>
