@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free SIP Calculator Online | Calculate SIP Returns | Toolgenix</title>
+    <meta name="description" content="Free online SIP calculator tool. Calculate returns for Systematic Investment Plans and one-time investments. Plan your financial future with our investment calculator.">
+    <meta name="keywords" content="SIP calculator, systematic investment plan, mutual fund calculator, investment calculator, lumpsum calculator, financial planning">
+    <meta name="author" content="Toolgenix">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Free SIP Calculator Online | Toolgenix">
+    <meta property="og:description" content="Calculate returns for your SIP and lumpsum investments with our online calculator">
+    <meta property="og:type" content="website">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/sip-calculator">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SIP Calculator Tool - Toolgenix",
+      "description": "Free online tool to calculate returns for Systematic Investment Plans and one-time investments",
+      "url": "https://toolgenix.com/tools/sip-calculator",
+      "applicationCategory": "FinancialApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #7A5CFA;
+            --primary-light: #8A63FF;
+            --primary-dark: #6A4EDC;
+            --background: #ffffff;
+            --card-bg: #f8f8f8;
+            --text: #1e1e2f;
+            --text-secondary: #2e2e3f;
+            --border: #e5e5e5;
+            --success: #4caf50;
+            --error: #ff4c4c;
+            --warning: #ff9800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+        }
+        
+        .logo span:first-child {
+            color: #1e1e2f;
+        }
+        
+        .logo span:last-child {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Tool Container */
+        .tool-container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
+            margin: 0 auto 3rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .tool-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .tool-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .calculator-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+        }
+
+        .input-with-icon input, .input-with-icon select {
+            padding-left: 35px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background-color: white;
+            color: var(--text);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .range-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .range-input input[type="range"] {
+            flex: 1;
+        }
+
+        .range-value {
+            min-width: 60px;
+            text-align: center;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 10px rgba(122, 92, 250, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 92, 250, 0.4);
+        }
+
+        .result-container {
+            display: none;
+            margin-top: 25px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-container.active {
+            display: block;
+        }
+
+        .result-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .result-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        .result-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .result-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .detail-box {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .detail-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .chart-container {
+            margin-top: 30px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .chart-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        .legend-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        /* Info Sections */
+        .info-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+        }
+        
+        .info-section h2 {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .info-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .benefit-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background);
+            border-top: 2px solid var(--primary);
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .info-section {
+                padding: 1.5rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .tool-container { 
+                padding: 20px; 
+            }
+            
+            .page-header h1 { 
+                font-size: 1.8rem; 
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="https://toolgenix.com">Home</a></li>
+                <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                <li><a href="https://toolgenix.com/join">Join</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com">Home</a> &gt; 
+            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/financial-tools">Financial Tools</a> &gt; 
+            SIP Calculator
+        </div>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Free Online SIP Calculator</h1>
+            <p>Calculate returns for your Systematic Investment Plans and one-time investments. Plan your financial future with our investment calculator.</p>
+        </section>
+        
+        <!-- SIP Calculator Tool -->
+        <section class="tool-container">
+            <div class="tool-header">
+                <h2>Investment Calculator</h2>
+                <p>Calculate returns for SIP and one-time investments</p>
+            </div>
+
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="investmentType">Investment Type</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-chart-line"></i>
+                        <select id="investmentType">
+                            <option value="sip">SIP (Monthly Investment)</option>
+                            <option value="lumpsum">One-Time (Lump Sum)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" id="sipFields">
+                    <label for="monthlyInvestment">Monthly Investment (₹)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-rupee-sign"></i>
+                        <input type="number" id="monthlyInvestment" value="5000" min="500" step="100">
+                    </div>
+                    <div class="range-input">
+                        <input type="range" id="monthlyInvestmentRange" min="500" max="100000" value="5000" step="100">
+                        <span class="range-value" id="monthlyInvestmentValue">5,000</span>
+                    </div>
+                </div>
+
+                <div class="form-group" id="lumpsumFields" style="display:none;">
+                    <label for="lumpsumInvestment">One-Time Investment (₹)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-rupee-sign"></i>
+                        <input type="number" id="lumpsumInvestment" value="50000" min="1000" step="1000">
+                    </div>
+                    <div class="range-input">
+                        <input type="range" id="lumpsumInvestmentRange" min="1000" max="10000000" value="50000" step="1000">
+                        <span class="range-value" id="lumpsumInvestmentValue">50,000</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="expectedReturn">Expected Annual Return (%)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-percentage"></i>
+                        <input type="number" id="expectedReturn" value="12" min="1" max="30" step="0.1">
+                    </div>
+                    <div class="range-input">
+                        <input type="range" id="expectedReturnRange" min="1" max="30" value="12" step="0.1">
+                        <span class="range-value" id="expectedReturnValue">12%</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="investmentTenure">Investment Tenure (Years)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="number" id="investmentTenure" value="10" min="1" max="40">
+                    </div>
+                    <div class="range-input">
+                        <input type="range" id="investmentTenureRange" min="1" max="40" value="10">
+                        <span class="range-value" id="investmentTenureValue">10 Years</span>
+                    </div>
+                </div>
+            </div>
+
+            <button id="calculateBtn">
+                <i class="fas fa-calculator"></i>
+                Calculate Returns
+            </button>
+
+            <div class="error-message" id="errorMessage">
+                Please enter valid values for all fields.
+            </div>
+
+            <div class="result-container" id="resultContainer">
+                <div class="result-box">
+                    <div class="result-title">Total Value at Maturity</div>
+                    <div class="result-value" id="maturityValue">₹ 0</div>
+                    <div class="result-title">after <span id="tenureDisplay">0 Years</span></div>
+                </div>
+
+                <div class="result-details">
+                    <div class="detail-box">
+                        <div class="detail-title">Total Investment</div>
+                        <div class="detail-value" id="totalInvestment">₹ 0</div>
+                    </div>
+                    <div class="detail-box">
+                        <div class="detail-title">Total Returns</div>
+                        <div class="detail-value" id="totalReturns">₹ 0</div>
+                    </div>
+                    <div class="detail-box">
+                        <div class="detail-title">Absolute Return</div>
+                        <div class="detail-value" id="absoluteReturn">0%</div>
+                    </div>
+                    <div class="detail-box">
+                        <div class="detail-title">Annualized Return</div>
+                        <div class="detail-value" id="annualizedReturn">0%</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Investment Breakdown</div>
+                    <div class="chart-wrapper">
+                        <canvas id="investmentChart"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #7A5CFA;"></div>
+                            <div class="legend-text">Total Investment</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #8A63FF;"></div>
+                            <div class="legend-text">Total Returns</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2>How to Use Our SIP Calculator</h2>
+            <ol>
+                <li><strong>Select your investment type</strong> - Choose between SIP (monthly investments) or one-time lump sum investment.</li>
+                <li><strong>Enter your investment amount</strong> - For SIP, enter the monthly amount you plan to invest. For lump sum, enter the one-time investment amount.</li>
+                <li><strong>Input the expected annual return</strong> - This is the average annual return you expect from your investment.</li>
+                <li><strong>Specify the investment tenure</strong> - Enter the number of years you plan to stay invested.</li>
+                <li><strong>Click the "Calculate Returns" button</strong> to see your investment growth projection.</li>
+                <li><strong>Review the results</strong> including your total investment, returns, and visual breakdown of your investment growth.</li>
+            </ol>
+            
+            <h3>Why Use Our SIP Calculator?</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-calculator"></i>
+                    <h4>Accurate Projections</h4>
+                    <p>Get precise investment growth projections using standard financial formulas.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-chart-pie"></i>
+                    <h4>Visual Breakdown</h4>
+                    <p>Visualize how your investment grows over time with interactive charts.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h4>Financial Planning</h4>
+                    <p>Plan your financial goals by understanding potential investment returns.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-lock"></i>
+                    <h4>Privacy Guaranteed</h4>
+                    <p>Your financial data never leaves your browser. All calculations happen locally.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SIP Information Section -->
+        <section class="info-section">
+            <h2>Understanding SIP Investments</h2>
+            
+            <h3>What is SIP?</h3>
+            <p>SIP stands for Systematic Investment Plan. It is an investment strategy where you invest a fixed amount regularly (usually monthly) in mutual funds or other investment vehicles. SIPs help in rupee cost averaging and compounding, which are powerful wealth-building concepts.</p>
+            
+            <h3>How SIP Works?</h3>
+            <p>When you invest through SIP, you buy units of a mutual fund at different market levels. When markets are down, your fixed investment buys more units, and when markets are up, you buy fewer units. This averages out your purchase cost over time, reducing the impact of market volatility.</p>
+            
+            <h3>Benefits of SIP</h3>
+            <ul>
+                <li><strong>Disciplined Investing:</strong> SIP enforces financial discipline by making regular investing a habit.</li>
+                <li><strong>Rupee Cost Averaging:</strong> You buy more units when prices are low and fewer when prices are high.</li>
+                <li><strong>Power of Compounding:</strong> Your returns generate more returns over time, accelerating wealth creation.</li>
+                <li><strong>Affordability:</strong> You can start with small amounts, making investing accessible to everyone.</li>
+                <li><strong>Flexibility:</strong> You can increase, decrease, pause, or stop your SIP at any time.</li>
+            </ul>
+            
+            <h3>SIP vs. Lump Sum Investment</h3>
+            <p>While SIPs are excellent for regular investors, lump sum investments can be beneficial when you have a large amount to invest and the market is at a low point. Our calculator helps you compare both approaches to make informed investment decisions.</p>
+            
+            <h3>Tips for Successful SIP Investing</h3>
+            <ol>
+                <li>Start early to maximize the power of compounding.</li>
+                <li>Increase your SIP amount periodically as your income grows.</li>
+                <li>Stay invested for the long term to ride out market volatility.</li>
+                <li>Diversify your investments across different fund categories.</li>
+                <li>Review your portfolio annually and rebalance if necessary.</li>
+            </ol>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">What is the difference between SIP and lump sum investment?</div>
+                <p>SIP involves investing a fixed amount regularly (usually monthly), while lump sum investment means investing a large amount at once. SIP helps in averaging purchase costs and reduces the impact of market timing, while lump sum can be more beneficial when markets are low.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How does compounding work in SIP?</div>
+                <p>Compounding means earning returns on your returns. In SIP, the returns you earn are reinvested, which then generate their own returns. Over time, this creates a snowball effect that significantly grows your investment.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What is a realistic expected return for SIP investments?</div>
+                <p>Historical data suggests that equity mutual funds in India have delivered returns of 12-15% annually over the long term. However, returns can vary based on market conditions, fund performance, and economic factors.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I withdraw my SIP investment anytime?</div>
+                <p>Yes, most SIP investments in mutual funds are open-ended, meaning you can redeem your units anytime. However, there might be exit loads if you withdraw within a specified period (usually 1 year).</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is SIP better than fixed deposits?</div>
+                <p>SIPs in equity mutual funds have the potential to generate higher returns than fixed deposits over the long term, but they also come with higher risk. Fixed deposits offer guaranteed returns with capital protection, while SIP returns are market-linked.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What happens if I miss an SIP installment?</div>
+                <p>Most mutual funds have a grace period for SIP payments. If you miss an installment, your bank may charge a penalty, and the SIP might be canceled if multiple installments are missed. It's best to ensure sufficient balance in your account.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com">Home</a></li>
+                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                        <li><a href="https://toolgenix.com/join">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const investmentType = document.getElementById('investmentType');
+        const sipFields = document.getElementById('sipFields');
+        const lumpsumFields = document.getElementById('lumpsumFields');
+        const monthlyInvestment = document.getElementById('monthlyInvestment');
+        const monthlyInvestmentRange = document.getElementById('monthlyInvestmentRange');
+        const monthlyInvestmentValue = document.getElementById('monthlyInvestmentValue');
+        const lumpsumInvestment = document.getElementById('lumpsumInvestment');
+        const lumpsumInvestmentRange = document.getElementById('lumpsumInvestmentRange');
+        const lumpsumInvestmentValue = document.getElementById('lumpsumInvestmentValue');
+        const expectedReturn = document.getElementById('expectedReturn');
+        const expectedReturnRange = document.getElementById('expectedReturnRange');
+        const expectedReturnValue = document.getElementById('expectedReturnValue');
+        const investmentTenure = document.getElementById('investmentTenure');
+        const investmentTenureRange = document.getElementById('investmentTenureRange');
+        const investmentTenureValue = document.getElementById('investmentTenureValue');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const resultContainer = document.getElementById('resultContainer');
+        const maturityValue = document.getElementById('maturityValue');
+        const tenureDisplay = document.getElementById('tenureDisplay');
+        const totalInvestment = document.getElementById('totalInvestment');
+        const totalReturns = document.getElementById('totalReturns');
+        const absoluteReturn = document.getElementById('absoluteReturn');
+        const annualizedReturn = document.getElementById('annualizedReturn');
+        const investmentChart = document.getElementById('investmentChart');
+
+        let chartInstance = null;
+
+        // Format currency in Indian Rupees
+        function formatCurrency(num) {
+            return '₹ ' + num.toLocaleString('en-IN');
+        }
+
+        // Format number with commas
+        function formatNumber(num) {
+            return num.toLocaleString('en-IN');
+        }
+
+        // Update range value displays
+        function updateRangeValues() {
+            monthlyInvestmentValue.textContent = formatNumber(parseInt(monthlyInvestment.value));
+            lumpsumInvestmentValue.textContent = formatNumber(parseInt(lumpsumInvestment.value));
+            expectedReturnValue.textContent = expectedReturn.value + '%';
+            investmentTenureValue.textContent = investmentTenure.value + ' Years';
+        }
+
+        // Toggle between SIP and Lump Sum fields
+        function toggleInvestmentType() {
+            const type = investmentType.value;
+            if (type === 'sip') {
+                sipFields.style.display = 'block';
+                lumpsumFields.style.display = 'none';
+            } else {
+                sipFields.style.display = 'none';
+                lumpsumFields.style.display = 'block';
+            }
+        }
+
+        // Calculate Investment
+        function calculateInvestment() {
+            const type = investmentType.value;
+            const rate = parseFloat(expectedReturn.value);
+            const years = parseFloat(investmentTenure.value);
+            const months = years * 12;
+            const monthlyRate = rate / 12 / 100;
+
+            let futureValue = 0, totalInvested = 0, totalReturn = 0;
+
+            if (type === "sip") {
+                const monthly = parseFloat(monthlyInvestment.value);
+                if (!monthly || monthly < 0) {
+                    errorMessage.classList.add('active');
+                    resultContainer.classList.remove('active');
+                    return;
+                }
+                totalInvested = monthly * months;
+                futureValue = monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate);
+                totalReturn = futureValue - totalInvested;
+            } else {
+                const lumpsum = parseFloat(lumpsumInvestment.value);
+                if (!lumpsum || lumpsum < 0) {
+                    errorMessage.classList.add('active');
+                    resultContainer.classList.remove('active');
+                    return;
+                }
+                totalInvested = lumpsum;
+                futureValue = lumpsum * Math.pow(1 + monthlyRate, months);
+                totalReturn = futureValue - totalInvested;
+            }
+            
+            errorMessage.classList.remove('active');
+
+            // Calculate returns
+            const absReturn = ((totalReturn / totalInvested) * 100).toFixed(2);
+            const annReturn = ((Math.pow(1 + (totalReturn / totalInvested), 1/years) - 1) * 100).toFixed(2);
+
+            // Update display values
+            maturityValue.textContent = formatCurrency(Math.round(futureValue));
+            tenureDisplay.textContent = `${years} Years`;
+            totalInvestment.textContent = formatCurrency(Math.round(totalInvested));
+            totalReturns.textContent = formatCurrency(Math.round(totalReturn));
+            absoluteReturn.textContent = `${absReturn}%`;
+            annualizedReturn.textContent = `${annReturn}%`;
+
+            // Update chart
+            if (chartInstance) chartInstance.destroy();
+
+            chartInstance = new Chart(investmentChart, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Total Investment', 'Total Returns'],
+                    datasets: [{
+                        data: [totalInvested, totalReturn],
+                        backgroundColor: ['#7A5CFA', '#8A63FF'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#1e1e2f',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Show results
+            resultContainer.classList.add('active');
+        }
+
+        // Event Listeners
+        investmentType.addEventListener('change', toggleInvestmentType);
+
+        monthlyInvestment.addEventListener('input', function() {
+            monthlyInvestmentRange.value = this.value;
+            updateRangeValues();
+            calculateInvestment();
+        });
+
+        monthlyInvestmentRange.addEventListener('input', function() {
+            monthlyInvestment.value = this.value;
+            updateRangeValues();
+            calculateInvestment();
+        });
+
+        lumpsumInvestment.addEventListener('input', function() {
+            lumpsumInvestmentRange.value = this.value;
+            updateRangeValues();
+            calculateInvestment();
+        });
+
+        lumpsumInvestmentRange.addEventListener('input', function() {
+            lumpsumInvestment.value = this.value;
+            updateRangeValues();
+            calculateInvestment();
+        });
+
+        expectedReturn.addEventListener('input', function() {
+            expectedReturnRange.value = this.value;
+            updateRangeValues();
+            calculateInvestment();
+        });
+
+        expectedReturnRange.addEventListener('input', function() {
+            expectedReturn.value = this.value;
+            updateRangeValues();
+            calculateInvestment();
+        });
+
+        investmentTenure.addEventListener('input', function() {
+            investmentTenureRange.value = this.value;
+            updateRangeValues();
+            calculateInvestment();
+        });
+
+        investmentTenureRange.addEventListener('input', function() {
+            investmentTenure.value = this.value;
+            updateRangeValues();
+            calculateInvestment();
+        });
+
+        calculateBtn.addEventListener('click', calculateInvestment);
+
+        // Initialize
+        toggleInvestmentType();
+        updateRangeValues();
+        calculateInvestment();
+    </script>
+</body>
+</html>
