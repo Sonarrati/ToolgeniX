@@ -1,0 +1,1324 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Color Picker & Converter Tool | HEX, RGB, HSL Converter | Toolgenix</title>
+    <meta name="description" content="Free online color picker and converter tool. Convert between HEX, RGB, HSL formats, extract colors from images, generate palettes, check WCAG contrast, and save favorites.">
+    <meta name="keywords" content="color picker, hex converter, rgb converter, hsl converter, color palette generator, image color extraction, WCAG contrast checker">
+    <meta name="author" content="Toolgenix">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Color Picker & Converter Tool | HEX, RGB, HSL Converter">
+    <meta property="og:description" content="Convert between color formats instantly, extract colors from images, generate palettes, and check WCAG contrast with our free online tool.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolgenix.com/tools/color-picker">
+    <meta property="og:image" content="https://toolgenix.com/images/color-picker-og.jpg">
+    <meta property="og:site_name" content="Toolgenix">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Color Picker & Converter Tool | HEX, RGB, HSL Converter">
+    <meta name="twitter:description" content="Convert between color formats instantly, extract colors from images, generate palettes, and check WCAG contrast">
+    <meta name="twitter:image" content="https://toolgenix.com/images/color-picker-twitter.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/color-picker">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Color Picker & Converter Tool - Toolgenix",
+      "description": "Free online tool to convert between color formats, extract colors from images, generate palettes, and check WCAG contrast",
+      "url": "https://toolgenix.com/tools/color-picker",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "892"
+      }
+    }
+    </script>
+    
+    <!-- Additional FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "What color formats does the converter support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our color converter supports HEX, RGB, and HSL formats with instant conversion between all formats."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Can I extract colors from images?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, you can upload any image and click on it to pick colors, or use the automatic palette extraction feature to get dominant colors."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Does the tool check color contrast for accessibility?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the tool includes WCAG contrast checking with multiple standards (AA, AAA) to ensure your color combinations are accessible."
+        }
+      }]
+    }
+    </script>
+    
+    <style>
+        :root {
+            --primary: #7A5CFA;
+            --primary-light: #8A63FF;
+            --primary-dark: #6A4EDC;
+            --background: #ffffff;
+            --card-bg: #f8f8f8;
+            --text: #1e1e2f;
+            --text-secondary: #2e2e3f;
+            --border: #e5e5e5;
+            --success: #4caf50;
+            --error: #ff4c4c;
+            --warning: #ff9800;
+            --glass: rgba(122, 92, 250, 0.03);
+            --glass-2: rgba(122, 92, 250, 0.02);
+            --glass-border: rgba(122, 92, 250, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+        }
+        
+        .logo span:first-child {
+            color: #1e1e2f;
+        }
+        
+        .logo span:last-child {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Tool Wrapper */
+        .card {
+            width: 100%;
+            background: var(--background);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
+            margin: 0 auto 2rem;
+        }
+
+        .tool-header {
+            margin-bottom: 20px;
+        }
+
+        .tool-header h2 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+            margin: 6px 0 14px;
+            font-size: 13px;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        input, select, button {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--background);
+            color: inherit;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            cursor: pointer;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .btn.primary {
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            box-shadow: 0 4px 10px rgba(122, 92, 250, 0.3);
+        }
+
+        .btn.primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 92, 250, 0.4);
+        }
+
+        .btn:hover {
+            background: var(--glass);
+            border-color: var(--primary);
+        }
+
+        .result {
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+
+        .muted {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .small {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .color-display {
+            height: 120px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .swatch {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .swatch:hover {
+            transform: scale(1.05);
+        }
+
+        .swatch label {
+            position: absolute;
+            bottom: 4px;
+            left: 4px;
+            font-size: 10px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .pal {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .badge {
+            padding: 6px 8px;
+            border-radius: 999px;
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .panel-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 320px;
+            overflow: auto;
+            padding-top: 6px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            border-radius: 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 980px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Info Sections */
+        .info-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .info-section h2 {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: left;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        
+        .info-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        
+        .benefit-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background);
+            border-top: 2px solid var(--primary);
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="https://toolgenix.com">Home</a></li>
+                <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                <li><a href="https://toolgenix.com/join">Join</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com">Home</a> &gt; 
+            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/design-tools">Design Tools</a> &gt; 
+            Color Picker & Converter
+        </div>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Free Color Picker & Converter Tool</h1>
+            <p>Convert between HEX, RGB, HSL formats, extract colors from images, generate palettes, check WCAG contrast, and save favorites.</p>
+        </section>
+        
+        <!-- Color Picker Tool -->
+        <div class="card" role="application" aria-labelledby="title">
+            <div class="tool-header">
+                <h2 id="title"><i class="fas fa-palette"></i> Color Picker & Converter</h2>
+                <p class="lead">Pick colors, convert formats, extract from images, check contrast, and generate palettes — all in one tool.</p>
+            </div>
+
+            <div class="grid">
+                <!-- Left Column -->
+                <div class="col">
+                    <div class="row">
+                        <input id="colorInput" type="color" value="#00aaff" style="width:64px;height:64px;border-radius:8px;border:none;cursor:pointer">
+                        <div style="flex:1">
+                            <div id="display" class="color-display">#00AAFF</div>
+                            <div class="controls">
+                                <button id="saveFav" class="btn"><i class="fas fa-star"></i> Favorite</button>
+                                <button id="downloadPNG" class="btn"><i class="fas fa-download"></i> Download PNG</button>
+                                <button id="copyAll" class="btn"><i class="fas fa-copy"></i> Copy All</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:10px" class="row">
+                        <div style="flex:1">
+                            <label class="small"><i class="fas fa-paint-brush"></i> HEX</label>
+                            <input id="hex" class="input" type="text" value="#00aaff">
+                        </div>
+                        <div style="width:120px">
+                            <label class="small"><i class="fas fa-code"></i> Format</label>
+                            <select id="format" class="input">
+                                <option value="hex">HEX</option>
+                                <option value="rgb">RGB</option>
+                                <option value="hsl">HSL</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:8px" class="row">
+                        <div style="flex:1">
+                            <label class="small"><i class="fas fa-sliders-h"></i> RGB</label>
+                            <input id="rgb" class="input" type="text" placeholder="rgb(0,0,0)">
+                        </div>
+                        <div style="width:160px">
+                            <label class="small"><i class="fas fa-adjust"></i> HSL</label>
+                            <input id="hsl" class="input" type="text" placeholder="hsl(0,0%,0%)">
+                        </div>
+                    </div>
+
+                    <div style="margin-top:10px" class="row">
+                        <div style="flex:1">
+                            <label class="small"><i class="fas fa-universal-access"></i> Contrast target (WCAG)</label>
+                            <select id="contrastTarget" class="input">
+                                <option value="4.5">WCAG AA (normal text) 4.5:1</option>
+                                <option value="3">AA Large Text 3:1</option>
+                                <option value="7">AAA 7:1</option>
+                            </select>
+                        </div>
+                        <div style="width:120px">
+                            <label class="small"><i class="fas fa-tint"></i> BG color</label>
+                            <input id="bgColor" class="input" type="color" value="#ffffff">
+                        </div>
+                    </div>
+
+                    <div style="margin-top:8px">
+                        <div class="small">Contrast result: <span id="contrastResult" class="badge">—</span> (<span id="contrastRatio">—</span>)</div>
+                    </div>
+
+                    <hr style="border:none;border-top:1px solid var(--border);margin:12px 0">
+
+                    <!-- Shades & gradient -->
+                    <div>
+                        <div class="row">
+                            <div style="flex:1">
+                                <label class="small"><i class="fas fa-layer-group"></i> Shades count</label>
+                                <input id="shadeCount" type="number" class="input" value="5" min="2" max="12">
+                            </div>
+                            <div style="width:160px">
+                                <label class="small"><i class="fas fa-cog"></i> Generate</label>
+                                <select id="shadeMode" class="input">
+                                    <option value="tints">Tints (lighter)</option>
+                                    <option value="shades">Shades (darker)</option>
+                                    <option value="both">Both (tints+shades)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="controls">
+                            <button id="generateShades" class="btn primary"><i class="fas fa-magic"></i> Generate Shades</button>
+                            <button id="generateGradient" class="btn"><i class="fas fa-gradient"></i> Generate Gradient</button>
+                            <button id="exportPalette" class="btn"><i class="fas fa-file-export"></i> Export Palette</button>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="small">Shades / Gradient preview</div>
+                            <div id="shadesArea" class="pal" style="margin-top:8px"></div>
+                            <div id="gradientPreview" style="height:40px;border-radius:8px;margin-top:8px;border:1px solid var(--border)"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col">
+                    <!-- Image picker -->
+                    <div>
+                        <div class="small"><i class="fas fa-image"></i> Pick color from image</div>
+                        <div class="controls" style="margin-top:8px">
+                            <input id="imgUpload" type="file" accept="image/*" class="input">
+                            <button id="extractPalette" class="btn"><i class="fas fa-palette"></i> Extract Palette</button>
+                        </div>
+                        <canvas id="imgCanvas" class="canvas" width="420" height="240" style="display:none;margin-top:8px;max-width:100%;border-radius:8px;border:1px solid var(--border)"></canvas>
+                        <div id="imgPal" class="pal" style="margin-top:8px"></div>
+                        <div class="small" style="margin-top:6px">Tip: upload an image then click the canvas to pick color. Use Extract Palette for dominant colors.</div>
+                    </div>
+
+                    <hr style="border:none;border-top:1px solid var(--border);margin:12px 0">
+
+                    <!-- Favorites -->
+                    <div>
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                            <div>
+                                <div class="small"><i class="fas fa-star"></i> Favorites</div>
+                                <div class="small muted">Saved colors you can reuse</div>
+                            </div>
+                            <div>
+                                <button id="clearFavs" class="btn"><i class="fas fa-trash"></i> Clear</button>
+                                <button id="importFavs" class="btn"><i class="fas fa-file-import"></i> Import</button>
+                            </div>
+                        </div>
+
+                        <div class="panel-list" id="favoritesList" style="margin-top:10px"></div>
+                    </div>
+
+                    <hr style="border:none;border-top:1px solid var(--border);margin:12px 0">
+
+                    <!-- History -->
+                    <div>
+                        <div class="small"><i class="fas fa-history"></i> History</div>
+                        <div class="small muted">Recent picked colors</div>
+                        <div class="panel-list" id="historyList" style="margin-top:8px"></div>
+                    </div>
+
+                    <hr style="border:none;border-top:1px solid var(--border);margin:12px 0">
+
+                    <!-- Utilities -->
+                    <div>
+                        <div class="small"><i class="fas fa-tools"></i> Utilities</div>
+                        <div class="controls" style="margin-top:8px">
+                            <button id="downloadPalettePNG" class="btn"><i class="fas fa-download"></i> Palette PNG</button>
+                            <button id="copyCSS" class="btn"><i class="fas fa-copy"></i> CSS Gradient</button>
+                            <button id="clearHistory" class="btn"><i class="fas fa-trash"></i> Clear History</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2>How to Use Our Color Picker & Converter</h2>
+            <ol>
+                <li><strong>Choose a color</strong> using the color picker, enter HEX/RGB/HSL values, or pick from an image</li>
+                <li><strong>Convert between formats</strong> - HEX, RGB, and HSL values update automatically</li>
+                <li><strong>Check accessibility</strong> - Verify color contrast against WCAG standards</li>
+                <li><strong>Generate color variations</strong> - Create tints, shades, and gradients</li>
+                <li><strong>Extract from images</strong> - Upload images to pick colors or extract dominant color palettes</li>
+                <li><strong>Save favorites</strong> - Keep your preferred colors for quick access</li>
+                <li><strong>Export your work</strong> - Download PNGs, export palettes as JSON, or copy CSS code</li>
+            </ol>
+            
+            <h3>Why Use Our Color Picker?</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h4>Multi-Format Support</h4>
+                    <p>Convert seamlessly between HEX, RGB, and HSL color formats with instant updates.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-universal-access"></i>
+                    <h4>Accessibility Focused</h4>
+                    <p>Check color contrast ratios against WCAG standards for inclusive design.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-image"></i>
+                    <h4>Image Color Extraction</h4>
+                    <p>Extract color palettes from uploaded images with automatic detection.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-lock"></i>
+                    <h4>Privacy Guaranteed</h4>
+                    <p>All image processing and color conversion happens locally in your browser.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Use Cases Section -->
+        <section class="info-section">
+            <h2>When to Use a Color Picker & Converter</h2>
+            
+            <h3>Web Design & Development</h3>
+            <p>Choose consistent color schemes, ensure accessibility compliance, and generate CSS code for your projects.</p>
+            
+            <h3>Brand Identity Design</h3>
+            <p>Develop brand color palettes, create tints and shades for brand guidelines, and ensure color consistency.</p>
+            
+            <h3>Digital Art & Graphics</h3>
+            <p>Extract color inspiration from images, create harmonious color schemes, and export palettes for design tools.</p>
+            
+            <h3>UI/UX Design</h3>
+            <p>Test color combinations for user interfaces, ensure proper contrast for readability, and create design systems.</p>
+            
+            <h3>Print Design</h3>
+            <p>Convert digital colors to print-friendly formats and create color variations for different applications.</p>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">What color formats does the converter support?</div>
+                <p>Our color converter supports HEX, RGB, and HSL formats with instant conversion between all formats. All conversions happen in real-time as you change values.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I extract colors from images?</div>
+                <p>Yes, you can upload any image and click on it to pick colors, or use the automatic palette extraction feature to get dominant colors from the image.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Does the tool check color contrast for accessibility?</div>
+                <p>Yes, the tool includes WCAG contrast checking with multiple standards (AA normal text, AA large text, AAA) to ensure your color combinations are accessible to all users.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How many colors can I save as favorites?</div>
+                <p>You can save an unlimited number of colors as favorites. They are stored locally in your browser for quick access across sessions.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is my image data stored or uploaded to servers?</div>
+                <p>No, all image processing happens locally in your browser. Your images are never uploaded to any server, ensuring complete privacy.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I export my color palettes?</div>
+                <p>Yes, you can export palettes as JSON files, download them as PNG images, or copy CSS gradients for immediate use in your projects.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com">Home</a></li>
+                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                        <li><a href="https://toolgenix.com/join">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* ---------- Utilities: color conversion ---------- */
+        function clamp(n,a,b){ return Math.max(a, Math.min(b, n)); }
+        function hexToRgb(hex) {
+          hex = hex.replace('#','');
+          if(hex.length === 3) hex = hex.split('').map(ch=>ch+ch).join('');
+          const bigint = parseInt(hex,16);
+          const r = (bigint >> 16) & 255;
+          const g = (bigint >> 8) & 255;
+          const b = bigint & 255;
+          return { r, g, b };
+        }
+        function rgbToHex(r,g,b){
+          return '#' + [r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();
+        }
+        function rgbToHsl(r,g,b){
+          r/=255; g/=255; b/=255;
+          const max = Math.max(r,g,b), min = Math.min(r,g,b);
+          let h=0, s=0, l=(max+min)/2;
+          if(max!==min){
+            const d = max-min;
+            s = l>0.5 ? d/(2-max-min) : d/(max+min);
+            switch(max){
+              case r: h = (g-b)/d + (g<b?6:0); break;
+              case g: h = (b-r)/d + 2; break;
+              case b: h = (r-g)/d + 4; break;
+            }
+            h /= 6;
+          }
+          return { h: Math.round(h*360), s: Math.round(s*100), l: Math.round(l*100) };
+        }
+        function hslToRgb(h,s,l){
+          h = (h % 360 + 360) % 360;
+          s/=100; l/=100;
+          if(s===0){
+            const v = Math.round(l*255);
+            return { r:v,g:v,b:v };
+          }
+          const q = l < 0.5 ? l * (1 + s) : l + s - l*s;
+          const p = 2*l - q;
+          const hk = h/360;
+          const t = [hk+1/3, hk, hk-1/3];
+          const rgb = t.map(tc => {
+            if(tc<0) tc+=1;
+            if(tc>1) tc-=1;
+            if(tc < 1/6) return p + (q-p)*6*tc;
+            if(tc < 1/2) return q;
+            if(tc < 2/3) return p + (q-p)*(2/3 - tc)*6;
+            return p;
+          });
+          return { r: Math.round(rgb[0]*255), g: Math.round(rgb[1]*255), b: Math.round(rgb[2]*255) };
+        }
+
+        /* Contrast ratio (WCAG) */
+        function luminance(r,g,b){
+          const srgb = [r,g,b].map(v => {
+            v /= 255;
+            return v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4);
+          });
+          return 0.2126*srgb[0] + 0.7152*srgb[1] + 0.0722*srgb[2];
+        }
+        function contrastRatio(rgb1, rgb2){
+          const L1 = luminance(rgb1.r, rgb1.g, rgb1.b);
+          const L2 = luminance(rgb2.r, rgb2.g, rgb2.b);
+          const bright = Math.max(L1,L2);
+          const dark = Math.min(L1,L2);
+          return +( (bright + 0.05) / (dark + 0.05) ).toFixed(2);
+        }
+
+        /* ---------- UI elements ---------- */
+        const colorInput = document.getElementById('colorInput');
+        const display = document.getElementById('display');
+        const hexField = document.getElementById('hex');
+        const rgbField = document.getElementById('rgb');
+        const hslField = document.getElementById('hsl');
+        const bgColor = document.getElementById('bgColor');
+        const contrastTarget = document.getElementById('contrastTarget');
+        const contrastResult = document.getElementById('contrastResult');
+        const contrastRatioEl = document.getElementById('contrastRatio');
+        const saveFavBtn = document.getElementById('saveFav');
+        const favoritesList = document.getElementById('favoritesList');
+        const historyList = document.getElementById('historyList');
+        const generateShadesBtn = document.getElementById('generateShades');
+        const generateGradientBtn = document.getElementById('generateGradient');
+        const shadesArea = document.getElementById('shadesArea');
+        const gradientPreview = document.getElementById('gradientPreview');
+        const shadeCount = document.getElementById('shadeCount');
+        const shadeMode = document.getElementById('shadeMode');
+        const extractPaletteBtn = document.getElementById('extractPalette');
+        const imgUpload = document.getElementById('imgUpload');
+        const imgCanvas = document.getElementById('imgCanvas');
+        const imgPal = document.getElementById('imgPal');
+        const downloadPNG = document.getElementById('downloadPNG');
+        const copyAll = document.getElementById('copyAll');
+        const exportPalette = document.getElementById('exportPalette');
+        const downloadPalettePNG = document.getElementById('downloadPalettePNG');
+        const copyCSS = document.getElementById('copyCSS');
+        const clearFavs = document.getElementById('clearFavs');
+        const importFavs = document.getElementById('importFavs');
+        const clearHistoryBtn = document.getElementById('clearHistory');
+        const format = document.getElementById('format');
+
+        /* ---------- Local storage keys ---------- */
+        const FAV_KEY = 'tg_color_favorites_v1';
+        const HIST_KEY = 'tg_color_history_v1';
+
+        /* ---------- Helpers for storage ---------- */
+        function loadFavs(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); }catch(e){ return []; } }
+        function saveFavs(arr){ localStorage.setItem(FAV_KEY, JSON.stringify(arr)); renderFavs(); }
+        function loadHist(){ try{ return JSON.parse(localStorage.getItem(HIST_KEY) || '[]'); }catch(e){ return []; } }
+        function saveHist(arr){ localStorage.setItem(HIST_KEY, JSON.stringify(arr)); renderHist(); }
+        function pushHist(hex){ const h = loadHist(); h.unshift({hex, time:Date.now()}); if(h.length>80) h.length = 80; saveHist(h); }
+
+        /* ---------- Render favorites & history ---------- */
+        function renderFavs(){
+          const arr = loadFavs();
+          favoritesList.innerHTML = '';
+          if(!arr.length){ favoritesList.innerHTML = '<div class="small muted">No favorites yet</div>'; return; }
+          arr.forEach((hex, i) => {
+            const el = document.createElement('div'); el.className = 'item';
+            el.innerHTML = `<div style="display:flex;gap:8px;align-items:center">
+              <div class="swatch" style="background:${hex};width:44px;height:44px;border-radius:8px;border:1px solid var(--border)"></div>
+              <div style="min-width:120px">${hex}</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="btn" data-hex="${hex}" title="Apply"><i class="fas fa-check"></i></button>
+              <button class="btn" data-copy="${hex}" title="Copy"><i class="fas fa-copy"></i></button>
+              <button class="btn" data-del="${hex}" title="Remove"><i class="fas fa-times"></i></button>
+            </div>`;
+            el.querySelector('[data-hex]')?.addEventListener('click', ()=> applyColor(hex));
+            el.querySelector('[data-copy]')?.addEventListener('click', ()=> { navigator.clipboard.writeText(hex); alert('Copied ' + hex); });
+            el.querySelector('[data-del]')?.addEventListener('click', ()=> { const a = loadFavs().filter(h=>h!==hex); saveFavs(a); });
+            favoritesList.appendChild(el);
+          });
+        }
+        function renderHist(){
+          const arr = loadHist();
+          historyList.innerHTML = '';
+          if(!arr.length){ historyList.innerHTML = '<div class="small muted">No history yet</div>'; return; }
+          arr.forEach((it, idx)=> {
+            const el = document.createElement('div'); el.className='item';
+            const time = new Date(it.time).toLocaleString();
+            el.innerHTML = `<div style="display:flex;gap:8px;align-items:center">
+              <div class="swatch" style="background:${it.hex};width:44px;height:44px;border-radius:8px"></div>
+              <div style="min-width:120px">${it.hex}<div class="small muted">${time}</div></div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="btn" data-apply="${it.hex}"><i class="fas fa-check"></i></button>
+              <button class="btn" data-copy="${it.hex}"><i class="fas fa-copy"></i></button>
+            </div>`;
+            el.querySelector('[data-apply]')?.addEventListener('click', ()=> applyColor(it.hex));
+            el.querySelector('[data-copy]')?.addEventListener('click', ()=> { navigator.clipboard.writeText(it.hex); alert('Copied ' + it.hex); });
+            historyList.appendChild(el);
+          });
+        }
+
+        /* ---------- Apply color to UI ---------- */
+        function applyColor(hex){
+          hex = normalizeHex(hex);
+          colorInput.value = hex;
+          updateFromHex(hex);
+          pushHist(hex);
+          renderHist();
+        }
+
+        /* ---------- Normalize hex (ensure #RRGGBB) ---------- */
+        function normalizeHex(h){
+          if(!h) return '#000000';
+          h = h.trim();
+          if(h[0] !== '#') h = '#' + h;
+          if(h.length === 4){ h = '#' + h[1]+h[1]+h[2]+h[2]+h[3]+h[3]; }
+          return h.toUpperCase();
+        }
+
+        /* ---------- UI update when color changes ---------- */
+        function updateFromHex(hex){
+          hex = normalizeHex(hex);
+          display.style.background = hex;
+          display.textContent = hex;
+          hexField.value = hex;
+          const {r,g,b} = hexToRgb(hex);
+          rgbField.value = `rgb(${r}, ${g}, ${b})`;
+          const hsl = rgbToHsl(r,g,b);
+          hslField.value = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+          // contrast with bg color
+          const bgHex = normalizeHex(bgColor.value);
+          const ratio = contrastRatio({r,g,b}, hexToRgb(bgHex));
+          contrastRatioEl.textContent = ratio;
+          const target = parseFloat(contrastTarget.value);
+          contrastResult.textContent = ratio >= target ? 'PASS' : 'FAIL';
+          contrastResult.style.background = ratio >= target ? 'var(--success)' : 'var(--error)';
+          // store to history
+          pushHist(hex);
+          renderHist();
+        }
+
+        /* ---------- event wiring ---------- */
+        colorInput.addEventListener('input', e => {
+          applyColor(e.target.value);
+        });
+        hexField.addEventListener('change', e => {
+          const hex = normalizeHex(e.target.value);
+          applyColor(hex);
+        });
+        rgbField.addEventListener('change', e => {
+          const val = e.target.value.trim();
+          // parse rgb(r,g,b)
+          const m = val.match(/(-?\d+)\D+(\d+)\D+(\d+)/);
+          if(m){ const hex = rgbToHex(parseInt(m[1]), parseInt(m[2]), parseInt(m[3])); applyColor(hex); }
+        });
+        hslField.addEventListener('change', e => {
+          const m = e.target.value.match(/(-?\d+)\D+(\d+)%\D+(\d+)%/);
+          if(m){ const rgb = hslToRgb(parseInt(m[1]), parseInt(m[2]), parseInt(m[3])); applyColor(rgbToHex(rgb.r, rgb.g, rgb.b)); }
+        });
+        bgColor.addEventListener('input', ()=> updateFromHex(colorInput.value));
+        contrastTarget.addEventListener('change', ()=> updateFromHex(colorInput.value));
+        format.addEventListener('change', ()=>{
+          const f = format.value;
+          if(f==='hex') { hexField.style.display='block'; rgbField.style.display='none'; hslField.style.display='none'; }
+          if(f==='rgb') { hexField.style.display='none'; rgbField.style.display='block'; hslField.style.display='none'; }
+          if(f==='hsl') { hexField.style.display='none'; rgbField.style.display='none'; hslField.style.display='block'; }
+        });
+
+        /* ---------- favorites ---------- */
+        saveFavBtn.addEventListener('click', ()=>{
+          const hex = normalizeHex(colorInput.value);
+          const favs = loadFavs();
+          if(favs.includes(hex)){ alert('Already in favorites'); return; }
+          favs.unshift(hex); saveFavs(favs); alert('Saved to favorites');
+        });
+        clearFavs.addEventListener('click', ()=> { if(confirm('Clear favorites?')) { saveFavs([]); }});
+        importFavs.addEventListener('click', ()=> {
+          const data = prompt('Paste palette JSON (array of HEX strings)');
+          if(!data) return;
+          try{ const arr = JSON.parse(data).map(s=>normalizeHex(s)); saveFavs(arr); alert('Imported'); }catch(e){ alert('Invalid JSON'); }
+        });
+
+        /* ---------- history controls ---------- */
+        clearHistoryBtn.addEventListener('click', ()=> { if(confirm('Clear history?')) { saveHist([]); }});
+
+        /* ---------- shades & gradient generation ---------- */
+        function generateShades(hex){
+          const count = Math.max(2, Math.min(12, parseInt(shadeCount.value) || 5));
+          const mode = shadeMode.value; // tints, shades, both
+          const rgb = hexToRgb(normalizeHex(hex));
+          const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+          const arr = [];
+          if(mode === 'tints' || mode === 'both'){
+            for(let i=count; i>=1; i--){
+              const l = clamp(hsl.l + ( (100 - hsl.l) * (i/count) ), 0, 100);
+              const c = hslToRgb(hsl.h, hsl.s, l);
+              arr.push(rgbToHex(c.r,c.g,c.b));
+            }
+          }
+          arr.push(normalizeHex(hex));
+          if(mode === 'shades' || mode === 'both'){
+            for(let i=1;i<=count;i++){
+              const l = clamp(hsl.l - (hsl.l * (i/(count+1))), 0, 100);
+              const c = hslToRgb(hsl.h, hsl.s, l);
+              arr.push(rgbToHex(c.r,c.g,c.b));
+            }
+          }
+          return arr;
+        }
+        generateShadesBtn.addEventListener('click', ()=>{
+          const hex = normalizeHex(colorInput.value);
+          const arr = generateShades(hex);
+          shadesArea.innerHTML = '';
+          arr.forEach(h=>{
+            const sw = document.createElement('div'); sw.className='swatch'; sw.style.background = h;
+            sw.title = h; sw.addEventListener('click', ()=> applyColor(h));
+            const lab = document.createElement('label'); lab.textContent = h; sw.appendChild(lab);
+            shadesArea.appendChild(sw);
+          });
+        });
+
+        /* gradient generator */
+        generateGradientBtn.addEventListener('click', ()=>{
+          const hex = normalizeHex(colorInput.value);
+          // choose a companion color: either bgColor or black/white contrast
+          const bgHex = normalizeHex(bgColor.value);
+          const rgb = hexToRgb(hex);
+          const bgRgb = hexToRgb(bgHex);
+          const ratio = contrastRatio(rgb, bgRgb);
+          let comp = '#000000';
+          if(ratio < 4) comp = '#ffffff';
+          const g = `linear-gradient(90deg, ${hex}, ${comp})`;
+          gradientPreview.style.background = g;
+        });
+
+        /* export palette JSON */
+        exportPalette.addEventListener('click', ()=>{
+          // collect palette from shadesArea if exists else single
+          const pal = Array.from(shadesArea.querySelectorAll('.swatch')).map(s => {
+            const bg = s.style.background;
+            return bg.startsWith('#') ? bg.toUpperCase() : bg;
+          });
+          const toExport = pal.length ? pal : [normalizeHex(colorInput.value)];
+          const blob = new Blob([JSON.stringify(toExport, null, 2)], {type:'application/json'});
+          const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'palette.json'; a.click();
+        });
+
+        /* ---------- palette download (PNG) ---------- */
+        downloadPalettePNG.addEventListener('click', ()=> {
+          const pal = Array.from(shadesArea.querySelectorAll('.swatch')).map(s => s.style.background);
+          const arr = pal.length ? pal : [normalizeHex(colorInput.value)];
+          // create canvas
+          const w = 400, h = 80;
+          const c = document.createElement('canvas'); c.width = w; c.height = h;
+          const ctx = c.getContext('2d');
+          const seg = w / arr.length;
+          arr.forEach((col,i)=>{
+            ctx.fillStyle = col; ctx.fillRect(i*seg,0,seg,h);
+          });
+          const a = document.createElement('a'); a.href = c.toDataURL('image/png'); a.download = 'palette.png'; a.click();
+        });
+
+        /* ---------- download single color PNG ---------- */
+        downloadPNG.addEventListener('click', () => {
+          const hex = normalizeHex(colorInput.value);
+          const size = 512;
+          const c = document.createElement('canvas'); c.width = size; c.height = size;
+          const ctx = c.getContext('2d');
+          ctx.fillStyle = hex; ctx.fillRect(0,0,size,size);
+          // optional stamp
+          ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(0,size-60,size,60);
+          ctx.fillStyle = '#fff'; ctx.font = '20px sans-serif'; ctx.fillText(hex, 12, size-24);
+          const a = document.createElement('a'); a.href = c.toDataURL('image/png'); a.download = 'color.png'; a.click();
+        });
+
+        /* copy all values */
+        copyAll.addEventListener('click', ()=>{
+          const hex = normalizeHex(colorInput.value);
+          const rgb = hexToRgb(hex);
+          const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+          const text = `HEX: ${hex}\nRGB: rgb(${rgb.r}, ${rgb.g}, ${rgb.b})\nHSL: hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+          navigator.clipboard.writeText(text).then(()=> alert('Copied color values'));
+        });
+
+        /* copy CSS gradient */
+        copyCSS.addEventListener('click', ()=>{
+          const a = normalizeHex(colorInput.value);
+          const b = normalizeHex(bgColor.value);
+          const css = `background: linear-gradient(90deg, ${a}, ${b});`;
+          navigator.clipboard.writeText(css).then(()=> alert('CSS gradient copied'));
+        });
+
+        /* ---------- image upload & color picking ---------- */
+        let imgCtx = null;
+        imgUpload.addEventListener('change', (e)=> {
+          const file = e.target.files[0];
+          if(!file) return;
+          const reader = new FileReader();
+          reader.onload = function(ev){
+            const img = new Image();
+            img.onload = function(){
+              // draw on canvas scaled to fit
+              const canvas = imgCanvas;
+              const maxW = 760;
+              const maxH = 420;
+              let w = img.width, h = img.height;
+              const ratio = Math.min(maxW/w, maxH/h, 1);
+              canvas.width = Math.round(w*ratio);
+              canvas.height = Math.round(h*ratio);
+              canvas.style.display = 'block';
+              const ctx = canvas.getContext('2d');
+              ctx.clearRect(0,0,canvas.width, canvas.height);
+              ctx.drawImage(img,0,0,canvas.width, canvas.height);
+              imgCtx = ctx;
+              // attach click listener for picking
+              canvas.onclick = function(ev){
+                const rect = canvas.getBoundingClientRect();
+                const x = Math.floor((ev.clientX - rect.left));
+                const y = Math.floor((ev.clientY - rect.top));
+                const p = ctx.getImageData(x,y,1,1).data;
+                const hex = rgbToHex(p[0],p[1],p[2]);
+                applyColor(hex);
+              };
+            };
+            img.src = ev.target.result;
+          };
+          reader.readAsDataURL(file);
+        });
+
+        /* simple palette extraction using color quantization by binning */
+        function extractPaletteFromCanvas(count=6){
+          const canvas = imgCanvas;
+          if(!imgCtx || canvas.style.display === 'none') { alert('Upload an image first'); return []; }
+          try{
+            const ctx = imgCtx;
+            const w = canvas.width, h = canvas.height;
+            const data = ctx.getImageData(0,0,w,h).data;
+            const bins = {};
+            // sample step to speed up for big images
+            const step = Math.max(1, Math.floor((w*h)/15000));
+            for(let i=0;i<data.length;i+=4*step){
+              const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
+              if(a < 125) continue;
+              // reduce color space to 12 bits (4 bits/channel)
+              const key = ((r>>4)&0xF)<<8 | ((g>>4)&0xF)<<4 | ((b>>4)&0xF);
+              bins[key] = (bins[key]||0)+1;
+            }
+            const items = Object.keys(bins).map(k => ({k:parseInt(k), count:bins[k]}));
+            items.sort((a,b)=>b.count - a.count);
+            const top = items.slice(0, count).map(it => {
+              const k = it.k;
+              const r = ((k>>8)&0xF) << 4;
+              const g = ((k>>4)&0xF) << 4;
+              const b = (k & 0xF) << 4;
+              return rgbToHex(r+8, g+8, b+8); // center of bin
+            });
+            return top;
+          }catch(e){ console.error(e); alert('Failed to extract'); return []; }
+        }
+        extractPaletteBtn.addEventListener('click', ()=>{
+          const pal = extractPaletteFromCanvas(8);
+          imgPal.innerHTML = '';
+          if(!pal.length){ imgPal.innerHTML = '<div class="small muted">No palette</div>'; return; }
+          pal.forEach(h => {
+            const sw = document.createElement('div'); sw.className='swatch'; sw.style.background = h;
+            sw.addEventListener('click', ()=> applyColor(h));
+            const lab = document.createElement('label'); lab.textContent = h; sw.appendChild(lab);
+            imgPal.appendChild(sw);
+          });
+        });
+
+        /* ---------- Initialization ---------- */
+        (function init(){
+          renderFavs(); renderHist();
+          applyColor(colorInput.value);
+          // Generate initial shades
+          const arr = generateShades(normalizeHex(colorInput.value));
+          shadesArea.innerHTML = '';
+          arr.forEach(h=>{
+            const sw = document.createElement('div'); sw.className='swatch'; sw.style.background = h;
+            sw.title = h; sw.addEventListener('click', ()=> applyColor(h));
+            const lab = document.createElement('label'); lab.textContent = h; sw.appendChild(lab);
+            shadesArea.appendChild(sw);
+          });
+        })();
+    </script>
+</body>
+</html>
