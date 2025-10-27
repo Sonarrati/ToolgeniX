@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AI Text Summarizer — Toolgenix (Client)</title>
+<style>
+  body{font-family:Inter,Arial; background:#071025;color:#eaf6ff; margin:0; padding:18px}
+  .wrap{max-width:980px;margin:auto}
+  textarea,input,select{width:100%;padding:10px;border-radius:8px;border:none;background:rgba(255,255,255,0.03);color:inherit}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.005));padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+  .controls{display:flex;gap:8px;margin-top:8px}
+  button{background:linear-gradient(90deg,#39d98a,#6aa6ff);border:none;padding:10px;border-radius:8px;color:#022;font-weight:700;cursor:pointer}
+  .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:#9fb0c7}
+  .small{font-size:13px;color:#9fb0c7}
+  .grid{display:grid;grid-template-columns:1fr 360px;gap:12px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>AI Text Summarizer — Toolgenix</h1>
+    <p class="small">Paste text or upload .txt & click <strong>Summarize (Server)</strong></p>
+
+    <div class="grid">
+      <div class="card">
+        <label class="small">Paste article text</label>
+        <textarea id="textInput" rows="14" placeholder="Paste article content here..."></textarea>
+
+        <div class="controls" style="margin-top:8px">
+          <select id="length" class="small">
+            <option value="short">Short (1–2 sentences)</option>
+            <option value="medium" selected>Medium (3–5 sentences)</option>
+            <option value="long">Long (6–10 sentences)</option>
+          </select>
+          <select id="style" class="small">
+            <option value="paragraph">Paragraph</option>
+            <option value="bullets">Bullets</option>
+            <option value="headline">Headline</option>
+          </select>
+          <button id="doSummarize">Summarize (Server)</button>
+        </div>
+
+        <div style="margin-top:8px" class="small">
+          <input id="file" type="file" accept=".txt" />
+        </div>
+
+        <div style="margin-top:8px" class="small">
+          <label><input id="useLocal" type="checkbox" /> Use local summarizer (no server)</label>
+        </div>
+      </div>
+
+      <aside class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="small" style="font-weight:700">Summary</div>
+          <div id="meta" class="small">—</div>
+        </div>
+
+        <div id="result" style="margin-top:8px;min-height:140px;background:rgba(255,255,255,0.01);padding:8px;border-radius:8px;overflow:auto"></div>
+
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <button id="copyBtn" class="ghost">Copy</button>
+          <button id="downloadBtn" class="ghost">Download</button>
+          <button id="saveBtn" class="ghost">Save History</button>
+          <button id="clearHistBtn" class="ghost">Clear History</button>
+        </div>
+
+        <div id="history" style="margin-top:8px;max-height:260px;overflow:auto"></div>
+      </aside>
+    </div>
+  </div>
+
+<script>
+/* Simple client interacting with /api/summarize on your server and also supports local summarizer fallback */
+const textInput = document.getElementById('textInput');
+const doSummarize = document.getElementById('doSummarize');
+const resultEl = document.getElementById('result');
+const lengthSel = document.getElementById('length');
+const styleSel = document.getElementById('style');
+const fileInput = document.getElementById('file');
+const useLocal = document.getElementById('useLocal');
+const historyEl = document.getElementById('history');
+const metaEl = document.getElementById('meta');
+
+function setLoading(on){
+  doSummarize.disabled = on;
+  doSummarize.textContent = on ? 'Summarizing…' : 'Summarize (Server)';
+}
+
+fileInput.addEventListener('change', async (e)=>{
+  const f = e.target.files[0];
+  if(!f) return;
+  if(!f.name.endsWith('.txt')) return alert('Only .txt files supported');
+  const txt = await f.text();
+  textInput.value = txt;
+});
+
+function saveHistory(txt){
+  const hist = JSON.parse(localStorage.getItem('summ_hist') || '[]');
+  hist.unshift({text: txt, when: new Date().toISOString()});
+  while(hist.length > 50) hist.pop();
+  localStorage.setItem('summ_hist', JSON.stringify(hist));
+  renderHistory();
+}
+function renderHistory(){
+  const hist = JSON.parse(localStorage.getItem('summ_hist') || '[]');
+  historyEl.innerHTML = '';
+  if(!hist.length) historyEl.innerHTML = '<div class="small">No history</div>';
+  hist.forEach(h=>{
+    const d = document.createElement('div');
+    d.style.padding='8px'; d.style.borderBottom='1px solid rgba(255,255,255,0.02)';
+    d.innerHTML = `<div style="font-weight:700">${new Date(h.when).toLocaleString()}</div><div style="margin-top:6px">${h.text.slice(0,200)}${h.text.length>200?'...':''}</div>`;
+    d.addEventListener('click', ()=> {
+      if(confirm('Load this summary?')) resultEl.textContent = h.text;
+    });
+    historyEl.appendChild(d);
+  });
+}
+renderHistory();
+
+function extractiveSummarize(text, length='medium', style='paragraph'){
+  // small version of extractive summarizer (client)
+  function clean(t){ return t.replace(/\s+/g,' ').trim(); }
+  text = clean(text);
+  const sentRegex = /(?<=\.)\s+|(?<=\?)\s+|(?<=\!)\s+/;
+  let sentences = text.split(sentRegex).map(s=>s.trim()).filter(s=>s.length>20);
+  if(sentences.length===0) return 'Not enough text to summarize';
+  const words = text.toLowerCase().match(/\b[^\d\W]+\b/g) || [];
+  const stop = new Set(['the','and','a','to','of','in','is','it','that','with','this','for','on','as','are','was','be','by','an','or','from','at','not','but']); // small stoplist
+  const freq = {};
+  for(const w of words) if(!stop.has(w)) freq[w] = (freq[w]||0)+1;
+  const scores = sentences.map((s,i)=>{
+    const ws = s.toLowerCase().match(/\b[^\d\W]+\b/g) || [];
+    let sc=0; for(const w of ws) if(freq[w]) sc+=freq[w];
+    sc = sc/Math.sqrt(ws.length||1);
+    return {i,s,sc};
+  });
+  let pickCount = Math.max(1, Math.round(sentences.length * (length==='short'?0.08: length==='medium'?0.18:0.32)));
+  pickCount = Math.min(pickCount, sentences.length);
+  scores.sort((a,b)=>b.sc - a.sc);
+  const top = scores.slice(0,pickCount).sort((a,b)=>a.i - b.i);
+  if(style==='bullets') return top.map(t=>'• '+t.s).join('\\n\\n');
+  if(style==='headline') return top[0]?.s || top.map(t=>t.s).join(' ');
+  return top.map(t=>t.s).join(' ');
+}
+
+doSummarize.addEventListener('click', async ()=>{
+  const text = textInput.value.trim();
+  if(!text) return alert('Paste the article text first');
+  const length = lengthSel.value;
+  const style = styleSel.value;
+  metaEl.textContent = 'Processing...';
+  if(useLocal.checked){
+    // use local summarizer in client (no server)
+    const s = extractiveSummarize(text, length, style);
+    resultEl.textContent = s;
+    metaEl.textContent = 'Local summary';
+    return;
+  }
+
+  // else use server -> which uses OpenAI API key safely
+  try{
+    setLoading(true);
+    const resp = await fetch('/api/summarize', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ text, length, style, mode: 'openai' })
+    });
+    if(!resp.ok){
+      const txt = await resp.text();
+      alert('Server error: ' + txt);
+      metaEl.textContent = 'Error';
+      return;
+    }
+    const j = await resp.json();
+    resultEl.textContent = j.summary || '[no summary returned]';
+    metaEl.textContent = 'Server summary (OpenAI)';
+    // save automatically to history
+    saveHistory(j.summary || '');
+  }catch(err){
+    alert('Request failed: ' + err.message);
+    metaEl.textContent = 'Error';
+  }finally{
+    setLoading(false);
+  }
+});
+
+// copy / download / save
+document.getElementById('copyBtn').addEventListener('click', ()=> {
+  const t = resultEl.textContent; if(!t) return alert('No summary'); navigator.clipboard.writeText(t).then(()=> alert('Copied'));
+});
+document.getElementById('downloadBtn').addEventListener('click', ()=> {
+  const t = resultEl.textContent; if(!t) return alert('No summary'); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([t], {type:'text/plain'})); a.download='summary.txt'; a.click();
+});
+document.getElementById('saveBtn').addEventListener('click', ()=> {
+  const t = resultEl.textContent; if(!t) return alert('No summary'); saveHistory(t);
+});
+document.getElementById('clearHistBtn').addEventListener('click', ()=> {
+  if(confirm('Clear saved history?')){ localStorage.removeItem('summ_hist'); renderHistory(); }
+});
+</script>
+</body>
+</html>
