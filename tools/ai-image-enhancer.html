@@ -1,97 +1,23 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Image Enhancer | Professional Image Enhancement Tool | Toolgenix</title>
     <meta name="description" content="Free AI-powered image enhancement tool with upscaling, sharpening, denoising, and color correction. Client-side processing for privacy and quality.">
     <meta name="keywords" content="AI image enhancer, image upscaler, photo enhancer, image sharpening, denoise tool, photo editor, image quality improvement">
     <meta name="author" content="Toolgenix">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph / Social Media Meta Tags -->
-    <meta property="og:title" content="AI Image Enhancer | Professional Image Enhancement Tool">
-    <meta property="og:description" content="Free AI-powered image enhancement tool with upscaling, sharpening, denoising, and color correction. Client-side processing for privacy and quality.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://toolgenix.com/tools/ai-image-enhancer">
-    <meta property="og:image" content="https://toolgenix.com/images/ai-image-enhancer-og.jpg">
-    <meta property="og:site_name" content="Toolgenix">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AI Image Enhancer | Professional Image Enhancement Tool">
-    <meta name="twitter:description" content="Free AI-powered image enhancement tool with upscaling, sharpening, denoising, and color correction.">
-    <meta name="twitter:image" content="https://toolgenix.com/images/ai-image-enhancer-twitter.jpg">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://toolgenix.com/tools/ai-image-enhancer">
-    
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Schema.org structured data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "AI Image Enhancer - Toolgenix",
-      "description": "Free AI-powered image enhancement tool with upscaling, sharpening, denoising, and color correction",
-      "url": "https://toolgenix.com/tools/ai-image-enhancer",
-      "applicationCategory": "MultimediaApplication",
-      "operatingSystem": "Any",
-      "permissions": "browser",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.7",
-        "ratingCount": "892"
-      }
-    }
-    </script>
-    
-    <!-- Additional FAQ Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "How does the AI Image Enhancer work?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Our tool uses advanced algorithms for sharpening, denoising, and color correction. All processing happens in your browser for maximum privacy and speed."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Can I upscale my images with this tool?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, you can upscale images up to 3x their original size while maintaining quality through advanced interpolation techniques."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Is my image data kept private?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Absolutely! All processing happens locally in your browser. Your images never leave your device, ensuring complete privacy."
-        }
-      }]
-    }
-    </script>
-    
     <style>
         :root {
             --primary: #7A5CFA;
             --primary-light: #8A63FF;
             --primary-dark: #6A4EDC;
+            --primary-glow: rgba(122, 92, 250, 0.15);
             --background: #ffffff;
             --card-bg: #f8f8f8;
             --text: #1e1e2f;
-            --text-secondary: #2e2e3f;
+            --text-secondary: #5a5a7a;
             --border: #e5e5e5;
             --success: #4caf50;
             --error: #ff4c4c;
@@ -99,6 +25,8 @@
             --glass: rgba(122, 92, 250, 0.03);
             --glass-2: rgba(122, 92, 250, 0.02);
             --glass-border: rgba(122, 92, 250, 0.1);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
         }
 
         * {
@@ -112,13 +40,17 @@
             background-color: var(--background);
             color: var(--text);
             line-height: 1.6;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7ff 0%, #f0f2ff 100%);
+            min-height: 100vh;
         }
 
         /* Header Styles */
         header {
-            background-color: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
-            padding: 0.8rem 5%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(122, 92, 250, 0.1);
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -128,7 +60,7 @@
         }
         
         .logo {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 800;
             display: flex;
         }
@@ -143,6 +75,26 @@
             -webkit-text-fill-color: transparent;
         }
         
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: var(--glass);
+        }
+        
         nav ul {
             display: flex;
             list-style: none;
@@ -155,33 +107,39 @@
             font-weight: 500;
             font-size: 0.9rem;
             transition: color 0.3s;
+            padding: 8px 12px;
+            border-radius: 8px;
         }
         
         nav a:hover {
             color: var(--primary);
+            background: var(--glass);
         }
 
         /* Main Content */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
         
         .page-header {
             text-align: center;
-            padding: 3rem 0 2rem;
+            padding: 2.5rem 0 1.5rem;
         }
         
         .page-header h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 1rem;
             color: var(--text);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .page-header p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--text-secondary);
             max-width: 700px;
             margin: 0 auto;
@@ -191,35 +149,57 @@
         .card {
             width: 100%;
             background: var(--background);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 25px;
             border: 1px solid var(--border);
-            box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
-            margin: 0 auto 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
         }
 
         .tool-header {
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .tool-header h2 {
             margin: 0;
             color: var(--primary);
-            font-size: 20px;
+            font-size: 1.4rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
+        .tool-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
         .tool-header p {
             color: var(--text-secondary);
             margin: 6px 0 14px;
-            font-size: 13px;
+            font-size: 0.95rem;
         }
 
         .row {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -227,38 +207,39 @@
         .col {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            flex: 1;
-            min-width: 0;
+            gap: 12px;
+            width: 100%;
         }
 
         input, select, button, textarea {
-            padding: 12px;
-            border-radius: 8px;
+            padding: 14px 16px;
+            border-radius: 12px;
             border: 1px solid var(--border);
             background: var(--background);
             color: inherit;
-            font-size: 14px;
-            transition: border-color 0.3s;
+            font-size: 15px;
+            transition: all 0.3s;
             width: 100%;
+            font-family: inherit;
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
         }
 
         .controls {
             display: flex;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 10px;
+            margin-top: 15px;
             flex-wrap: wrap;
         }
 
         .btn {
             cursor: pointer;
-            padding: 12px 16px;
-            border-radius: 8px;
+            padding: 14px 20px;
+            border-radius: 12px;
             border: 1px solid var(--border);
             background: transparent;
             color: var(--primary);
@@ -266,28 +247,46 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             font-weight: 600;
             flex: 1;
-            min-width: 80px;
+            min-width: 130px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn.primary {
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
             border: none;
-            box-shadow: 0 4px 10px rgba(122, 92, 250, 0.3);
+            box-shadow: 0 4px 15px var(--primary-glow);
         }
 
         .btn.primary:hover {
-            background: var(--primary-dark);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(122, 92, 250, 0.4);
+            box-shadow: 0 6px 20px var(--primary-glow);
         }
 
         .btn:hover {
             background: var(--glass);
             border-color: var(--primary);
+            transform: translateY(-1px);
         }
 
         .btn.warn {
@@ -298,112 +297,164 @@
 
         .muted {
             color: var(--text-secondary);
-            font-size: 13px;
+            font-size: 0.9rem;
         }
 
         .small {
-            font-size: 13px;
+            font-size: 0.9rem;
             color: var(--text-secondary);
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        @media (min-width: 768px) {
-            .grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .previewWrap {
+        .preview-container {
             display: flex;
-            gap: 12px;
+            flex-direction: column;
+            gap: 20px;
             align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
+            width: 100%;
         }
 
-        .preview {
+        .preview-comparison {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 15px;
+            position: relative;
+        }
+
+        .preview-card {
             background: var(--card-bg);
-            border-radius: 8px;
-            padding: 15px;
+            border-radius: 16px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
             border: 1px solid var(--border);
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .preview-card.active {
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .preview-header h3 {
+            font-size: 1.1rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .preview-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .original-badge {
+            background: rgba(122, 92, 250, 0.1);
+            color: var(--primary);
+        }
+
+        .enhanced-badge {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--success);
         }
 
         .preview canvas {
             max-width: 100%;
             height: auto;
-            border-radius: 6px;
+            border-radius: 12px;
             display: block;
             border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         .meta {
-            margin-top: 6px;
+            margin-top: 12px;
             color: var(--text-secondary);
-            font-size: 13px;
+            font-size: 0.9rem;
             text-align: center;
+            width: 100%;
+            padding: 8px 0;
+            border-top: 1px solid var(--border);
         }
 
         .preset {
             background: transparent;
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px 12px;
+            border-radius: 12px;
+            padding: 12px 15px;
             cursor: pointer;
             color: var(--text-secondary);
             transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+            font-weight: 500;
         }
 
         .preset:hover {
             background: var(--glass);
             border-color: var(--primary);
             color: var(--primary);
+            transform: translateY(-1px);
         }
 
         .preset.active {
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
             border: none;
+            box-shadow: 0 4px 12px var(--primary-glow);
         }
 
         .footer {
-            margin-top: 14px;
+            margin-top: 20px;
             color: var(--text-secondary);
-            font-size: 13px;
+            font-size: 0.9rem;
             text-align: center;
+            padding: 15px 0;
+            border-top: 1px solid var(--border);
         }
 
         .badge {
             display: inline-block;
-            padding: 6px 8px;
-            border-radius: 8px;
+            padding: 6px 12px;
+            border-radius: 10px;
             background: var(--card-bg);
             color: var(--text-secondary);
             font-weight: 600;
-            min-width: 50px;
+            min-width: 60px;
             text-align: center;
+            font-size: 0.9rem;
         }
 
         .processing {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
         }
 
         .spinner {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border: 3px solid rgba(122, 92, 250, 0.1);
             border-top-color: var(--primary);
             border-radius: 50%;
@@ -416,262 +467,327 @@
             }
         }
 
-        /* Info Sections */
-        .info-section {
-            margin: 3rem 0;
-            padding: 2rem;
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-        
-        .info-section h2 {
-            color: var(--text);
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            text-align: left;
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 10px;
-        }
-        
-        .info-section h3 {
-            color: var(--primary);
-            margin: 1.5rem 0 1rem;
-            font-size: 1.4rem;
-        }
-        
-        .info-section p, .info-section li {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            line-height: 1.7;
-        }
-        
-        .info-section ul, .info-section ol {
-            padding-left: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .info-section li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        
-        .benefit-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-            text-align: center;
-            border: 1px solid var(--border);
-        }
-        
-        .benefit-card i {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        
-        .benefit-card h4 {
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-        
-        /* FAQ Section */
-        .faq-item {
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 1.5rem;
-        }
-        
-        .faq-question {
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--background);
-            border-top: 2px solid var(--primary);
-            padding: 2rem 5% 1rem;
-            margin-top: 3rem;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-bottom: 1.2rem;
-        }
-        
-        @media (min-width: 768px) {
-            .footer-content {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
-        .footer-column h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: var(--text);
-        }
-        
-        .footer-column p {
-            color: var(--text-secondary);
-            line-height: 1.4;
-            font-size: 0.85rem;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .footer-links a {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-        
-        .social-icons {
-            display: flex;
-            gap: 0.7rem;
-        }
-        
-        .social-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--card-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-        
-        .social-icon:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 1.2rem;
-            border-top: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-        }
-        
-        /* Breadcrumb */
-        .breadcrumb {
-            padding: 1rem 0;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-        
-        .breadcrumb a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-        
-        .breadcrumb a:hover {
-            text-decoration: underline;
+        /* Range slider styling */
+        .slider-container {
+            width: 100%;
+            margin: 10px 0;
         }
 
-        /* Range slider styling */
         input[type="range"] {
             -webkit-appearance: none;
             width: 100%;
-            height: 6px;
+            height: 8px;
             background: var(--border);
-            border-radius: 5px;
+            border-radius: 10px;
             outline: none;
+            padding: 0;
         }
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             background: var(--primary);
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            border: 2px solid white;
+            transition: all 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
         }
 
         input[type="range"]::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             background: var(--primary);
             cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 767px) {
-            .page-header {
-                padding: 2rem 0 1.5rem;
-            }
-            
-            .page-header h1 {
-                font-size: 2rem;
-            }
-            
-            .page-header p {
-                font-size: 1.1rem;
-            }
-            
-            .card {
-                padding: 15px;
-            }
-            
-            .btn {
-                padding: 10px 12px;
-                font-size: 13px;
-            }
-            
-            .info-section {
-                padding: 1.5rem;
-                margin: 2rem 0;
-            }
-            
-            .info-section h2 {
-                font-size: 1.5rem;
-            }
-            
-            .info-section h3 {
-                font-size: 1.2rem;
-            }
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
         /* Label styling */
         .label {
-            min-width: 110px;
-            color: var(--text-secondary);
-            font-size: 13px;
+            color: var(--text);
+            font-size: 0.95rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+
+        .control-group-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Tabs for mobile */
+        .mobile-tabs {
+            display: none;
+            width: 100%;
+            margin-bottom: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 5px;
+            border: 1px solid var(--border);
+        }
+
+        .mobile-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 5px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .mobile-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 2px 8px var(--primary-glow);
+        }
+
+        .tab-content {
+            width: 100%;
+        }
+
+        .file-upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--card-bg);
+            margin-bottom: 20px;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--primary);
+            background: var(--glass);
+        }
+
+        .file-upload-area i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .file-upload-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .file-upload-subtext {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 768px) {
+            header {
+                padding: 0.8rem 4%;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+                z-index: 1000;
+                border-radius: 0 0 16px 16px;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                width: 100%;
+                text-align: center;
+            }
+            
+            nav a {
+                display: block;
+                padding: 0.8rem 1rem;
+                border-radius: 0;
+            }
+            
+            .page-header {
+                padding: 1.5rem 0 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .tool-header h2 {
+                font-size: 1.3rem;
+            }
+            
+            .btn {
+                padding: 12px 16px;
+                font-size: 0.95rem;
+                min-width: 120px;
+            }
+            
+            .mobile-tabs {
+                display: flex;
+            }
+            
+            .tab-content {
+                display: none;
+            }
+            
+            .tab-content.active {
+                display: block;
+            }
+            
+            .preset {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+
+            .preview-comparison {
+                flex-direction: column;
+            }
+            
+            .preview-card {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .page-header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .btn {
+                min-width: 100px;
+                font-size: 0.9rem;
+                padding: 10px 14px;
+            }
+            
+            .preset {
+                font-size: 0.8rem;
+                padding: 8px 10px;
+            }
+            
+            .badge {
+                padding: 5px 10px;
+                min-width: 50px;
+                font-size: 0.8rem;
+            }
+            
+            input, select, button, textarea {
+                padding: 12px 14px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            .control-group {
+                padding: 12px;
+            }
+        }
+
+        /* Preview slider for comparison */
+        .preview-slider {
+            position: relative;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .preview-slider input[type="range"] {
+            width: 100%;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+
+        .slider-labels span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Stats display */
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .stat {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -681,8 +797,11 @@
         <div class="logo">
             <span>TOOL</span><span>GENIX</span>
         </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
         <nav>
-            <ul>
+            <ul id="navMenu">
                 <li><a href="https://toolgenix.com">Home</a></li>
                 <li><a href="https://toolgenix.com/categories">Categories</a></li>
                 <li><a href="https://toolgenix.com/tools">Tools</a></li>
@@ -694,713 +813,800 @@
 
     <!-- Main Content -->
     <main class="container">
-        <!-- Breadcrumb -->
-        <div class="breadcrumb">
-            <a href="https://toolgenix.com">Home</a> &gt; 
-            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
-            <a href="https://toolgenix.com/tools/image-tools">Image Tools</a> &gt; 
-            AI Image Enhancer
-        </div>
-        
         <!-- Page Header -->
         <section class="page-header">
-            <h1>Free AI Image Enhancer Tool</h1>
-            <p>Professional image enhancement with upscaling, sharpening, denoising, and color correction. All processing happens in your browser for complete privacy.</p>
+            <h1>AI Image Enhancer</h1>
+            <p>Enhance your images with AI-powered sharpening, denoising, and upscaling. All processing happens in your browser for complete privacy.</p>
         </section>
         
         <!-- AI Image Enhancer Tool -->
         <div class="card" role="application" aria-labelledby="title">
             <div class="tool-header">
-                <h2 id="title"><i class="fas fa-magic"></i> AI Image Enhancer</h2>
-                <p class="lead">Professional image enhancement with upscaling, sharpening, denoising, and color correction</p>
+                <div class="tool-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <div>
+                    <h2 id="title">Enhance Your Images</h2>
+                    <p class="lead">Upload an image and adjust the settings to improve quality</p>
+                </div>
             </div>
 
-            <div class="grid" aria-live="polite">
-                <!-- Left Column - Controls -->
-                <div class="col">
-                    <div class="card">
-                        <div>
-                            <label class="small"><i class="fas fa-upload"></i> Upload image (PNG/JPG/WebP/BMP/GIF)</label>
-                            <input id="fileInput" type="file" accept="image/*">
-                            <div class="small" id="fileNote">Max recommended size: 8MB</div>
+            <!-- Mobile Tabs -->
+            <div class="mobile-tabs">
+                <div class="mobile-tab active" data-tab="upload">
+                    <i class="fas fa-upload"></i> Upload
+                </div>
+                <div class="mobile-tab" data-tab="adjust">
+                    <i class="fas fa-sliders-h"></i> Adjust
+                </div>
+                <div class="mobile-tab" data-tab="preview">
+                    <i class="fas fa-image"></i> Preview
+                </div>
+            </div>
+
+            <!-- Upload Tab -->
+            <div class="tab-content active" id="upload-tab">
+                <div class="file-upload-area" id="fileUploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <div class="file-upload-text">Upload Your Image</div>
+                    <div class="file-upload-subtext">PNG, JPG, WebP, BMP, or GIF (Max 8MB)</div>
+                    <input id="fileInput" type="file" accept="image/*" style="display: none;">
+                </div>
+
+                <div class="controls">
+                    <button id="applyBtn" class="btn primary">
+                        <i class="fas fa-play"></i> Enhance Image
+                    </button>
+                </div>
+            </div>
+
+            <!-- Adjust Tab -->
+            <div class="tab-content" id="adjust-tab">
+                <div class="control-group">
+                    <div class="control-group-title">
+                        <i class="fas fa-sliders-h"></i> Presets
+                    </div>
+                    <div class="row">
+                        <button class="preset active" id="presetAuto">
+                            <i class="fas fa-robot"></i> Auto
+                        </button>
+                        <button class="preset" id="presetSharpen">
+                            <i class="fas fa-crosshairs"></i> Sharpen
+                        </button>
+                        <button class="preset" id="presetDenoise">
+                            <i class="fas fa-snowflake"></i> Denoise
+                        </button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-group-title">
+                        <i class="fas fa-tune"></i> Enhancement Settings
+                    </div>
+                    
+                    <div class="slider-container">
+                        <div class="label">
+                            <i class="fas fa-bolt"></i> Strength
                         </div>
+                        <input id="strength" type="range" min="0" max="2" step="0.05" value="1">
+                        <div class="row" style="justify-content: space-between; margin-top: 5px;">
+                            <span class="small">Low</span>
+                            <div class="badge" id="strengthVal">1.00</div>
+                            <span class="small">High</span>
+                        </div>
+                    </div>
 
-                        <div class="controls" style="margin-top: 15px;">
-                            <div class="row">
-                                <span class="label"><i class="fas fa-sliders-h"></i> Preset</span>
-                                <button class="preset active" id="presetAuto"><i class="fas fa-robot"></i> Auto Enhance</button>
-                                <button class="preset" id="presetSharpen"><i class="fas fa-crosshairs"></i> Sharpen Only</button>
-                                <button class="preset" id="presetDenoise"><i class="fas fa-snowflake"></i> Denoise Only</button>
-                            </div>
+                    <div class="slider-container">
+                        <div class="label">
+                            <i class="fas fa-crosshairs"></i> Sharpen
+                        </div>
+                        <input id="sharpen" type="range" min="0" max="2" step="0.05" value="0.8">
+                        <div class="row" style="justify-content: space-between; margin-top: 5px;">
+                            <span class="small">Low</span>
+                            <div class="badge" id="sharpenVal">0.80</div>
+                            <span class="small">High</span>
+                        </div>
+                    </div>
 
-                            <div class="row">
-                                <span class="label"><i class="fas fa-bolt"></i> Strength</span>
-                                <input id="strength" type="range" min="0" max="2" step="0.05" value="1">
-                                <div class="badge" id="strengthVal">1.00</div>
-                            </div>
-
-                            <div class="row">
-                                <span class="label"><i class="fas fa-crosshairs"></i> Sharpen</span>
-                                <input id="sharpen" type="range" min="0" max="2" step="0.05" value="0.8">
-                                <div class="badge" id="sharpenVal">0.80</div>
-                            </div>
-
-                            <div class="row">
-                                <span class="label"><i class="fas fa-circle"></i> Radius</span>
-                                <input id="radius" type="range" min="0" max="10" step="0.5" value="1.5">
-                                <div class="badge" id="radiusVal">1.5</div>
-                            </div>
-
-                            <div class="row">
-                                <span class="label"><i class="fas fa-snowflake"></i> Denoise</span>
-                                <input id="denoise" type="range" min="0" max="1" step="0.01" value="0.12">
-                                <div class="badge" id="denoiseVal">0.12</div>
-                            </div>
-
-                            <div class="row">
-                                <span class="label"><i class="fas fa-sun"></i> Brightness</span>
-                                <input id="brightness" type="range" min="-0.5" max="0.5" step="0.01" value="0">
-                                <div class="badge" id="brightnessVal">0</div>
-                            </div>
-
-                            <div class="row">
-                                <span class="label"><i class="fas fa-adjust"></i> Contrast</span>
-                                <input id="contrast" type="range" min="-0.6" max="0.8" step="0.01" value="0.06">
-                                <div class="badge" id="contrastVal">0.06</div>
-                            </div>
-
-                            <div class="row">
-                                <span class="label"><i class="fas fa-palette"></i> Saturation</span>
-                                <input id="saturation" type="range" min="-0.8" max="0.8" step="0.01" value="0.06">
-                                <div class="badge" id="saturationVal">0.06</div>
-                            </div>
-
-                            <div class="row">
-                                <span class="label"><i class="fas fa-expand-arrows-alt"></i> Upscale</span>
-                                <select id="upscale" class="input">
-                                    <option value="1">1× (original)</option>
-                                    <option value="2">2×</option>
-                                    <option value="3">3×</option>
-                                </select>
-                            </div>
-
-                            <div class="row">
-                                <span class="label"><i class="fas fa-file-export"></i> Output format</span>
-                                <select id="outFormat">
-                                    <option value="image/png">PNG</option>
-                                    <option value="image/jpeg">JPEG</option>
-                                    <option value="image/webp">WEBP</option>
-                                </select>
-
-                                <span style="margin-left:auto" class="small">Quality: <input id="jpegQuality" type="range" min="0.4" max="1" step="0.05" value="0.92"></span>
-                            </div>
-
-                            <div class="row">
-                                <button id="applyBtn" class="btn primary"><i class="fas fa-play"></i> Apply Enhancements</button>
-                                <button id="downloadBtn" class="btn"><i class="fas fa-download"></i> Download</button>
-                            </div>
-
-                            <div class="row" style="justify-content: space-between; margin-top: 10px;">
-                                <div id="status" class="small">&nbsp;</div>
-                                <div id="processing" class="processing" style="display:none"><div class="spinner"></div><div class="small">Processing...</div></div>
-                            </div>
-
-                            <div class="small" style="margin-top:10px"><i class="fas fa-info-circle"></i> Optional: For real AI upscaling (GAN) connect server-side API — see comments in the code.</div>
+                    <div class="slider-container">
+                        <div class="label">
+                            <i class="fas fa-snowflake"></i> Denoise
+                        </div>
+                        <input id="denoise" type="range" min="0" max="1" step="0.01" value="0.12">
+                        <div class="row" style="justify-content: space-between; margin-top: 5px;">
+                            <span class="small">Low</span>
+                            <div class="badge" id="denoiseVal">0.12</div>
+                            <span class="small">High</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Column - Preview -->
-                <div class="col">
-                    <div class="card">
-                        <div class="previewWrap">
-                            <div class="preview">
-                                <div class="small" style="font-weight:700"><i class="fas fa-image"></i> Original</div>
-                                <canvas id="origCanvas"></canvas>
-                                <div class="meta" id="origMeta">No image</div>
-                            </div>
+                <div class="control-group">
+                    <div class="control-group-title">
+                        <i class="fas fa-palette"></i> Color Adjustments
+                    </div>
+                    
+                    <div class="slider-container">
+                        <div class="label">
+                            <i class="fas fa-sun"></i> Brightness
+                        </div>
+                        <input id="brightness" type="range" min="-0.5" max="0.5" step="0.01" value="0">
+                        <div class="row" style="justify-content: space-between; margin-top: 5px;">
+                            <span class="small">Dark</span>
+                            <div class="badge" id="brightnessVal">0</div>
+                            <span class="small">Bright</span>
+                        </div>
+                    </div>
 
-                            <div class="preview">
-                                <div class="small" style="font-weight:700"><i class="fas fa-star"></i> Enhanced</div>
-                                <canvas id="outCanvas"></canvas>
-                                <div class="meta" id="outMeta">No output</div>
+                    <div class="slider-container">
+                        <div class="label">
+                            <i class="fas fa-adjust"></i> Contrast
+                        </div>
+                        <input id="contrast" type="range" min="-0.6" max="0.8" step="0.01" value="0.06">
+                        <div class="row" style="justify-content: space-between; margin-top: 5px;">
+                            <span class="small">Low</span>
+                            <div class="badge" id="contrastVal">0.06</div>
+                            <span class="small">High</span>
+                        </div>
+                    </div>
+
+                    <div class="slider-container">
+                        <div class="label">
+                            <i class="fas fa-fill-drip"></i> Saturation
+                        </div>
+                        <input id="saturation" type="range" min="-0.8" max="0.8" step="0.01" value="0.06">
+                        <div class="row" style="justify-content: space-between; margin-top: 5px;">
+                            <span class="small">Low</span>
+                            <div class="badge" id="saturationVal">0.06</div>
+                            <span class="small">High</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-group-title">
+                        <i class="fas fa-cog"></i> Output Settings
+                    </div>
+                    
+                    <div class="row">
+                        <div style="flex: 1;">
+                            <div class="label">
+                                <i class="fas fa-expand-arrows-alt"></i> Upscale
                             </div>
+                            <select id="upscale" class="input">
+                                <option value="1">1× (original)</option>
+                                <option value="2">2×</option>
+                                <option value="3">3×</option>
+                            </select>
+                        </div>
+                        
+                        <div style="flex: 1;">
+                            <div class="label">
+                                <i class="fas fa-file-export"></i> Format
+                            </div>
+                            <select id="outFormat">
+                                <option value="image/png">PNG</option>
+                                <option value="image/jpeg">JPEG</option>
+                                <option value="image/webp">WEBP</option>
+                            </select>
                         </div>
                     </div>
                     
-                    <div class="card" style="margin-top:20px">
-                        <div class="small" style="font-weight:700"><i class="fas fa-lightbulb"></i> Quick Tips</div>
-                        <div class="small" style="margin-top:8px">
-                            <div><i class="fas fa-check-circle"></i> Use high-quality source images for best results</div>
-                            <div><i class="fas fa-check-circle"></i> Adjust strength to control overall enhancement intensity</div>
-                            <div><i class="fas fa-check-circle"></i> Use denoise for grainy or noisy images</div>
-                            <div><i class="fas fa-check-circle"></i> Try different presets for common scenarios</div>
+                    <div class="slider-container" style="margin-top: 15px;">
+                        <div class="label">
+                            <i class="fas fa-medal"></i> Quality
+                        </div>
+                        <input id="jpegQuality" type="range" min="0.4" max="1" step="0.05" value="0.92">
+                        <div class="row" style="justify-content: space-between; margin-top: 5px;">
+                            <span class="small">Low</span>
+                            <div class="badge" id="qualityVal">92%</div>
+                            <span class="small">High</span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <!-- How to Use Section -->
-        <section class="info-section">
-            <h2>How to Use Our AI Image Enhancer</h2>
-            <ol>
-                <li><strong>Upload your image</strong> - Select a PNG, JPG, WebP, BMP, or GIF file from your device.</li>
-                <li><strong>Choose enhancement settings</strong> - Use presets or manually adjust sharpening, denoising, and color parameters.</li>
-                <li><strong>Preview the results</strong> - Compare original and enhanced images side by side.</li>
-                <li><strong>Adjust as needed</strong> - Fine-tune settings based on your preview until satisfied.</li>
-                <li><strong>Download your enhanced image</strong> - Save in your preferred format (PNG, JPEG, or WebP).</li>
-            </ol>
-            
-            <h3>Why Use Our AI Image Enhancer?</h3>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <i class="fas fa-user-shield"></i>
-                    <h4>Complete Privacy</h4>
-                    <p>All processing happens in your browser - your images never leave your device.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-bolt"></i>
-                    <h4>Instant Results</h4>
-                    <p>See enhancements in real-time with our efficient client-side processing.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-sliders-h"></i>
-                    <h4>Full Control</h4>
-                    <p>Fine-tune every aspect of enhancement with detailed parameter controls.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-expand-arrows-alt"></i>
-                    <h4>Quality Upscaling</h4>
-                    <p>Increase image size up to 3x while maintaining quality and detail.</p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Use Cases Section -->
-        <section class="info-section">
-            <h2>When to Use an AI Image Enhancer</h2>
-            
-            <h3>Photography & Portraits</h3>
-            <p>Enhance portrait photos by sharpening details, reducing noise, and improving skin tones for professional results.</p>
-            
-            <h3>Product Images</h3>
-            <p>Make product photos pop with enhanced clarity, color correction, and upscaling for e-commerce listings.</p>
-            
-            <h3>Social Media Content</h3>
-            <p>Improve image quality for social media posts, stories, and profile pictures to stand out in feeds.</p>
-            
-            <h3>Document Restoration</h3>
-            <p>Enhance scanned documents, old photos, or low-quality images by improving readability and visual quality.</p>
-            
-            <h3>Creative Projects</h3>
-            <p>Prepare images for presentations, websites, or design projects with professional-level enhancement tools.</p>
-        </section>
-        
-        <!-- FAQ Section -->
-        <section class="info-section">
-            <h2>Frequently Asked Questions</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question">How does the AI Image Enhancer work?</div>
-                <p>Our tool uses advanced algorithms for sharpening, denoising, and color correction. All processing happens in your browser for maximum privacy and speed.</p>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Can I upscale my images with this tool?</div>
-                <p>Yes, you can upscale images up to 3x their original size while maintaining quality through advanced interpolation techniques.</p>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Is my image data kept private?</div>
-                <p>Absolutely! All processing happens locally in your browser. Your images never leave your device, ensuring complete privacy.</p>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">What image formats are supported?</div>
-                <p>We support PNG, JPG, WebP, BMP, and GIF formats for input, and PNG, JPEG, and WebP for output.</p>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Does the tool work on mobile devices?</div>
-                <p>Yes, our tool is fully responsive and works on smartphones, tablets, and desktop computers.</p>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Are there any usage limits?</div>
-                <p>No, you can use the tool as much as you want. We recommend keeping individual files under 15MB for optimal performance.</p>
-            </div>
-        </section>
-    </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>About Toolgenix</h3>
-                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                <div class="controls">
+                    <button id="applyBtn2" class="btn primary">
+                        <i class="fas fa-play"></i> Apply Enhancements
+                    </button>
+                    <button id="downloadBtn" class="btn">
+                        <i class="fas fa-download"></i> Download
+                    </button>
                 </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://toolgenix.com">Home</a></li>
-                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
-                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
-                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
-                        <li><a href="https://toolgenix.com/join">Join</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Connect With Us</h3>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+            </div>
+
+            <!-- Preview Tab -->
+            <div class="tab-content" id="preview-tab">
+                <div class="preview-container">
+                    <div class="preview-comparison">
+                        <div class="preview-card active">
+                            <div class="preview-header">
+                                <h3>Original</h3>
+                                <div class="preview-badge original-badge">Original</div>
+                            </div>
+                            <canvas id="origCanvas"></canvas>
+                            <div class="meta" id="origMeta">No image uploaded</div>
+                        </div>
+
+                        <div class="preview-card">
+                            <div class="preview-header">
+                                <h3>Enhanced</h3>
+                                <div class="preview-badge enhanced-badge">Enhanced</div>
+                            </div>
+                            <canvas id="outCanvas"></canvas>
+                            <div class="meta" id="outMeta">No enhancement applied</div>
+                        </div>
+                    </div>
+
+                    <div class="stats-container">
+                        <div class="stat">
+                            <div class="stat-value" id="originalSize">-</div>
+                            <div class="stat-label">Original Size</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="enhancedSize">-</div>
+                            <div class="stat-label">Enhanced Size</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="improvement">-</div>
+                            <div class="stat-label">Improvement</div>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button id="downloadBtn2" class="btn primary">
+                            <i class="fas fa-download"></i> Download Enhanced
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2025 Toolgenix — All rights reserved.</p>
+
+            <div class="row" style="justify-content: space-between; margin-top: 20px;">
+                <div id="status" class="small">&nbsp;</div>
+                <div id="processing" class="processing" style="display:none">
+                    <div class="spinner"></div>
+                    <div class="small">Processing...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Tips -->
+        <div class="card">
+            <div class="tool-header">
+                <div class="tool-icon" style="background: linear-gradient(135deg, #FF9A44, #FF6B6B);">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div>
+                    <h2>Quick Tips</h2>
+                    <p>Get the best results from our AI Image Enhancer</p>
+                </div>
+            </div>
+            <div class="small" style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <i class="fas fa-check-circle" style="color: var(--primary); margin-top: 2px;"></i>
+                    <span>Use high-quality source images for best results</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <i class="fas fa-check-circle" style="color: var(--primary); margin-top: 2px;"></i>
+                    <span>Adjust strength to control overall enhancement intensity</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <i class="fas fa-check-circle" style="color: var(--primary); margin-top: 2px;"></i>
+                    <span>Use denoise for grainy or noisy images</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <i class="fas fa-check-circle" style="color: var(--primary); margin-top: 2px;"></i>
+                    <span>Try different presets for common scenarios</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer style="background-color: var(--background); border-top: 1px solid var(--border); padding: 1.5rem 5%; margin-top: 2rem;">
+        <div class="container">
+            <div class="footer">
+                <p>© 2025 Toolgenix — AI Image Enhancer • All processing happens in your browser for complete privacy</p>
             </div>
         </div>
     </footer>
 
-<script>
-/*
-  AI Image Enhancer (client-side)
-  - Upload image -> draw to origCanvas
-  - Apply improvements: unsharp mask (sharpen), denoise blend (gaussian blur + blend), brightness/contrast/saturation
-  - Upscale using canvas drawImage with imageSmoothingQuality = 'high'
-  - Download result as chosen format
-  - This is deterministic, fast, private (no server). For advanced AI upscaling, add a server endpoint.
-*/
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
 
-// Elements
-const fileInput = document.getElementById('fileInput');
-const origCanvas = document.getElementById('origCanvas');
-const outCanvas = document.getElementById('outCanvas');
-const statusEl = document.getElementById('status');
-const processingEl = document.getElementById('processing');
-const applyBtn = document.getElementById('applyBtn');
-const downloadBtn = document.getElementById('downloadBtn');
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                navMenu.classList.remove('show');
+            }
+        });
 
-const strengthEl = document.getElementById('strength');
-const sharpenEl = document.getElementById('sharpen');
-const radiusEl = document.getElementById('radius');
-const denoiseEl = document.getElementById('denoise');
-const brightnessEl = document.getElementById('brightness');
-const contrastEl = document.getElementById('contrast');
-const saturationEl = document.getElementById('saturation');
-const upscaleEl = document.getElementById('upscale');
-const outFormatEl = document.getElementById('outFormat');
-const qualityEl = document.getElementById('jpegQuality');
+        // Mobile tabs
+        const mobileTabs = document.querySelectorAll('.mobile-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        mobileTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Update active tab
+                mobileTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Show active tab content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === `${tabId}-tab`) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
 
-const strengthVal = document.getElementById('strengthVal');
-const sharpenVal = document.getElementById('sharpenVal');
-const radiusVal = document.getElementById('radiusVal');
-const denoiseVal = document.getElementById('denoiseVal');
-const brightnessVal = document.getElementById('brightnessVal');
-const contrastVal = document.getElementById('contrastVal');
-const saturationVal = document.getElementById('saturationVal');
+        // File upload area click
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('fileInput');
+        
+        fileUploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
 
-const presetAuto = document.getElementById('presetAuto');
-const presetSharpen = document.getElementById('presetSharpen');
-const presetDenoise = document.getElementById('presetDenoise');
+        // Elements
+        const origCanvas = document.getElementById('origCanvas');
+        const outCanvas = document.getElementById('outCanvas');
+        const statusEl = document.getElementById('status');
+        const processingEl = document.getElementById('processing');
+        const applyBtn = document.getElementById('applyBtn');
+        const applyBtn2 = document.getElementById('applyBtn2');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const downloadBtn2 = document.getElementById('downloadBtn2');
 
-let origImg = new Image();
-let origLoaded = false;
-let origWidth=0, origHeight=0;
+        const strengthEl = document.getElementById('strength');
+        const sharpenEl = document.getElementById('sharpen');
+        const denoiseEl = document.getElementById('denoise');
+        const brightnessEl = document.getElementById('brightness');
+        const contrastEl = document.getElementById('contrast');
+        const saturationEl = document.getElementById('saturation');
+        const upscaleEl = document.getElementById('upscale');
+        const outFormatEl = document.getElementById('outFormat');
+        const qualityEl = document.getElementById('jpegQuality');
 
-// update badges
-function updateBadges(){
-  strengthVal.textContent = Number(strengthEl.value).toFixed(2);
-  sharpenVal.textContent = Number(sharpenEl.value).toFixed(2);
-  radiusVal.textContent = Number(radiusEl.value);
-  denoiseVal.textContent = Number(denoiseEl.value).toFixed(2);
-  brightnessVal.textContent = Number(brightnessEl.value);
-  contrastVal.textContent = Number(contrastEl.value);
-  saturationVal.textContent = Number(saturationEl.value);
-}
-Array.from([strengthEl, sharpenEl, radiusEl, denoiseEl, brightnessEl, contrastEl, saturationEl]).forEach(el=>{
-  el.addEventListener('input', updateBadges);
-});
-updateBadges();
+        const strengthVal = document.getElementById('strengthVal');
+        const sharpenVal = document.getElementById('sharpenVal');
+        const denoiseVal = document.getElementById('denoiseVal');
+        const brightnessVal = document.getElementById('brightnessVal');
+        const contrastVal = document.getElementById('contrastVal');
+        const saturationVal = document.getElementById('saturationVal');
+        const qualityVal = document.getElementById('qualityVal');
 
-// Preset handling
-presetAuto.addEventListener('click', () => {
-  setActivePreset(presetAuto);
-  strengthEl.value = 1;
-  sharpenEl.value = 0.8;
-  radiusEl.value = 1.5;
-  denoiseEl.value = 0.12;
-  brightnessEl.value = 0;
-  contrastEl.value = 0.06;
-  saturationEl.value = 0.06;
-  updateBadges();
-});
+        const presetAuto = document.getElementById('presetAuto');
+        const presetSharpen = document.getElementById('presetSharpen');
+        const presetDenoise = document.getElementById('presetDenoise');
 
-presetSharpen.addEventListener('click', () => {
-  setActivePreset(presetSharpen);
-  strengthEl.value = 1.2;
-  sharpenEl.value = 1.5;
-  radiusEl.value = 1.0;
-  denoiseEl.value = 0;
-  brightnessEl.value = 0;
-  contrastEl.value = 0.1;
-  saturationEl.value = 0;
-  updateBadges();
-});
+        // Stats elements
+        const originalSizeEl = document.getElementById('originalSize');
+        const enhancedSizeEl = document.getElementById('enhancedSize');
+        const improvementEl = document.getElementById('improvement');
 
-presetDenoise.addEventListener('click', () => {
-  setActivePreset(presetDenoise);
-  strengthEl.value = 1;
-  sharpenEl.value = 0;
-  radiusEl.value = 2.0;
-  denoiseEl.value = 0.3;
-  brightnessEl.value = 0.05;
-  contrastEl.value = 0.05;
-  saturationEl.value = 0.05;
-  updateBadges();
-});
+        let origImg = new Image();
+        let origLoaded = false;
+        let origWidth=0, origHeight=0;
 
-function setActivePreset(activePreset) {
-  [presetAuto, presetSharpen, presetDenoise].forEach(preset => {
-    preset.classList.remove('active');
-  });
-  activePreset.classList.add('active');
-}
+        // update badges
+        function updateBadges(){
+          strengthVal.textContent = Number(strengthEl.value).toFixed(2);
+          sharpenVal.textContent = Number(sharpenEl.value).toFixed(2);
+          denoiseVal.textContent = Number(denoiseEl.value).toFixed(2);
+          brightnessVal.textContent = Number(brightnessEl.value).toFixed(2);
+          contrastVal.textContent = Number(contrastEl.value).toFixed(2);
+          saturationVal.textContent = Number(saturationEl.value).toFixed(2);
+          qualityVal.textContent = Math.round(Number(qualityEl.value) * 100) + '%';
+        }
+        
+        Array.from([strengthEl, sharpenEl, denoiseEl, brightnessEl, contrastEl, saturationEl, qualityEl]).forEach(el=>{
+          el.addEventListener('input', updateBadges);
+        });
+        updateBadges();
 
-// file load
-fileInput.addEventListener('change', async (e)=>{
-  const file = e.target.files && e.target.files[0];
-  if(!file) return;
-  if(!file.type.startsWith('image/')) { alert('Please select an image file'); return; }
-  if(file.size > 15 * 1024 * 1024) { // 15MB guard for browser performance
-    if(!confirm('File is large (>15MB). Continue?')) return;
-  }
-  const url = URL.createObjectURL(file);
-  origImg = new Image();
-  origImg.onload = () => {
-    origLoaded = true;
-    origWidth = origImg.naturalWidth;
-    origHeight = origImg.naturalHeight;
-    drawOriginal();
-    status('Image loaded: ' + origWidth + '×' + origHeight);
-    URL.revokeObjectURL(url);
-  };
-  origImg.onerror = ()=> alert('Failed to load image');
-  origImg.src = url;
-});
+        // Preset handling
+        presetAuto.addEventListener('click', () => {
+            setActivePreset(presetAuto);
+            strengthEl.value = 1;
+            sharpenEl.value = 0.8;
+            denoiseEl.value = 0.12;
+            brightnessEl.value = 0;
+            contrastEl.value = 0.06;
+            saturationEl.value = 0.06;
+            updateBadges();
+        });
 
-function status(txt){ statusEl.textContent = txt; }
+        presetSharpen.addEventListener('click', () => {
+            setActivePreset(presetSharpen);
+            strengthEl.value = 1.2;
+            sharpenEl.value = 1.5;
+            denoiseEl.value = 0;
+            brightnessEl.value = 0;
+            contrastEl.value = 0.1;
+            saturationEl.value = 0;
+            updateBadges();
+        });
 
-// draw original on canvas sized to fit preview area (max width 420)
-function drawOriginal(){
-  const maxPreviewWidth = 420;
-  const scale = Math.min(1, maxPreviewWidth / origWidth);
-  const w = Math.max(200, Math.round(origWidth * scale));
-  const h = Math.round(origHeight * scale);
-  origCanvas.width = w; origCanvas.height = h;
-  const ctx = origCanvas.getContext('2d');
-  ctx.clearRect(0,0,w,h);
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = 'high';
-  ctx.drawImage(origImg, 0, 0, w, h);
-  document.getElementById('origMeta').textContent = `${origWidth}×${origHeight}`;
-  // clear out canvas
-  outCanvas.width = w; outCanvas.height = h;
-  const outCtx = outCanvas.getContext('2d'); outCtx.clearRect(0,0,w,h);
-  document.getElementById('outMeta').textContent = 'No output';
-}
+        presetDenoise.addEventListener('click', () => {
+            setActivePreset(presetDenoise);
+            strengthEl.value = 1;
+            sharpenEl.value = 0;
+            denoiseEl.value = 0.3;
+            brightnessEl.value = 0.05;
+            contrastEl.value = 0.05;
+            saturationEl.value = 0.05;
+            updateBadges();
+        });
 
-// MAIN: apply enhancements
-applyBtn.addEventListener('click', async ()=>{
-  if(!origLoaded){ alert('Please upload an image first'); return; }
-  try{
-    showProcessing(true);
-    // get parameters
-    const strength = Number(strengthEl.value);
-    const sharpenAmount = Number(sharpenEl.value) * strength; // combined
-    const radius = Number(radiusEl.value);
-    const denoise = Number(denoiseEl.value) * strength;
-    const brightness = Number(brightnessEl.value) * 255;
-    const contrast = Number(contrastEl.value);
-    const saturation = Number(saturationEl.value);
-    const upscale = Number(upscaleEl.value);
-    // compute target size for processing (use source size * upscale)
-    const targetW = Math.round(origImg.naturalWidth * upscale);
-    const targetH = Math.round(origImg.naturalHeight * upscale);
+        function setActivePreset(activePreset) {
+            [presetAuto, presetSharpen, presetDenoise].forEach(preset => {
+                preset.classList.remove('active');
+            });
+            activePreset.classList.add('active');
+        }
 
-    // Step 1: upscale source to working canvas with high quality
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = targetW; tempCanvas.height = targetH;
-    const tctx = tempCanvas.getContext('2d');
-    tctx.imageSmoothingEnabled = true;
-    tctx.imageSmoothingQuality = 'high';
-    // draw high-res scaled image
-    tctx.drawImage(origImg, 0, 0, targetW, targetH);
+        // file load
+        fileInput.addEventListener('change', async (e)=>{
+            const file = e.target.files && e.target.files[0];
+            if(!file) return;
+            if(!file.type.startsWith('image/')) { 
+                alert('Please select an image file'); 
+                return; 
+            }
+            if(file.size > 15 * 1024 * 1024) { // 15MB guard for browser performance
+                if(!confirm('File is large (>15MB). Continue?')) return;
+            }
+            
+            const url = URL.createObjectURL(file);
+            origImg = new Image();
+            origImg.onload = () => {
+                origLoaded = true;
+                origWidth = origImg.naturalWidth;
+                origHeight = origImg.naturalHeight;
+                drawOriginal();
+                status('Image loaded: ' + origWidth + '×' + origHeight);
+                updateStats();
+                URL.revokeObjectURL(url);
+                
+                // Switch to adjust tab after image is loaded
+                if (window.innerWidth <= 768) {
+                    document.querySelector('.mobile-tab[data-tab="adjust"]').click();
+                }
+            };
+            origImg.onerror = ()=> alert('Failed to load image');
+            origImg.src = url;
+        });
 
-    // get image data for processing
-    let imageData = tctx.getImageData(0,0,targetW,targetH);
+        function status(txt){ statusEl.textContent = txt; }
 
-    // Optionally denoise: create blurred copy and blend toward the blurred image
-    if(denoise > 0.001){
-      // gaussian blur via separable kernel (approx)
-      const blurred = gaussianBlur(imageData, Math.max(1, Math.round(radius || 2)));
-      // blend original toward blurred by factor denoise
-      imageData = blendImageData(imageData, blurred, denoise);
-    }
+        // Update stats
+        function updateStats() {
+            if (origLoaded) {
+                originalSizeEl.textContent = origWidth + '×' + origHeight;
+                enhancedSizeEl.textContent = '-';
+                improvementEl.textContent = '-';
+            }
+        }
 
-    // Sharpen via unsharp mask: original + amount * (original - blurred)
-    if(sharpenAmount > 0.001){
-      const blurredForUnsharp = gaussianBlur(imageData, Math.max(1, Math.round(radius || 1)));
-      imageData = unsharpMaskFrom(imageData, blurredForUnsharp, sharpenAmount);
-    }
+        // draw original on canvas sized to fit preview area
+        function drawOriginal(){
+            const maxPreviewWidth = 400;
+            const scale = Math.min(1, maxPreviewWidth / origWidth);
+            const w = Math.max(200, Math.round(origWidth * scale));
+            const h = Math.round(origHeight * scale);
+            origCanvas.width = w; origCanvas.height = h;
+            const ctx = origCanvas.getContext('2d');
+            ctx.clearRect(0,0,w,h);
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(origImg, 0, 0, w, h);
+            document.getElementById('origMeta').textContent = `${origWidth}×${origHeight}`;
+            // clear out canvas
+            outCanvas.width = w; outCanvas.height = h;
+            const outCtx = outCanvas.getContext('2d'); outCtx.clearRect(0,0,w,h);
+            document.getElementById('outMeta').textContent = 'No enhancement applied';
+        }
 
-    // Color adjustments: brightness, contrast, saturation
-    if(Math.abs(brightness) > 0.5 || Math.abs(contrast) > 0.001 || Math.abs(saturation) > 0.001){
-      imageData = adjustColor(imageData, brightness, contrast, saturation);
-    }
+        // MAIN: apply enhancements
+        function applyEnhancements() {
+            if(!origLoaded){ alert('Please upload an image first'); return; }
+            try{
+                showProcessing(true);
+                // get parameters
+                const strength = Number(strengthEl.value);
+                const sharpenAmount = Number(sharpenEl.value) * strength; // combined
+                const radius = 1.5; // Fixed for mobile simplicity
+                const denoise = Number(denoiseEl.value) * strength;
+                const brightness = Number(brightnessEl.value) * 255;
+                const contrast = Number(contrastEl.value);
+                const saturation = Number(saturationEl.value);
+                const upscale = Number(upscaleEl.value);
+                // compute target size for processing (use source size * upscale)
+                const targetW = Math.round(origImg.naturalWidth * upscale);
+                const targetH = Math.round(origImg.naturalHeight * upscale);
 
-    // Put processed data back to temp canvas
-    tctx.putImageData(imageData, 0, 0);
+                // Step 1: upscale source to working canvas with high quality
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = targetW; tempCanvas.height = targetH;
+                const tctx = tempCanvas.getContext('2d');
+                tctx.imageSmoothingEnabled = true;
+                tctx.imageSmoothingQuality = 'high';
+                // draw high-res scaled image
+                tctx.drawImage(origImg, 0, 0, targetW, targetH);
 
-    // Draw processed image to output preview canvas sized to preview
-    const previewW = origCanvas.width;
-    const previewH = Math.round(targetH * (previewW / targetW));
-    outCanvas.width = previewW; outCanvas.height = previewH;
-    const outCtx = outCanvas.getContext('2d');
-    outCtx.imageSmoothingEnabled = true;
-    outCtx.imageSmoothingQuality = 'high';
-    outCtx.clearRect(0,0,previewW,previewH);
-    outCtx.drawImage(tempCanvas, 0, 0, previewW, previewH);
+                // get image data for processing
+                let imageData = tctx.getImageData(0,0,targetW,targetH);
 
-    document.getElementById('outMeta').textContent = `${targetW}×${targetH}`;
-    status('Enhancement complete');
-  } catch (err) {
-    console.error(err);
-    alert('Processing failed: ' + err.message);
-  } finally {
-    showProcessing(false);
-  }
-});
+                // Optionally denoise: create blurred copy and blend toward the blurred image
+                if(denoise > 0.001){
+                    // gaussian blur via separable kernel (approx)
+                    const blurred = gaussianBlur(imageData, Math.max(1, Math.round(radius || 2)));
+                    // blend original toward blurred by factor denoise
+                    imageData = blendImageData(imageData, blurred, denoise);
+                }
 
-// DOWNLOAD
-downloadBtn.addEventListener('click', ()=>{
-  if(!origLoaded) return alert('No image to download');
-  const mime = outFormatEl.value || 'image/png';
-  const quality = Number(qualityEl.value) || 0.92;
-  // create a high-res canvas export: use last processed upscale target if present
-  // For simplicity, re-run quick processing but output to full target size
-  (async ()=>{
-    try{
-      showProcessing(true);
-      // generate final canvas at upscale size
-      const upscale = Number(upscaleEl.value);
-      const targetW = Math.round(origImg.naturalWidth * upscale);
-      const targetH = Math.round(origImg.naturalHeight * upscale);
-      const finalCanvas = document.createElement('canvas');
-      finalCanvas.width = targetW; finalCanvas.height = targetH;
-      const fctx = finalCanvas.getContext('2d');
-      fctx.imageSmoothingEnabled = true;
-      fctx.imageSmoothingQuality = 'high';
-      fctx.drawImage(origImg, 0, 0, targetW, targetH);
-      let idata = fctx.getImageData(0,0,targetW,targetH);
+                // Sharpen via unsharp mask: original + amount * (original - blurred)
+                if(sharpenAmount > 0.001){
+                    const blurredForUnsharp = gaussianBlur(imageData, Math.max(1, Math.round(radius || 1)));
+                    imageData = unsharpMaskFrom(imageData, blurredForUnsharp, sharpenAmount);
+                }
 
-      // apply same steps as in Apply (denoise, sharpen, colors)
-      const strength = Number(strengthEl.value);
-      const sharpenAmount = Number(sharpenEl.value) * strength;
-      const radius = Number(radiusEl.value);
-      const denoise = Number(denoiseEl.value) * strength;
-      const brightness = Number(brightnessEl.value) * 255;
-      const contrast = Number(contrastEl.value);
-      const saturation = Number(saturationEl.value);
+                // Color adjustments: brightness, contrast, saturation
+                if(Math.abs(brightness) > 0.5 || Math.abs(contrast) > 0.001 || Math.abs(saturation) > 0.001){
+                    imageData = adjustColor(imageData, brightness, contrast, saturation);
+                }
 
-      if(denoise > 0.001){
-        const blurred = gaussianBlur(idata, Math.max(1, Math.round(radius || 2)));
-        idata = blendImageData(idata, blurred, denoise);
-      }
-      if(sharpenAmount > 0.001){
-        const blurredForUnsharp = gaussianBlur(idata, Math.max(1, Math.round(radius || 1)));
-        idata = unsharpMaskFrom(idata, blurredForUnsharp, sharpenAmount);
-      }
-      if(Math.abs(brightness) > 0.5 || Math.abs(contrast) > 0.001 || Math.abs(saturation) > 0.001){
-        idata = adjustColor(idata, brightness, contrast, saturation);
-      }
-      fctx.putImageData(idata, 0, 0);
+                // Put processed data back to temp canvas
+                tctx.putImageData(imageData, 0, 0);
 
-      finalCanvas.toBlob((blob)=>{
-        if(!blob){ alert('Export failed'); showProcessing(false); return; }
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'enhanced.' + (mime === 'image/png' ? 'png' : mime === 'image/webp' ? 'webp' : 'jpg');
-        a.click();
-        showProcessing(false);
-      }, mime, quality);
-    } catch(err){
-      showProcessing(false);
-      alert('Export failed: ' + err.message);
-    }
-  })();
-});
+                // Draw processed image to output preview canvas sized to preview
+                const previewW = origCanvas.width;
+                const previewH = Math.round(targetH * (previewW / targetW));
+                outCanvas.width = previewW; outCanvas.height = previewH;
+                const outCtx = outCanvas.getContext('2d');
+                outCtx.imageSmoothingEnabled = true;
+                outCtx.imageSmoothingQuality = 'high';
+                outCtx.clearRect(0,0,previewW,previewH);
+                outCtx.drawImage(tempCanvas, 0, 0, previewW, previewH);
 
-// show processing
-function showProcessing(on){
-  processingEl.style.display = on ? 'inline-flex' : 'none';
-}
+                document.getElementById('outMeta').textContent = `${targetW}×${targetH}`;
+                enhancedSizeEl.textContent = targetW + '×' + targetH;
+                improvementEl.textContent = upscale + '×';
+                status('Enhancement complete');
+                
+                // Switch to preview tab after processing
+                if (window.innerWidth <= 768) {
+                    document.querySelector('.mobile-tab[data-tab="preview"]').click();
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Processing failed: ' + err.message);
+            } finally {
+                showProcessing(false);
+            }
+        }
 
-// ---------- Image processing helpers (medium-quality, CPU-friendly) ----------
+        applyBtn.addEventListener('click', applyEnhancements);
+        applyBtn2.addEventListener('click', applyEnhancements);
 
-// Create a blurred copy via separable gaussian blur (approx).
-function gaussianBlur(imageData, radius){
-  // For performance: small radius only. Use box blur approximation via multiple passes if needed.
-  const w = imageData.width, h = imageData.height;
-  const src = imageData.data;
-  const out = new Uint8ClampedArray(src.length);
-  // if radius <= 0 return a copy
-  if(radius <= 0) return new ImageData(new Uint8ClampedArray(src), w, h);
+        // DOWNLOAD
+        function downloadEnhanced() {
+            if(!origLoaded) return alert('No image to download');
+            const mime = outFormatEl.value || 'image/png';
+            const quality = Number(qualityEl.value) || 0.92;
+            // create a high-res canvas export: use last processed upscale target if present
+            // For simplicity, re-run quick processing but output to full target size
+            (async ()=>{
+                try{
+                    showProcessing(true);
+                    // generate final canvas at upscale size
+                    const upscale = Number(upscaleEl.value);
+                    const targetW = Math.round(origImg.naturalWidth * upscale);
+                    const targetH = Math.round(origImg.naturalHeight * upscale);
+                    const finalCanvas = document.createElement('canvas');
+                    finalCanvas.width = targetW; finalCanvas.height = targetH;
+                    const fctx = finalCanvas.getContext('2d');
+                    fctx.imageSmoothingEnabled = true;
+                    fctx.imageSmoothingQuality = 'high';
+                    fctx.drawImage(origImg, 0, 0, targetW, targetH);
+                    let idata = fctx.getImageData(0,0,targetW,targetH);
 
-  // Kernel via box blur approximation: do three passes
-  const kernel = Math.max(1, Math.round(radius));
-  // horizontal then vertical simple box blur repeated 2 times -> approximates gaussian
-  boxBlur(src, out, w, h, kernel);
-  boxBlur(out, src, w, h, kernel);
-  boxBlur(src, out, w, h, kernel);
-  return new ImageData(out, w, h);
-}
-function boxBlur(src, dst, w, h, r){
-  // src, dst are Uint8ClampedArray; do per-channel
-  const tmp = new Uint32Array(w * h);
-  const channels = 4;
-  // horizontal pass into tmp (packed RGBA into 32-bit)
-  for(let y=0;y<h;y++){
-    let sumR=0,sumG=0,sumB=0,sumA=0;
-    const row = y*w;
-    // init window
-    for(let x=0;x<=r && x<w;x++){
-      const idx = (row + x)*4;
-      sumR += src[idx]; sumG += src[idx+1]; sumB += src[idx+2]; sumA += src[idx+3];
-    }
-    for(let x=0;x<w;x++){
-      const outIdx = row + x;
-      const divisor = Math.min(w-1, x+r) - Math.max(0, x-r) + 1;
-      tmp[outIdx] = ((sumR/divisor&0xff) << 0) | ((sumG/divisor&0xff) << 8) | ((sumB/divisor&0xff) << 16) | ((sumA/divisor&0xff) << 24);
-      // slide window
-      const iadd = x + r + 1;
-      const isub = x - r;
-      if(iadd < w){
-        const idxAdd = (row + iadd)*4;
-        sumR += src[idxAdd]; sumG += src[idxAdd+1]; sumB += src[idxAdd+2]; sumA += src[idxAdd+3];
-      }
-      if(isub >= 0){
-        const idxSub = (row + isub)*4;
-        sumR -= src[idxSub]; sumG -= src[idxSub+1]; sumB -= src[idxSub+2]; sumA -= src[idxSub+3];
-      }
-    }
-  }
-  // vertical pass from tmp -> dst
-  for(let x=0;x<w;x++){
-    let sumR=0,sumG=0,sumB=0,sumA=0;
-    for(let y=0;y<=r && y<h;y++){
-      const v = tmp[y*w + x];
-      sumR += v & 0xff; sumG += (v>>8)&0xff; sumB += (v>>16)&0xff; sumA += (v>>24)&0xff;
-    }
-    for(let y=0;y<h;y++){
-      const idx = (y*w + x)*4;
-      const divisor = Math.min(h-1, y+r) - Math.max(0, y-r) + 1;
-      const v = Math.round(sumR/divisor) & 0xff;
-      dst[idx] = Math.round(sumR/divisor);
-      dst[idx+1] = Math.round(sumG/divisor);
-      dst[idx+2] = Math.round(sumB/divisor);
-      dst[idx+3] = Math.round(sumA/divisor);
-      const iadd = y + r + 1;
-      const isub = y - r;
-      if(iadd < h){
-        const vAdd = tmp[iadd*w + x];
-        sumR += vAdd & 0xff; sumG += (vAdd>>8)&0xff; sumB += (vAdd>>16)&0xff; sumA += (vAdd>>24)&0xff;
-      }
-      if(isub >= 0){
-        const vSub = tmp[isub*w + x];
-        sumR -= vSub & 0xff; sumG -= (vSub>>8)&0xff; sumB -= (vSub>>16)&0xff; sumA -= (vSub>>24)&0xff;
-      }
-    }
-  }
-}
+                    // apply same steps as in Apply (denoise, sharpen, colors)
+                    const strength = Number(strengthEl.value);
+                    const sharpenAmount = Number(sharpenEl.value) * strength;
+                    const radius = 1.5;
+                    const denoise = Number(denoiseEl.value) * strength;
+                    const brightness = Number(brightnessEl.value) * 255;
+                    const contrast = Number(contrastEl.value);
+                    const saturation = Number(saturationEl.value);
 
-// Blend: out = src*(1-f) + blurred*f
-function blendImageData(srcData, blurredImageData, f){
-  const w = srcData.width, h = srcData.height;
-  const s = srcData.data, b = blurredImageData.data;
-  const out = new Uint8ClampedArray(s.length);
-  for(let i=0;i<s.length;i+=4){
-    out[i]   = Math.round(s[i]   * (1-f) + b[i]   * f);
-    out[i+1] = Math.round(s[i+1] * (1-f) + b[i+1] * f);
-    out[i+2] = Math.round(s[i+2] * (1-f) + b[i+2] * f);
-    out[i+3] = s[i+3];
-  }
-  return new ImageData(out, w, h);
-}
+                    if(denoise > 0.001){
+                        const blurred = gaussianBlur(idata, Math.max(1, Math.round(radius || 2)));
+                        idata = blendImageData(idata, blurred, denoise);
+                    }
+                    if(sharpenAmount > 0.001){
+                        const blurredForUnsharp = gaussianBlur(idata, Math.max(1, Math.round(radius || 1)));
+                        idata = unsharpMaskFrom(idata, blurredForUnsharp, sharpenAmount);
+                    }
+                    if(Math.abs(brightness) > 0.5 || Math.abs(contrast) > 0.001 || Math.abs(saturation) > 0.001){
+                        idata = adjustColor(idata, brightness, contrast, saturation);
+                    }
+                    fctx.putImageData(idata, 0, 0);
 
-// Unsharp mask: result = orig + amount * (orig - blurred)
-function unsharpMaskFrom(origImageData, blurredImageData, amount){
-  const w = origImageData.width, h = origImageData.height;
-  const src = origImageData.data, blur = blurredImageData.data;
-  const out = new Uint8ClampedArray(src.length);
-  for(let i=0;i<src.length;i+=4){
-    const r = src[i], g = src[i+1], bb = src[i+2];
-    const br = blur[i], bg = blur[i+1], bbb = blur[i+2];
-    out[i]   = clamp(Math.round(r + amount * (r - br)));
-    out[i+1] = clamp(Math.round(g + amount * (g - bg)));
-    out[i+2] = clamp(Math.round(bb + amount * (bb - bbb)));
-    out[i+3] = src[i+3];
-  }
-  return new ImageData(out, w, h);
-}
+                    finalCanvas.toBlob((blob)=>{
+                        if(!blob){ alert('Export failed'); showProcessing(false); return; }
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(blob);
+                        a.download = 'enhanced.' + (mime === 'image/png' ? 'png' : mime === 'image/webp' ? 'webp' : 'jpg');
+                        a.click();
+                        showProcessing(false);
+                    }, mime, quality);
+                } catch(err){
+                    showProcessing(false);
+                    alert('Export failed: ' + err.message);
+                }
+            })();
+        }
 
-// adjust color: brightness (±255), contrast (-1..1), saturation (-1..1)
-function adjustColor(imageData, brightness=0, contrast=0, saturation=0){
-  const w = imageData.width, h = imageData.height;
-  const src = imageData.data;
-  const out = new Uint8ClampedArray(src.length);
-  // contrast factor
-  const c = (1+contrast);
-  for(let i=0;i<src.length;i+=4){
-    // convert to linear-ish by simple ops
-    let r = src[i], g = src[i+1], b = src[i+2];
-    // brightness
-    r = r + brightness; g = g + brightness; b = b + brightness;
-    // contrast
-    r = ((r - 128) * c) + 128;
-    g = ((g - 128) * c) + 128;
-    b = ((b - 128) * c) + 128;
-    // saturation via HSL approx: convert to lum and lerp
-    const lum = 0.2126*r + 0.7152*g + 0.0722*b;
-    r = lerp(lum, r, 1 + saturation);
-    g = lerp(lum, g, 1 + saturation);
-    b = lerp(lum, b, 1 + saturation);
-    out[i] = clamp(Math.round(r));
-    out[i+1] = clamp(Math.round(g));
-    out[i+2] = clamp(Math.round(b));
-    out[i+3] = src[i+3];
-  }
-  return new ImageData(out, w, h);
-}
+        downloadBtn.addEventListener('click', downloadEnhanced);
+        downloadBtn2.addEventListener('click', downloadEnhanced);
 
-// helpers
-function clamp(v){ return v < 0 ? 0 : (v > 255 ? 255 : v); }
-function lerp(a,b,t){ return a + (b-a)*t; }
+        // show processing
+        function showProcessing(on){
+            processingEl.style.display = on ? 'inline-flex' : 'none';
+        }
 
-//
-// NOTE: This client-side enhancer uses pixel-processing approximations (fast, private).
-// For best "AI" results (GAN-based super-resolution), use a server-side AI model like Real-ESRGAN, ESRGAN, or commercial APIs.
-// Example server approach (high-level):
-// - POST image to /api/upscale on your server
-// - Server calls a model (Replicate or your own) with your secret API key (kept in .env)
-// - Server returns resulting image blob -> client shows it
-// Do NOT put your API key in client code.
-//
-</script>
+        // ---------- Image processing helpers (medium-quality, CPU-friendly) ----------
+
+        // Create a blurred copy via separable gaussian blur (approx).
+        function gaussianBlur(imageData, radius){
+            // For performance: small radius only. Use box blur approximation via multiple passes if needed.
+            const w = imageData.width, h = imageData.height;
+            const src = imageData.data;
+            const out = new Uint8ClampedArray(src.length);
+            // if radius <= 0 return a copy
+            if(radius <= 0) return new ImageData(new Uint8ClampedArray(src), w, h);
+
+            // Kernel via box blur approximation: do three passes
+            const kernel = Math.max(1, Math.round(radius));
+            // horizontal then vertical simple box blur repeated 2 times -> approximates gaussian
+            boxBlur(src, out, w, h, kernel);
+            boxBlur(out, src, w, h, kernel);
+            boxBlur(src, out, w, h, kernel);
+            return new ImageData(out, w, h);
+        }
+        
+        function boxBlur(src, dst, w, h, r){
+            // src, dst are Uint8ClampedArray; do per-channel
+            const tmp = new Uint32Array(w * h);
+            const channels = 4;
+            // horizontal pass into tmp (packed RGBA into 32-bit)
+            for(let y=0;y<h;y++){
+                let sumR=0,sumG=0,sumB=0,sumA=0;
+                const row = y*w;
+                // init window
+                for(let x=0;x<=r && x<w;x++){
+                    const idx = (row + x)*4;
+                    sumR += src[idx]; sumG += src[idx+1]; sumB += src[idx+2]; sumA += src[idx+3];
+                }
+                for(let x=0;x<w;x++){
+                    const outIdx = row + x;
+                    const divisor = Math.min(w-1, x+r) - Math.max(0, x-r) + 1;
+                    tmp[outIdx] = ((sumR/divisor&0xff) << 0) | ((sumG/divisor&0xff) << 8) | ((sumB/divisor&0xff) << 16) | ((sumA/divisor&0xff) << 24);
+                    // slide window
+                    const iadd = x + r + 1;
+                    const isub = x - r;
+                    if(iadd < w){
+                        const idxAdd = (row + iadd)*4;
+                        sumR += src[idxAdd]; sumG += src[idxAdd+1]; sumB += src[idxAdd+2]; sumA += src[idxAdd+3];
+                    }
+                    if(isub >= 0){
+                        const idxSub = (row + isub)*4;
+                        sumR -= src[idxSub]; sumG -= src[idxSub+1]; sumB -= src[idxSub+2]; sumA -= src[idxSub+3];
+                    }
+                }
+            }
+            // vertical pass from tmp -> dst
+            for(let x=0;x<w;x++){
+                let sumR=0,sumG=0,sumB=0,sumA=0;
+                for(let y=0;y<=r && y<h;y++){
+                    const v = tmp[y*w + x];
+                    sumR += v & 0xff; sumG += (v>>8)&0xff; sumB += (v>>16)&0xff; sumA += (v>>24)&0xff;
+                }
+                for(let y=0;y<h;y++){
+                    const idx = (y*w + x)*4;
+                    const divisor = Math.min(h-1, y+r) - Math.max(0, y-r) + 1;
+                    const v = Math.round(sumR/divisor) & 0xff;
+                    dst[idx] = Math.round(sumR/divisor);
+                    dst[idx+1] = Math.round(sumG/divisor);
+                    dst[idx+2] = Math.round(sumB/divisor);
+                    dst[idx+3] = Math.round(sumA/divisor);
+                    const iadd = y + r + 1;
+                    const isub = y - r;
+                    if(iadd < h){
+                        const vAdd = tmp[iadd*w + x];
+                        sumR += vAdd & 0xff; sumG += (vAdd>>8)&0xff; sumB += (vAdd>>16)&0xff; sumA += (vAdd>>24)&0xff;
+                    }
+                    if(isub >= 0){
+                        const vSub = tmp[isub*w + x];
+                        sumR -= vSub & 0xff; sumG -= (vSub>>8)&0xff; sumB -= (vSub>>16)&0xff; sumA -= (vSub>>24)&0xff;
+                    }
+                }
+            }
+        }
+
+        // Blend: out = src*(1-f) + blurred*f
+        function blendImageData(srcData, blurredImageData, f){
+            const w = srcData.width, h = srcData.height;
+            const s = srcData.data, b = blurredImageData.data;
+            const out = new Uint8ClampedArray(s.length);
+            for(let i=0;i<s.length;i+=4){
+                out[i]   = Math.round(s[i]   * (1-f) + b[i]   * f);
+                out[i+1] = Math.round(s[i+1] * (1-f) + b[i+1] * f);
+                out[i+2] = Math.round(s[i+2] * (1-f) + b[i+2] * f);
+                out[i+3] = s[i+3];
+            }
+            return new ImageData(out, w, h);
+        }
+
+        // Unsharp mask: result = orig + amount * (orig - blurred)
+        function unsharpMaskFrom(origImageData, blurredImageData, amount){
+            const w = origImageData.width, h = origImageData.height;
+            const src = origImageData.data, blur = blurredImageData.data;
+            const out = new Uint8ClampedArray(src.length);
+            for(let i=0;i<src.length;i+=4){
+                const r = src[i], g = src[i+1], bb = src[i+2];
+                const br = blur[i], bg = blur[i+1], bbb = blur[i+2];
+                out[i]   = clamp(Math.round(r + amount * (r - br)));
+                out[i+1] = clamp(Math.round(g + amount * (g - bg)));
+                out[i+2] = clamp(Math.round(bb + amount * (bb - bbb)));
+                out[i+3] = src[i+3];
+            }
+            return new ImageData(out, w, h);
+        }
+
+        // adjust color: brightness (±255), contrast (-1..1), saturation (-1..1)
+        function adjustColor(imageData, brightness=0, contrast=0, saturation=0){
+            const w = imageData.width, h = imageData.height;
+            const src = imageData.data;
+            const out = new Uint8ClampedArray(src.length);
+            // contrast factor
+            const c = (1+contrast);
+            for(let i=0;i<src.length;i+=4){
+                // convert to linear-ish by simple ops
+                let r = src[i], g = src[i+1], b = src[i+2];
+                // brightness
+                r = r + brightness; g = g + brightness; b = b + brightness;
+                // contrast
+                r = ((r - 128) * c) + 128;
+                g = ((g - 128) * c) + 128;
+                b = ((b - 128) * c) + 128;
+                // saturation via HSL approx: convert to lum and lerp
+                const lum = 0.2126*r + 0.7152*g + 0.0722*b;
+                r = lerp(lum, r, 1 + saturation);
+                g = lerp(lum, g, 1 + saturation);
+                b = lerp(lum, b, 1 + saturation);
+                out[i] = clamp(Math.round(r));
+                out[i+1] = clamp(Math.round(g));
+                out[i+2] = clamp(Math.round(b));
+                out[i+3] = src[i+3];
+            }
+            return new ImageData(out, w, h);
+        }
+
+        // helpers
+        function clamp(v){ return v < 0 ? 0 : (v > 255 ? 255 : v); }
+        function lerp(a,b,t){ return a + (b-a)*t; }
+    </script>
 </body>
 </html>
