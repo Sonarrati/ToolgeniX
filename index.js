@@ -21,7 +21,7 @@ app.use(express.json({ limit: "5mb" })); // accept JSON bodies up to 5MB
 
 const OPENAI_KEY = process.env.OPENAI_API_KEY;
 if (!OPENAI_KEY) {
-  console.warn("WARNING: OPENAI_API_KEY not set in environment. Set OPENAI_API_KEY in .env");
+  console.warn("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");
 }
 
 // Basic rate limiting (very small) — optional minimal protection
