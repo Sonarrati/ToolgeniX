@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AI Image Enhancer — Toolgenix</title>
+<style>
+:root{
+  --bg:#071025; --panel:#0e1724; --muted:#9fb0c7;
+  --accent:#39d98a; --accent2:#6aa6ff; --card:rgba(255,255,255,0.02);
+  --radius:12px; --glass: rgba(255,255,255,0.03);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Inter, system-ui, Arial; background:linear-gradient(180deg,var(--bg),#01101a); color:#eaf6ff;
+  -webkit-font-smoothing:antialiased; padding:20px;
+}
+.container{max-width:1100px;margin:0 auto}
+.header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.brand h1{margin:0;color:var(--accent)} .brand p{margin:0;color:var(--muted);font-size:13px}
+
+.grid{display:grid;grid-template-columns:420px 1fr;gap:14px}
+@media(max-width:980px){ .grid{grid-template-columns:1fr} }
+
+.card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.01));border-radius:var(--radius);padding:12px;border:1px solid rgba(255,255,255,0.03)}
+.small{font-size:13px;color:var(--muted)}
+.controls{display:flex;flex-direction:column;gap:10px}
+.row{display:flex;gap:8px;align-items:center}
+.label{min-width:110px;color:var(--muted);font-size:13px}
+input[type="range"]{width:100%}
+select,input[type="file"],button,textarea{border-radius:8px;border:none;padding:10px}
+.btn{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#022;font-weight:700;cursor:pointer}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+.previewWrap{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.preview{background:#081227;border-radius:8px;padding:8px;display:flex;flex-direction:column;align-items:center}
+.preview canvas{max-width:100%;height:auto;border-radius:6px;display:block}
+.meta{margin-top:6px;color:var(--muted);font-size:13px}
+.preset{background:transparent;border:1px solid rgba(255,255,255,0.03);border-radius:8px;padding:8px;cursor:pointer;color:var(--muted)}
+
+.footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
+.badge{display:inline-block;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--muted);font-weight:600}
+.processing{display:inline-flex;align-items:center;gap:8px}
+.spinner{width:18px;height:18px;border:3px solid rgba(255,255,255,0.06);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* small helpers */
+.col{display:flex;flex-direction:column;gap:8px}
+.rightActions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="brand">
+      <h1>AI Image Enhancer</h1>
+      <p class="small">Boost image clarity — client-side enhancement (unsharp mask, denoise blend, color adjust, upscale)</p>
+    </div>
+    <div class="small">Tip: For best results use high-quality source image</div>
+  </div>
+
+  <div class="grid">
+    <!-- left controls -->
+    <div class="card">
+      <div class="controls">
+        <div>
+          <label class="small">Upload image (PNG/JPG/WebP/BMP/GIF)</label>
+          <input id="fileInput" type="file" accept="image/*">
+          <div class="small" id="fileNote">Max recommended size: 8MB</div>
+        </div>
+
+        <div class="col">
+          <div class="row">
+            <span class="label">Preset</span>
+            <button class="preset" id="presetAuto">Auto Enhance</button>
+            <button class="preset" id="presetSharpen">Sharpen Only</button>
+            <button class="preset" id="presetDenoise">Denoise Only</button>
+          </div>
+
+          <div class="row">
+            <span class="label">Strength</span>
+            <input id="strength" type="range" min="0" max="2" step="0.05" value="1">
+            <div class="badge" id="strengthVal">1.00</div>
+          </div>
+
+          <div class="row">
+            <span class="label">Sharpen</span>
+            <input id="sharpen" type="range" min="0" max="2" step="0.05" value="0.8">
+            <div class="badge" id="sharpenVal">0.80</div>
+          </div>
+
+          <div class="row">
+            <span class="label">Radius</span>
+            <input id="radius" type="range" min="0" max="10" step="0.5" value="1.5">
+            <div class="badge" id="radiusVal">1.5</div>
+          </div>
+
+          <div class="row">
+            <span class="label">Denoise</span>
+            <input id="denoise" type="range" min="0" max="1" step="0.01" value="0.12">
+            <div class="badge" id="denoiseVal">0.12</div>
+          </div>
+
+          <div class="row">
+            <span class="label">Brightness</span>
+            <input id="brightness" type="range" min="-0.5" max="0.5" step="0.01" value="0">
+            <div class="badge" id="brightnessVal">0</div>
+          </div>
+
+          <div class="row">
+            <span class="label">Contrast</span>
+            <input id="contrast" type="range" min="-0.6" max="0.8" step="0.01" value="0.06">
+            <div class="badge" id="contrastVal">0.06</div>
+          </div>
+
+          <div class="row">
+            <span class="label">Saturation</span>
+            <input id="saturation" type="range" min="-0.8" max="0.8" step="0.01" value="0.06">
+            <div class="badge" id="saturationVal">0.06</div>
+          </div>
+
+          <div class="row">
+            <span class="label">Upscale</span>
+            <select id="upscale" class="input">
+              <option value="1">1× (original)</option>
+              <option value="2">2×</option>
+              <option value="3">3×</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <span class="label">Output format</span>
+            <select id="outFormat">
+              <option value="image/png">PNG</option>
+              <option value="image/jpeg">JPEG</option>
+              <option value="image/webp">WEBP</option>
+            </select>
+
+            <span style="margin-left:auto" class="small">Quality: <input id="jpegQuality" type="range" min="0.4" max="1" step="0.05" value="0.92"></span>
+          </div>
+
+          <div class="row">
+            <button id="applyBtn" class="btn">Apply Enhancements</button>
+            <button id="downloadBtn" class="btn ghost">Download</button>
+          </div>
+
+          <div class="row rightActions">
+            <div id="status" class="small">&nbsp;</div>
+            <div id="processing" class="processing" style="display:none"><div class="spinner"></div><div class="small">Processing...</div></div>
+          </div>
+
+          <div class="small" style="margin-top:6px">Optional: For real AI upscaling (GAN) connect server-side API — see comments in the code.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- right preview -->
+    <div class="card">
+      <div class="previewWrap">
+        <div class="preview" style="width:48%">
+          <div class="small" style="font-weight:700">Original</div>
+          <canvas id="origCanvas"></canvas>
+          <div class="meta" id="origMeta">No image</div>
+        </div>
+
+        <div class="preview" style="width:48%">
+          <div class="small" style="font-weight:700">Enhanced</div>
+          <canvas id="outCanvas"></canvas>
+          <div class="meta" id="outMeta">No output</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Toolgenix — Client-side Image Enhancer • No keys required for client-only mode</div>
+</div>
+
+<script>
+/*
+  AI Image Enhancer (client-side)
+  - Upload image -> draw to origCanvas
+  - Apply improvements: unsharp mask (sharpen), denoise blend (gaussian blur + blend), brightness/contrast/saturation
+  - Upscale using canvas drawImage with imageSmoothingQuality = 'high'
+  - Download result as chosen format
+  - This is deterministic, fast, private (no server). For advanced AI upscaling, add a server endpoint.
+*/
+
+// Elements
+const fileInput = document.getElementById('fileInput');
+const origCanvas = document.getElementById('origCanvas');
+const outCanvas = document.getElementById('outCanvas');
+const statusEl = document.getElementById('status');
+const processingEl = document.getElementById('processing');
+const applyBtn = document.getElementById('applyBtn');
+const downloadBtn = document.getElementById('downloadBtn');
+
+const strengthEl = document.getElementById('strength');
+const sharpenEl = document.getElementById('sharpen');
+const radiusEl = document.getElementById('radius');
+const denoiseEl = document.getElementById('denoise');
+const brightnessEl = document.getElementById('brightness');
+const contrastEl = document.getElementById('contrast');
+const saturationEl = document.getElementById('saturation');
+const upscaleEl = document.getElementById('upscale');
+const outFormatEl = document.getElementById('outFormat');
+const qualityEl = document.getElementById('jpegQuality');
+
+const strengthVal = document.getElementById('strengthVal');
+const sharpenVal = document.getElementById('sharpenVal');
+const radiusVal = document.getElementById('radiusVal');
+const denoiseVal = document.getElementById('denoiseVal');
+const brightnessVal = document.getElementById('brightnessVal');
+const contrastVal = document.getElementById('contrastVal');
+const saturationVal = document.getElementById('saturationVal');
+
+let origImg = new Image();
+let origLoaded = false;
+let origWidth=0, origHeight=0;
+
+// update badges
+function updateBadges(){
+  strengthVal.textContent = Number(strengthEl.value).toFixed(2);
+  sharpenVal.textContent = Number(sharpenEl.value).toFixed(2);
+  radiusVal.textContent = Number(radiusEl.value);
+  denoiseVal.textContent = Number(denoiseEl.value).toFixed(2);
+  brightnessVal.textContent = Number(brightnessEl.value);
+  contrastVal.textContent = Number(contrastEl.value);
+  saturationVal.textContent = Number(saturationEl.value);
+}
+Array.from([strengthEl, sharpenEl, radiusEl, denoiseEl, brightnessEl, contrastEl, saturationEl]).forEach(el=>{
+  el.addEventListener('input', updateBadges);
+});
+updateBadges();
+
+// file load
+fileInput.addEventListener('change', async (e)=>{
+  const file = e.target.files && e.target.files[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/')) { alert('Please select an image file'); return; }
+  if(file.size > 15 * 1024 * 1024) { // 15MB guard for browser performance
+    if(!confirm('File is large (>15MB). Continue?')) return;
+  }
+  const url = URL.createObjectURL(file);
+  origImg = new Image();
+  origImg.onload = () => {
+    origLoaded = true;
+    origWidth = origImg.naturalWidth;
+    origHeight = origImg.naturalHeight;
+    drawOriginal();
+    status('Image loaded: ' + origWidth + '×' + origHeight);
+    URL.revokeObjectURL(url);
+  };
+  origImg.onerror = ()=> alert('Failed to load image');
+  origImg.src = url;
+});
+
+function status(txt){ statusEl.textContent = txt; }
+
+// draw original on canvas sized to fit preview area (max width 420)
+function drawOriginal(){
+  const maxPreviewWidth = 420;
+  const scale = Math.min(1, maxPreviewWidth / origWidth);
+  const w = Math.max(200, Math.round(origWidth * scale));
+  const h = Math.round(origHeight * scale);
+  origCanvas.width = w; origCanvas.height = h;
+  const ctx = origCanvas.getContext('2d');
+  ctx.clearRect(0,0,w,h);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(origImg, 0, 0, w, h);
+  document.getElementById('origMeta').textContent = `${origWidth}×${origHeight}`;
+  // clear out canvas
+  outCanvas.width = w; outCanvas.height = h;
+  const outCtx = outCanvas.getContext('2d'); outCtx.clearRect(0,0,w,h);
+  document.getElementById('outMeta').textContent = 'No output';
+}
+
+// MAIN: apply enhancements
+applyBtn.addEventListener('click', async ()=>{
+  if(!origLoaded){ alert('Please upload an image first'); return; }
+  try{
+    showProcessing(true);
+    // get parameters
+    const strength = Number(strengthEl.value);
+    const sharpenAmount = Number(sharpenEl.value) * strength; // combined
+    const radius = Number(radiusEl.value);
+    const denoise = Number(denoiseEl.value) * strength;
+    const brightness = Number(brightnessEl.value) * 255;
+    const contrast = Number(contrastEl.value);
+    const saturation = Number(saturationEl.value);
+    const upscale = Number(upscaleEl.value);
+    // compute target size for processing (use source size * upscale)
+    const targetW = Math.round(origImg.naturalWidth * upscale);
+    const targetH = Math.round(origImg.naturalHeight * upscale);
+
+    // Step 1: upscale source to working canvas with high quality
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = targetW; tempCanvas.height = targetH;
+    const tctx = tempCanvas.getContext('2d');
+    tctx.imageSmoothingEnabled = true;
+    tctx.imageSmoothingQuality = 'high';
+    // draw high-res scaled image
+    tctx.drawImage(origImg, 0, 0, targetW, targetH);
+
+    // get image data for processing
+    let imageData = tctx.getImageData(0,0,targetW,targetH);
+
+    // Optionally denoise: create blurred copy and blend toward the blurred image
+    if(denoise > 0.001){
+      // gaussian blur via separable kernel (approx)
+      const blurred = gaussianBlur(imageData, Math.max(1, Math.round(radius || 2)));
+      // blend original toward blurred by factor denoise
+      imageData = blendImageData(imageData, blurred, denoise);
+    }
+
+    // Sharpen via unsharp mask: original + amount * (original - blurred)
+    if(sharpenAmount > 0.001){
+      const blurredForUnsharp = gaussianBlur(imageData, Math.max(1, Math.round(radius || 1)));
+      imageData = unsharpMaskFrom(imageData, blurredForUnsharp, sharpenAmount);
+    }
+
+    // Color adjustments: brightness, contrast, saturation
+    if(Math.abs(brightness) > 0.5 || Math.abs(contrast) > 0.001 || Math.abs(saturation) > 0.001){
+      imageData = adjustColor(imageData, brightness, contrast, saturation);
+    }
+
+    // Put processed data back to temp canvas
+    tctx.putImageData(imageData, 0, 0);
+
+    // Draw processed image to output preview canvas sized to preview
+    const previewW = origCanvas.width;
+    const previewH = Math.round(targetH * (previewW / targetW));
+    outCanvas.width = previewW; outCanvas.height = previewH;
+    const outCtx = outCanvas.getContext('2d');
+    outCtx.imageSmoothingEnabled = true;
+    outCtx.imageSmoothingQuality = 'high';
+    outCtx.clearRect(0,0,previewW,previewH);
+    outCtx.drawImage(tempCanvas, 0, 0, previewW, previewH);
+
+    document.getElementById('outMeta').textContent = `${targetW}×${targetH}`;
+    status('Enhancement complete');
+  } catch (err) {
+    console.error(err);
+    alert('Processing failed: ' + err.message);
+  } finally {
+    showProcessing(false);
+  }
+});
+
+// DOWNLOAD
+downloadBtn.addEventListener('click', ()=>{
+  if(!origLoaded) return alert('No image to download');
+  const mime = outFormatEl.value || 'image/png';
+  const quality = Number(qualityEl.value) || 0.92;
+  // create a high-res canvas export: use last processed upscale target if present
+  // For simplicity, re-run quick processing but output to full target size
+  (async ()=>{
+    try{
+      showProcessing(true);
+      // generate final canvas at upscale size
+      const upscale = Number(upscaleEl.value);
+      const targetW = Math.round(origImg.naturalWidth * upscale);
+      const targetH = Math.round(origImg.naturalHeight * upscale);
+      const finalCanvas = document.createElement('canvas');
+      finalCanvas.width = targetW; finalCanvas.height = targetH;
+      const fctx = finalCanvas.getContext('2d');
+      fctx.imageSmoothingEnabled = true;
+      fctx.imageSmoothingQuality = 'high';
+      fctx.drawImage(origImg, 0, 0, targetW, targetH);
+      let idata = fctx.getImageData(0,0,targetW,targetH);
+
+      // apply same steps as in Apply (denoise, sharpen, colors)
+      const strength = Number(strengthEl.value);
+      const sharpenAmount = Number(sharpenEl.value) * strength;
+      const radius = Number(radiusEl.value);
+      const denoise = Number(denoiseEl.value) * strength;
+      const brightness = Number(brightnessEl.value) * 255;
+      const contrast = Number(contrastEl.value);
+      const saturation = Number(saturationEl.value);
+
+      if(denoise > 0.001){
+        const blurred = gaussianBlur(idata, Math.max(1, Math.round(radius || 2)));
+        idata = blendImageData(idata, blurred, denoise);
+      }
+      if(sharpenAmount > 0.001){
+        const blurredForUnsharp = gaussianBlur(idata, Math.max(1, Math.round(radius || 1)));
+        idata = unsharpMaskFrom(idata, blurredForUnsharp, sharpenAmount);
+      }
+      if(Math.abs(brightness) > 0.5 || Math.abs(contrast) > 0.001 || Math.abs(saturation) > 0.001){
+        idata = adjustColor(idata, brightness, contrast, saturation);
+      }
+      fctx.putImageData(idata, 0, 0);
+
+      finalCanvas.toBlob((blob)=>{
+        if(!blob){ alert('Export failed'); showProcessing(false); return; }
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'enhanced.' + (mime === 'image/png' ? 'png' : mime === 'image/webp' ? 'webp' : 'jpg');
+        a.click();
+        showProcessing(false);
+      }, mime, quality);
+    } catch(err){
+      showProcessing(false);
+      alert('Export failed: ' + err.message);
+    }
+  })();
+});
+
+// show processing
+function showProcessing(on){
+  processingEl.style.display = on ? 'inline-flex' : 'none';
+}
+
+// ---------- Image processing helpers (medium-quality, CPU-friendly) ----------
+
+// Create a blurred copy via separable gaussian blur (approx).
+function gaussianBlur(imageData, radius){
+  // For performance: small radius only. Use box blur approximation via multiple passes if needed.
+  const w = imageData.width, h = imageData.height;
+  const src = imageData.data;
+  const out = new Uint8ClampedArray(src.length);
+  // if radius <= 0 return a copy
+  if(radius <= 0) return new ImageData(new Uint8ClampedArray(src), w, h);
+
+  // Kernel via box blur approximation: do three passes
+  const kernel = Math.max(1, Math.round(radius));
+  // horizontal then vertical simple box blur repeated 2 times -> approximates gaussian
+  boxBlur(src, out, w, h, kernel);
+  boxBlur(out, src, w, h, kernel);
+  boxBlur(src, out, w, h, kernel);
+  return new ImageData(out, w, h);
+}
+function boxBlur(src, dst, w, h, r){
+  // src, dst are Uint8ClampedArray; do per-channel
+  const tmp = new Uint32Array(w * h);
+  const channels = 4;
+  // horizontal pass into tmp (packed RGBA into 32-bit)
+  for(let y=0;y<h;y++){
+    let sumR=0,sumG=0,sumB=0,sumA=0;
+    const row = y*w;
+    // init window
+    for(let x=0;x<=r && x<w;x++){
+      const idx = (row + x)*4;
+      sumR += src[idx]; sumG += src[idx+1]; sumB += src[idx+2]; sumA += src[idx+3];
+    }
+    for(let x=0;x<w;x++){
+      const outIdx = row + x;
+      const divisor = Math.min(w-1, x+r) - Math.max(0, x-r) + 1;
+      tmp[outIdx] = ((sumR/divisor&0xff) << 0) | ((sumG/divisor&0xff) << 8) | ((sumB/divisor&0xff) << 16) | ((sumA/divisor&0xff) << 24);
+      // slide window
+      const iadd = x + r + 1;
+      const isub = x - r;
+      if(iadd < w){
+        const idxAdd = (row + iadd)*4;
+        sumR += src[idxAdd]; sumG += src[idxAdd+1]; sumB += src[idxAdd+2]; sumA += src[idxAdd+3];
+      }
+      if(isub >= 0){
+        const idxSub = (row + isub)*4;
+        sumR -= src[idxSub]; sumG -= src[idxSub+1]; sumB -= src[idxSub+2]; sumA -= src[idxSub+3];
+      }
+    }
+  }
+  // vertical pass from tmp -> dst
+  for(let x=0;x<w;x++){
+    let sumR=0,sumG=0,sumB=0,sumA=0;
+    for(let y=0;y<=r && y<h;y++){
+      const v = tmp[y*w + x];
+      sumR += v & 0xff; sumG += (v>>8)&0xff; sumB += (v>>16)&0xff; sumA += (v>>24)&0xff;
+    }
+    for(let y=0;y<h;y++){
+      const idx = (y*w + x)*4;
+      const divisor = Math.min(h-1, y+r) - Math.max(0, y-r) + 1;
+      const v = Math.round(sumR/divisor) & 0xff;
+      dst[idx] = Math.round(sumR/divisor);
+      dst[idx+1] = Math.round(sumG/divisor);
+      dst[idx+2] = Math.round(sumB/divisor);
+      dst[idx+3] = Math.round(sumA/divisor);
+      const iadd = y + r + 1;
+      const isub = y - r;
+      if(iadd < h){
+        const vAdd = tmp[iadd*w + x];
+        sumR += vAdd & 0xff; sumG += (vAdd>>8)&0xff; sumB += (vAdd>>16)&0xff; sumA += (vAdd>>24)&0xff;
+      }
+      if(isub >= 0){
+        const vSub = tmp[isub*w + x];
+        sumR -= vSub & 0xff; sumG -= (vSub>>8)&0xff; sumB -= (vSub>>16)&0xff; sumA -= (vSub>>24)&0xff;
+      }
+    }
+  }
+}
+
+// Blend: out = src*(1-f) + blurred*f
+function blendImageData(srcData, blurredImageData, f){
+  const w = srcData.width, h = srcData.height;
+  const s = srcData.data, b = blurredImageData.data;
+  const out = new Uint8ClampedArray(s.length);
+  for(let i=0;i<s.length;i+=4){
+    out[i]   = Math.round(s[i]   * (1-f) + b[i]   * f);
+    out[i+1] = Math.round(s[i+1] * (1-f) + b[i+1] * f);
+    out[i+2] = Math.round(s[i+2] * (1-f) + b[i+2] * f);
+    out[i+3] = s[i+3];
+  }
+  return new ImageData(out, w, h);
+}
+
+// Unsharp mask: result = orig + amount * (orig - blurred)
+function unsharpMaskFrom(origImageData, blurredImageData, amount){
+  const w = origImageData.width, h = origImageData.height;
+  const src = origImageData.data, blur = blurredImageData.data;
+  const out = new Uint8ClampedArray(src.length);
+  for(let i=0;i<src.length;i+=4){
+    const r = src[i], g = src[i+1], bb = src[i+2];
+    const br = blur[i], bg = blur[i+1], bbb = blur[i+2];
+    out[i]   = clamp(Math.round(r + amount * (r - br)));
+    out[i+1] = clamp(Math.round(g + amount * (g - bg)));
+    out[i+2] = clamp(Math.round(bb + amount * (bb - bbb)));
+    out[i+3] = src[i+3];
+  }
+  return new ImageData(out, w, h);
+}
+
+// adjust color: brightness (±255), contrast (-1..1), saturation (-1..1)
+function adjustColor(imageData, brightness=0, contrast=0, saturation=0){
+  const w = imageData.width, h = imageData.height;
+  const src = imageData.data;
+  const out = new Uint8ClampedArray(src.length);
+  // contrast factor
+  const c = (1+contrast);
+  for(let i=0;i<src.length;i+=4){
+    // convert to linear-ish by simple ops
+    let r = src[i], g = src[i+1], b = src[i+2];
+    // brightness
+    r = r + brightness; g = g + brightness; b = b + brightness;
+    // contrast
+    r = ((r - 128) * c) + 128;
+    g = ((g - 128) * c) + 128;
+    b = ((b - 128) * c) + 128;
+    // saturation via HSL approx: convert to lum and lerp
+    const lum = 0.2126*r + 0.7152*g + 0.0722*b;
+    r = lerp(lum, r, 1 + saturation);
+    g = lerp(lum, g, 1 + saturation);
+    b = lerp(lum, b, 1 + saturation);
+    out[i] = clamp(Math.round(r));
+    out[i+1] = clamp(Math.round(g));
+    out[i+2] = clamp(Math.round(b));
+    out[i+3] = src[i+3];
+  }
+  return new ImageData(out, w, h);
+}
+
+// helpers
+function clamp(v){ return v < 0 ? 0 : (v > 255 ? 255 : v); }
+function lerp(a,b,t){ return a + (b-a)*t; }
+
+//
+// NOTE: This client-side enhancer uses pixel-processing approximations (fast, private).
+// For best "AI" results (GAN-based super-resolution), use a server-side AI model like Real-ESRGAN, ESRGAN, or commercial APIs.
+// Example server approach (high-level):
+// - POST image to /api/upscale on your server
+// - Server calls a model (Replicate or your own) with your secret API key (kept in .env)
+// - Server returns resulting image blob -> client shows it
+// Do NOT put your API key in client code.
+//
+</script>
+</body>
+</html>
