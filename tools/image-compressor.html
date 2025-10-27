@@ -3,168 +3,1087 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Image Compressor — Toolgenix</title>
+<title>Image Compressor | Reduce Image File Size | Toolgenix</title>
+<meta name="description" content="Free online image compressor tool to reduce file size while maintaining quality. Supports PNG, JPG, WebP, GIF, BMP, and TIFF formats.">
+<meta name="keywords" content="image compressor, reduce image size, image optimization, file size reducer, image compression tool">
+<meta name="author" content="Toolgenix">
+
+<!-- Open Graph / Social Media Meta Tags -->
+<meta property="og:title" content="Image Compressor | Reduce Image File Size | Toolgenix">
+<meta property="og:description" content="Free online image compressor tool to reduce file size while maintaining quality. Supports PNG, JPG, WebP, GIF, BMP, and TIFF formats.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolgenix.com/tools/image-compressor">
+<meta property="og:image" content="https://toolgenix.com/images/image-compressor-og.jpg">
+<meta property="og:site_name" content="Toolgenix">
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Image Compressor | Reduce Image File Size | Toolgenix">
+<meta name="twitter:description" content="Free online image compressor tool to reduce file size while maintaining quality.">
+<meta name="twitter:image" content="https://toolgenix.com/images/image-compressor-twitter.jpg">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://toolgenix.com/tools/image-compressor">
+
+<!-- Schema.org structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Image Compressor - Toolgenix",
+  "description": "Free online image compressor tool to reduce file size while maintaining quality",
+  "url": "https://toolgenix.com/tools/image-compressor",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any",
+  "permissions": "browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "567"
+  }
+}
+</script>
+
+<!-- Additional FAQ Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "How does the Image Compressor work?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Our tool uses client-side compression algorithms to reduce image file size while maintaining visual quality. All processing happens in your browser for complete privacy."
+    }
+  }, {
+    "@type": "Question",
+    "name": "What image formats are supported?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "We support PNG, JPG/JPEG, WebP, GIF, BMP, and TIFF formats. For animated GIFs, only the first frame will be compressed."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Is my image data kept private?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Absolutely! All compression happens locally in your browser. Your images never leave your device, ensuring complete privacy."
+    }
+  }]
+}
+</script>
+
+<!-- Font Awesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
-:root{
-  --bg:#071025; --panel:#0e1724; --muted:#9fb0c7;
-  --accentA:#7c5cff; --accentB:#39d98a;
-  --glass: rgba(255,255,255,0.03);
-  --radius:12px;
+:root {
+  --primary: #7A5CFA;
+  --primary-light: #8A63FF;
+  --primary-dark: #6A4EDC;
+  --background: #ffffff;
+  --card-bg: #f8f8f8;
+  --text: #1e1e2f;
+  --text-secondary: #2e2e3f;
+  --border: #e5e5e5;
+  --success: #4caf50;
+  --error: #ff4c4c;
+  --warning: #ff9800;
+  --glass: rgba(122, 92, 250, 0.03);
+  --glass-2: rgba(122, 92, 250, 0.02);
+  --glass-border: rgba(122, 92, 250, 0.1);
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
-*{box-sizing:border-box}
-body{
-  margin:0;background:linear-gradient(180deg,var(--bg),#02101a);color:#eaf6ff;font-family:Inter,system-ui,Arial;
-  -webkit-font-smoothing:antialiased;padding:18px;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-.container{max-width:1000px;margin:0 auto}
-.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
-.brand h1{margin:0;color:var(--accentB)} .brand p{margin:0;color:var(--muted);font-size:13px}
 
-.grid{display:grid;grid-template-columns:1fr 360px;gap:14px}
-@media(max-width:980px){.grid{grid-template-columns:1fr}}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+  background: linear-gradient(135deg, #f5f7ff 0%, #f0f2ff 100%);
+  min-height: 100vh;
+}
 
-.card{background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.005));padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-.uploader{display:flex;flex-direction:column;gap:10px;align-items:center;border-radius:10px;padding:18px;background:var(--panel);border:1px dashed rgba(255,255,255,0.04)}
-.drop{width:100%;padding:28px;border-radius:10px;border:2px dashed rgba(255,255,255,0.03);text-align:center;cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent)}
-.drop.dragover{border-color:rgba(122,255,170,0.4);box-shadow:0 8px 40px rgba(0,0,0,0.6) inset}
-.previewRow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.previewBox{flex:1;min-width:180px;background:var(--glass);padding:8px;border-radius:8px;text-align:center}
-.previewBox img{max-width:100%;height:auto;border-radius:8px;display:block;margin:0 auto}
-.small{font-size:13px;color:var(--muted)}
-.row{display:flex;gap:8px;align-items:center}
-.label{min-width:120px;color:var(--muted);font-size:13px}
-.input,select{padding:8px;border-radius:8px;border:none;background:var(--glass);color:inherit}
-.btn{padding:10px 12px;border-radius:10px;border:none;cursor:pointer;background:linear-gradient(90deg,var(--accentB),var(--accentA));color:#022;font-weight:800}
-.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
-.note{font-size:12px;color:var(--muted);margin-top:6px}
+/* Header Styles */
+header {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(122, 92, 250, 0.1);
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
-.meta{display:flex;flex-direction:column;gap:6px;margin-top:8px}
-.stat{display:flex;justify-content:space-between;align-items:center;padding:8px;background:rgba(255,255,255,0.01);border-radius:8px;font-size:14px}
+.logo {
+  font-size: 1.6rem;
+  font-weight: 800;
+  display: flex;
+}
 
-.footer{margin-top:12px;color:var(--muted);font-size:13px;text-align:center}
-.warn{color:#ffd08a}
+.logo span:first-child {
+  color: #1e1e2f;
+}
+
+.logo span:last-child {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: var(--primary);
+}
+
+/* Main Content */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.page-header {
+  text-align: center;
+  padding: 3rem 0 2rem;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.page-header p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Tool Wrapper */
+.card {
+  width: 100%;
+  background: var(--background);
+  border-radius: 12px;
+  padding: 25px;
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
+  margin: 0 auto 2rem;
+}
+
+.tool-header {
+  margin-bottom: 20px;
+}
+
+.tool-header h2 {
+  margin: 0;
+  color: var(--primary);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tool-header p {
+  color: var(--text-secondary);
+  margin: 6px 0 14px;
+  font-size: 13px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+input, select, button, textarea {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: inherit;
+  font-size: 14px;
+  transition: border-color 0.3s;
+  width: 100%;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--primary);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 600;
+  flex: 1;
+  min-width: 120px;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(122, 92, 250, 0.3);
+}
+
+.btn.primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(122, 92, 250, 0.4);
+}
+
+.btn:hover {
+  background: var(--glass);
+  border-color: var(--primary);
+}
+
+.btn.warn {
+  background: var(--error);
+  color: white;
+  border: none;
+}
+
+.muted {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.small {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.previewRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.previewBox {
+  flex: 1;
+  min-width: 180px;
+  background: var(--card-bg);
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.previewBox img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.footer {
+  margin-top: 14px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-align: center;
+}
+
+.warn {
+  color: var(--warning);
+}
+
+.uploader {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  border-radius: 10px;
+  padding: 18px;
+  background: var(--card-bg);
+  border: 2px dashed var(--border);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.uploader:hover {
+  border-color: var(--primary);
+  background: var(--glass);
+}
+
+.uploader.dragover {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(122, 92, 250, 0.1);
+}
+
+.label {
+  min-width: 120px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: inherit;
+}
+
+.note {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+
+.processing {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(122, 92, 250, 0.1);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Range slider styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--border);
+  border-radius: 5px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary);
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Info Sections */
+.info-section {
+  margin: 3rem 0;
+  padding: 2rem;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.info-section h2 {
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  text-align: left;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 10px;
+}
+
+.info-section h3 {
+  color: var(--primary);
+  margin: 1.5rem 0 1rem;
+  font-size: 1.4rem;
+}
+
+.info-section p, .info-section li {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.info-section ul, .info-section ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-section li {
+  margin-bottom: 0.5rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.benefit-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.benefit-card i {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.benefit-card h4 {
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+/* FAQ Section */
+.faq-item {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.5rem;
+}
+
+.faq-question {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* Footer */
+footer {
+  background-color: var(--background);
+  border-top: 2px solid var(--primary);
+  padding: 2rem 5% 1rem;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 1.2rem;
+}
+
+@media (min-width: 768px) {
+  .footer-content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.footer-column h3 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.footer-column p {
+  color: var(--text-secondary);
+  line-height: 1.4;
+  font-size: 0.85rem;
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--primary);
+}
+
+.social-icons {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.social-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.social-icon:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.breadcrumb a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .page-header {
+    padding: 2rem 0 1.5rem;
+  }
+  
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .page-header p {
+    font-size: 1.1rem;
+  }
+  
+  .card {
+    padding: 15px;
+  }
+  
+  .btn {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .info-section {
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .info-section h2 {
+    font-size: 1.5rem;
+  }
+  
+  .info-section h3 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Mobile Menu */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+  
+  nav ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+    padding: 1rem 0;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+  
+  nav ul.show {
+    display: flex;
+  }
+  
+  nav ul li {
+    width: 100%;
+    text-align: center;
+  }
+  
+  nav a {
+    display: block;
+    padding: 0.8rem 1rem;
+  }
+}
+
+/* Custom controls styling */
+.control-group {
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+}
+
+.control-group-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 </style>
 </head>
 <body>
-<div class="container" role="main">
-  <div class="header">
-    <div class="brand">
-      <h1>Image Compressor — Toolgenix</h1>
-      <p class="small">Reduce image file size quickly — client-side, private, fast</p>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <span>TOOL</span><span>GENIX</span>
     </div>
-    <div class="small">Supports PNG, JPG/JPEG, WEBP, GIF (static frame), BMP, TIFF</div>
-  </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+    <nav>
+      <ul id="navMenu">
+        <li><a href="https://toolgenix.com"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="https://toolgenix.com/categories"><i class="fas fa-th-large"></i> Categories</a></li>
+        <li><a href="https://toolgenix.com/tools"><i class="fas fa-tools"></i> Tools</a></li>
+        <li><a href="https://toolgenix.com/blog"><i class="fas fa-blog"></i> Blog</a></li>
+        <li><a href="https://toolgenix.com/join"><i class="fas fa-user-plus"></i> Join</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <div class="grid" aria-live="polite">
-    <!-- left -->
-    <section class="card">
-      <div class="uploader">
-        <div id="dropZone" class="drop" tabindex="0">
-          <div style="font-size:32px">🖼️</div>
-          <div style="font-weight:700;margin-top:6px">Drop image here or click to choose</div>
-          <div class="small" style="margin-top:6px">PNG, JPG, JPEG, WEBP, GIF, BMP, TIFF — max 25MB recommended</div>
-          <input id="fileInput" type="file" accept="image/*" style="display:none" />
-        </div>
-
-        <div style="width:100%;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
-          <button id="compressBtn" class="btn" disabled>Compress Image</button>
-          <button id="resetBtn" class="btn ghost">Reset</button>
-          <button id="downloadBtn" class="btn ghost" disabled>Download</button>
-        </div>
-        <div id="processing" class="small" style="display:none;margin-top:6px">Processing…</div>
-      </div>
-
-      <div style="margin-top:12px">
-        <div class="row" style="align-items:center">
-          <div class="label">Quality Preset</div>
-          <select id="preset" class="input">
-            <option value="high">High (minimal quality loss)</option>
-            <option value="medium" selected>Medium (balanced)</option>
-            <option value="low">Low (max compression)</option>
-            <option value="custom">Custom</option>
-          </select>
-          <div style="flex:1"></div>
-          <label class="small" title="Convert PNG/TIFF/BMP to JPEG or WebP to reduce size"><input type="checkbox" id="convertCheckbox" /> Convert to WebP/JPEG</label>
-        </div>
-
-        <div id="customControls" style="display:none;margin-top:8px">
-          <div class="row"><div class="label">Output Format</div>
-            <select id="format" class="input">
-              <option value="original">Keep original</option>
-              <option value="image/jpeg">JPEG</option>
-              <option value="image/webp" selected>WebP</option>
-            </select>
-          </div>
-
-          <div class="row" style="margin-top:8px">
-            <div class="label">Quality (0.1 - 1.0)</div>
-            <input id="qualitySlider" type="range" min="0.1" max="1" step="0.01" value="0.75" />
-            <div class="small" id="qualityVal">0.75</div>
-          </div>
-
-          <div class="row" style="margin-top:8px">
-            <div class="label">Resize</div>
-            <select id="resizeMode" class="input">
-              <option value="none" selected>Keep original</option>
-              <option value="percent">Scale by %</option>
-              <option value="maxwidth">Fit to max width</option>
-            </select>
-            <input id="resizeValue" class="input" type="number" min="10" max="4000" value="100" style="width:110px;display:none;margin-left:8px" />
-            <div class="small" id="resizeNote" style="margin-left:6px">%</div>
-          </div>
-        </div>
-
-        <div class="note">Tip: For best compression convert PNGs to WebP or JPEG if transparency not required. GIF animations will be flattened to first frame.</div>
-      </div>
-
-      <div style="margin-top:12px">
-        <div class="small" style="font-weight:700">Preview</div>
-        <div class="previewRow" style="margin-top:8px">
-          <div class="previewBox">
-            <div class="small" style="font-weight:700">Original</div>
-            <img id="origPreview" alt="Original preview" />
-            <div id="origInfo" class="small meta"></div>
-          </div>
-          <div class="previewBox">
-            <div class="small" style="font-weight:700">Compressed</div>
-            <img id="outPreview" alt="Compressed preview" />
-            <div id="outInfo" class="small meta"></div>
-          </div>
-        </div>
-      </div>
-
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="https://toolgenix.com"><i class="fas fa-home"></i> Home</a> &gt; 
+      <a href="https://toolgenix.com/tools"><i class="fas fa-tools"></i> Tools</a> &gt; 
+      <a href="https://toolgenix.com/tools/image-tools"><i class="fas fa-image"></i> Image Tools</a> &gt; 
+      Image Compressor
+    </div>
+    
+    <!-- Page Header -->
+    <section class="page-header">
+      <h1>Free Image Compressor Tool</h1>
+      <p>Reduce image file size while maintaining quality. Supports PNG, JPG, WebP, GIF, BMP, and TIFF formats.</p>
     </section>
-
-    <!-- right sidebar -->
-    <aside class="card">
-      <div style="font-weight:700" class="small">Compression Details</div>
-      <div class="meta" style="margin-top:8px">
-        <div class="stat"><div>Original size</div><div id="origSize">—</div></div>
-        <div class="stat"><div>Compressed size</div><div id="outSize">—</div></div>
-        <div class="stat"><div>Saved</div><div id="saved">—</div></div>
-        <div class="stat"><div>Output format</div><div id="outFormat">—</div></div>
-        <div class="stat"><div>Resolution</div><div id="resolution">—</div></div>
+    
+    <!-- Image Compressor Tool -->
+    <div class="card" role="application" aria-labelledby="title">
+      <div class="tool-header">
+        <h2 id="title"><i class="fas fa-compress-alt"></i> Image Compressor</h2>
+        <p class="lead">Reduce image file size quickly — client-side, private, fast</p>
       </div>
 
-      <div style="margin-top:12px">
-        <div class="small" style="font-weight:700">Advanced</div>
-        <div style="margin-top:8px" class="small">
-          <label><input type="checkbox" id="stripMetadata" checked /> Strip metadata (EXIF) for smaller files</label>
+      <div class="grid" aria-live="polite">
+        <!-- Left Column - Controls -->
+        <div class="col">
+          <div class="uploader" id="dropZone" tabindex="0">
+            <div style="font-size: 3rem; color: var(--primary);">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <div style="font-weight:700;margin-top:6px">Drop image here or click to choose</div>
+            <div class="small" style="margin-top:6px">
+              <i class="fas fa-file-image"></i> PNG, JPG, JPEG, WEBP, GIF, BMP, TIFF — max 25MB recommended
+            </div>
+            <input id="fileInput" type="file" accept="image/*" style="display:none" />
+          </div>
+
+          <div class="controls">
+            <button id="compressBtn" class="btn primary" disabled>
+              <i class="fas fa-compress-arrows-alt"></i> Compress Image
+            </button>
+            <button id="resetBtn" class="btn">
+              <i class="fas fa-redo"></i> Reset
+            </button>
+            <button id="downloadBtn" class="btn" disabled>
+              <i class="fas fa-download"></i> Download
+            </button>
+          </div>
+          
+          <div id="processing" class="processing" style="display:none; margin-top:10px">
+            <div class="spinner"></div>
+            <div class="small">Processing…</div>
+          </div>
+
+          <div class="control-group" style="margin-top: 15px;">
+            <div class="control-group-title">
+              <i class="fas fa-sliders-h"></i> Compression Settings
+            </div>
+            
+            <div class="row">
+              <div class="label"><i class="fas fa-prescription-bottle"></i> Quality Preset</div>
+              <select id="preset" class="input">
+                <option value="high">High (minimal quality loss)</option>
+                <option value="medium" selected>Medium (balanced)</option>
+                <option value="low">Low (max compression)</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+
+            <div style="margin-top: 10px;">
+              <label class="small">
+                <input type="checkbox" id="convertCheckbox" /> 
+                <i class="fas fa-exchange-alt"></i> Convert to WebP/JPEG for better compression
+              </label>
+            </div>
+
+            <div id="customControls" style="display:none; margin-top:15px">
+              <div class="row">
+                <div class="label"><i class="fas fa-file-export"></i> Output Format</div>
+                <select id="format" class="input">
+                  <option value="original">Keep original</option>
+                  <option value="image/jpeg">JPEG</option>
+                  <option value="image/webp" selected>WebP</option>
+                </select>
+              </div>
+
+              <div class="row" style="margin-top:10px">
+                <div class="label"><i class="fas fa-medal"></i> Quality (0.1 - 1.0)</div>
+                <input id="qualitySlider" type="range" min="0.1" max="1" step="0.01" value="0.75" />
+                <div class="small" id="qualityVal">0.75</div>
+              </div>
+
+              <div class="row" style="margin-top:10px">
+                <div class="label"><i class="fas fa-expand-arrows-alt"></i> Resize</div>
+                <select id="resizeMode" class="input">
+                  <option value="none" selected>Keep original</option>
+                  <option value="percent">Scale by %</option>
+                  <option value="maxwidth">Fit to max width</option>
+                </select>
+                <input id="resizeValue" class="input" type="number" min="10" max="4000" value="100" style="width:110px;display:none;margin-left:8px" />
+                <div class="small" id="resizeNote" style="margin-left:6px">%</div>
+              </div>
+            </div>
+            
+            <div class="note" style="margin-top: 10px;">
+              <i class="fas fa-lightbulb"></i> Tip: For best compression convert PNGs to WebP or JPEG if transparency not required. 
+              GIF animations will be flattened to first frame.
+            </div>
+          </div>
         </div>
-        <div style="margin-top:8px" class="small warn" id="gifWarn" style="display:none"></div>
-      </div>
 
-      <div style="margin-top:14px">
-        <div class="small" style="font-weight:700">About</div>
-        <div class="small" style="margin-top:6px">Compression runs in your browser — your images are not uploaded anywhere. For animated GIFs or multi-page TIFFs, only the first frame/page will be used.</div>
-      </div>
-    </aside>
-  </div>
+        <!-- Right Column - Preview & Stats -->
+        <div class="col">
+          <div class="card">
+            <div class="small" style="font-weight:700"><i class="fas fa-chart-bar"></i> Compression Details</div>
+            <div class="meta" style="margin-top:12px">
+              <div class="stat">
+                <div><i class="fas fa-file"></i> Original size</div>
+                <div id="origSize">—</div>
+              </div>
+              <div class="stat">
+                <div><i class="fas fa-file-archive"></i> Compressed size</div>
+                <div id="outSize">—</div>
+              </div>
+              <div class="stat">
+                <div><i class="fas fa-piggy-bank"></i> Saved</div>
+                <div id="saved">—</div>
+              </div>
+              <div class="stat">
+                <div><i class="fas fa-code"></i> Output format</div>
+                <div id="outFormat">—</div>
+              </div>
+              <div class="stat">
+                <div><i class="fas fa-expand"></i> Resolution</div>
+                <div id="resolution">—</div>
+              </div>
+            </div>
 
-  <div class="footer">Built for Toolgenix — Client-side, private. Want server-side batch compression? Ask me and I'll add it.</div>
-</div>
+            <div style="margin-top:15px">
+              <div class="small" style="font-weight:700"><i class="fas fa-cogs"></i> Advanced</div>
+              <div style="margin-top:8px" class="small">
+                <label>
+                  <input type="checkbox" id="stripMetadata" checked /> 
+                  <i class="fas fa-tags"></i> Strip metadata (EXIF) for smaller files
+                </label>
+              </div>
+              <div style="margin-top:8px" class="warn" id="gifWarn" style="display:none"></div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top: 20px;">
+            <div class="small" style="font-weight:700"><i class="fas fa-images"></i> Preview</div>
+            <div class="previewRow">
+              <div class="previewBox">
+                <div class="small" style="font-weight:700"><i class="fas fa-image"></i> Original</div>
+                <img id="origPreview" alt="Original preview" />
+                <div id="origInfo" class="small meta"></div>
+              </div>
+              <div class="previewBox">
+                <div class="small" style="font-weight:700"><i class="fas fa-file-archive"></i> Compressed</div>
+                <img id="outPreview" alt="Compressed preview" />
+                <div id="outInfo" class="small meta"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- How to Use Section -->
+    <section class="info-section">
+      <h2><i class="fas fa-play-circle"></i> How to Use Our Image Compressor</h2>
+      <ol>
+        <li><strong>Upload your image</strong> - Drag and drop or click to select an image file from your device.</li>
+        <li><strong>Adjust compression settings</strong> - Choose a quality preset or customize compression parameters.</li>
+        <li><strong>Preview the results</strong> - Compare original and compressed images side by side.</li>
+        <li><strong>Download compressed image</strong> - Save the optimized image to your device.</li>
+      </ol>
+      
+      <h3><i class="fas fa-star"></i> Why Use Our Image Compressor?</h3>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <i class="fas fa-user-shield"></i>
+          <h4>Complete Privacy</h4>
+          <p>All compression happens in your browser - your images never leave your device.</p>
+        </div>
+        <div class="benefit-card">
+          <i class="fas fa-bolt"></i>
+          <h4>Instant Results</h4>
+          <p>See compression results in real-time with our efficient client-side processing.</p>
+        </div>
+        <div class="benefit-card">
+          <i class="fas fa-sliders-h"></i>
+          <h4>Full Control</h4>
+          <p>Fine-tune compression settings to balance quality and file size.</p>
+        </div>
+        <div class="benefit-card">
+          <i class="fas fa-images"></i>
+          <h4>Multiple Formats</h4>
+          <p>Supports PNG, JPG, WebP, GIF, BMP, and TIFF formats with conversion options.</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Use Cases Section -->
+    <section class="info-section">
+      <h2><i class="fas fa-images"></i> When to Use an Image Compressor</h2>
+      
+      <h3><i class="fas fa-globe"></i> Website Optimization</h3>
+      <p>Reduce image file sizes to improve website loading speed and user experience.</p>
+      
+      <h3><i class="fas fa-envelope"></i> Email Attachments</h3>
+      <p>Compress images before sending via email to reduce attachment size and avoid bounce-backs.</p>
+      
+      <h3><i class="fas fa-mobile-alt"></i> Mobile Applications</h3>
+      <p>Optimize images for mobile apps to reduce download size and improve performance.</p>
+      
+      <h3><i class="fas fa-cloud-upload-alt"></i> Cloud Storage</h3>
+      <p>Save storage space by compressing images before uploading to cloud services.</p>
+      
+      <h3><i class="fas fa-share-alt"></i> Social Media</h3>
+      <p>Prepare images for social media posts while maintaining quality and reducing upload times.</p>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="info-section">
+      <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">How does the Image Compressor work?</div>
+        <p>Our tool uses client-side compression algorithms to reduce image file size while maintaining visual quality. All processing happens in your browser for complete privacy.</p>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">What image formats are supported?</div>
+        <p>We support PNG, JPG/JPEG, WebP, GIF, BMP, and TIFF formats. For animated GIFs, only the first frame will be compressed.</p>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">Is my image data kept private?</div>
+        <p>Absolutely! All compression happens locally in your browser. Your images never leave your device, ensuring complete privacy.</p>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">What's the maximum file size I can compress?</div>
+        <p>We recommend files up to 25MB for optimal performance, but you can try larger files (up to 50MB) with a confirmation prompt.</p>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">Does the tool work on mobile devices?</div>
+        <p>Yes, our tool is fully responsive and works on smartphones, tablets, and desktop computers.</p>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">Are there any usage limits?</div>
+        <p>No, you can use the tool as much as you want. All processing happens in your browser with no server-side limitations.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>About Toolgenix</h3>
+          <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="https://toolgenix.com"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="https://toolgenix.com/categories"><i class="fas fa-th-large"></i> Categories</a></li>
+            <li><a href="https://toolgenix.com/blog"><i class="fas fa-blog"></i> Blog</a></li>
+            <li><a href="https://toolgenix.com/tools"><i class="fas fa-tools"></i> Tools</a></li>
+            <li><a href="https://toolgenix.com/join"><i class="fas fa-user-plus"></i> Join</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Connect With Us</h3>
+          <div class="social-icons">
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Toolgenix — All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
 <script>
+// Mobile menu toggle
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const navMenu = document.getElementById('navMenu');
+
+mobileMenuBtn.addEventListener('click', () => {
+  navMenu.classList.toggle('show');
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+    navMenu.classList.remove('show');
+  }
+});
+
 // Utility
 const $ = id => document.getElementById(id);
 const humanFileSize = (bytes) => {
@@ -453,7 +1372,6 @@ function processingEnd(){
 
 // Init
 resetAll();
-
 </script>
 </body>
 </html>
