@@ -425,6 +425,14 @@
             font-size: 14px;
         }
 
+        /* Chart container */
+        .chart-container {
+            position: relative;
+            height: 200px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
         /* Info Sections */
         .info-section {
             margin: 3rem 0;
@@ -712,8 +720,10 @@
                     </div>
 
                     <div style="margin-top:20px">
-                        <label class="small"><i class="fas fa-chart-line"></i> Temperature Chart (interactive)</label>
-                        <canvas id="tempChart" height="160"></canvas>
+                        <label class="small"><i class="fas fa-chart-line"></i> Temperature Chart (5-day forecast)</label>
+                        <div class="chart-container">
+                            <canvas id="tempChart"></canvas>
+                        </div>
                     </div>
 
                     <div style="margin-top:20px">
@@ -870,9 +880,6 @@
         */
 
         /* ====== CONFIG ====== */
-        /* You provided this key — kept here for quick testing.
-           WARNING: For production, do NOT embed API keys in client-side code.
-           Instead: create a server endpoint that signs requests to OpenWeather and call that from the client. */
         const OPENWEATHER_API_KEY = "e03dba08745781e66d975b1b02657cde";
 
         /* ====== DOM ====== */
@@ -910,7 +917,9 @@
             return r.json();
           });
         }
+        
         function setHTML(el, html) { el.innerHTML = html; }
+        
         function showMap(lat, lon, label='') {
           if(!lat || !lon) {
             mapEl.innerHTML = '<div id="mapFallback" style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted)"><i class="fas fa-map-marked-alt" style="font-size:24px;margin-right:8px"></i>No location selected</div>';
@@ -918,28 +927,35 @@
           }
           const iframe = document.createElement('iframe');
           iframe.style.border = '0';
-          iframe.width = '100%'; iframe.height = '100%';
+          iframe.width = '100%'; 
+          iframe.height = '100%';
           const bbox = `${lon-0.5}%2C${lat-0.5}%2C${lon+0.5}%2C${lat+0.5}`;
           iframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lon}`;
           iframe.title = label || 'Location map';
-          mapEl.innerHTML = ''; mapEl.appendChild(iframe);
+          mapEl.innerHTML = ''; 
+          mapEl.appendChild(iframe);
         }
-        function formatTemp(t, units) { return `${Math.round(t)}°${units === 'imperial' ? 'F' : 'C'}`; }
-        function kmh_to_ms(v){ return v/3.6; }
+        
+        function formatTemp(t, units) { 
+            return `${Math.round(t)}°${units === 'imperial' ? 'F' : 'C'}`; 
+        }
 
         /* ====== OpenWeather calls ====== */
         async function getCurrentByCoords(lat, lon, units='metric') {
           const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${OPENWEATHER_API_KEY}`;
           return fetchJSON(url);
         }
+        
         async function getCurrentByCity(city, units='metric') {
           const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&units=${units}&appid=${OPENWEATHER_API_KEY}`;
           return fetchJSON(url);
         }
+        
         async function getForecastByCoords(lat, lon, units='metric') {
           const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${units}&appid=${OPENWEATHER_API_KEY}`;
           return fetchJSON(url);
         }
+        
         async function getForecastByCity(city, units='metric') {
           const url = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&units=${units}&appid=${OPENWEATHER_API_KEY}`;
           return fetchJSON(url);
@@ -983,19 +999,22 @@
         function renderForecast(forecastData, units) {
           // forecastData.list[] contains items every 3 hours
           const items = forecastData.list || [];
-          // show a compact textual summary
-          const byDay = {}; // date -> array
+          
+          // Group by day for forecast display
+          const byDay = {};
           items.forEach(it => {
             const d = it.dt_txt.split(' ')[0];
             if(!byDay[d]) byDay[d] = [];
             byDay[d].push(it);
           });
+          
           let html = '<div style="display:flex;flex-direction:column;gap:8px">';
           Object.keys(byDay).slice(0,5).forEach(day => {
             const arr = byDay[day];
-            // compute min/max
+            // Compute min/max temperatures
             const temps = arr.map(a => a.main.temp);
-            const min = Math.min(...temps); const max = Math.max(...temps);
+            const min = Math.min(...temps); 
+            const max = Math.max(...temps);
             const icon = arr[0].weather?.[0]?.icon || '';
             html += `<div class="forecast-item">
               <div style="font-weight:700">${new Date(day).toLocaleDateString()}</div>
@@ -1006,39 +1025,92 @@
           html += '</div>';
           setHTML(forecastEl, html);
 
-          // prepare dataset for chart (next 48h or available)
-          const labels = items.slice(0, 24).map(it => it.dt_txt.replace(' ', '\n'));
-          const temps = items.slice(0, 24).map(it => it.main.temp);
-          drawTempChart(labels, temps, units);
+          // Prepare data for temperature chart
+          drawTempChart(items, units);
         }
 
-        /* Chart */
-        function drawTempChart(labels, temps, units) {
-          if(tempChart) tempChart.destroy();
+        /* Chart - Fixed Implementation */
+        function drawTempChart(forecastItems, units) {
+          // Destroy existing chart if it exists
+          if (tempChart) {
+            tempChart.destroy();
+          }
+          
+          // Get the canvas context
           const ctx = tempChartCanvas.getContext('2d');
+          
+          // Prepare data for the chart (use first 8 data points for better visualization)
+          const displayItems = forecastItems.slice(0, 8);
+          const labels = displayItems.map(item => {
+            const date = new Date(item.dt * 1000);
+            return `${date.getHours()}:00`;
+          });
+          
+          const temps = displayItems.map(item => item.main.temp);
+          
+          // Create the chart
           tempChart = new Chart(ctx, {
             type: 'line',
             data: {
-              labels,
+              labels: labels,
               datasets: [{
-                label: `Temperature (${units==='imperial'?'°F':'°C'})`,
+                label: `Temperature (${units === 'imperial' ? '°F' : '°C'})`,
                 data: temps,
-                borderWidth: 2,
-                pointRadius: 2,
-                tension: 0.25,
+                borderWidth: 3,
+                borderColor: 'rgba(122, 92, 250, 1)',
+                backgroundColor: 'rgba(122, 92, 250, 0.1)',
+                pointBackgroundColor: 'rgba(122, 92, 250, 1)',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                pointHoverRadius: 7,
                 fill: true,
-                backgroundColor: 'rgba(122, 92, 250, 0.12)',
-                borderColor: 'rgba(122, 92, 250, 1)'
+                tension: 0.4
               }]
             },
             options: {
               responsive: true,
               maintainAspectRatio: false,
-              scales: {
-                x: { ticks: { color: '#2e2e3f' } },
-                y: { ticks: { color: '#2e2e3f' } }
+              plugins: {
+                legend: {
+                  display: true,
+                  position: 'top',
+                  labels: {
+                    color: '#1e1e2f',
+                    font: {
+                      size: 12
+                    }
+                  }
+                },
+                tooltip: {
+                  backgroundColor: 'rgba(30, 30, 47, 0.9)',
+                  titleColor: '#fff',
+                  bodyColor: '#fff',
+                  borderColor: 'rgba(122, 92, 250, 0.5)',
+                  borderWidth: 1
+                }
               },
-              plugins: { legend: { labels: { color: '#2e2e3f' } } }
+              scales: {
+                x: {
+                  grid: {
+                    color: 'rgba(122, 92, 250, 0.1)'
+                  },
+                  ticks: {
+                    color: '#1e1e2f'
+                  }
+                },
+                y: {
+                  grid: {
+                    color: 'rgba(122, 92, 250, 0.1)'
+                  },
+                  ticks: {
+                    color: '#1e1e2f',
+                    callback: function(value) {
+                      return value + (units === 'imperial' ? '°F' : '°C');
+                    }
+                  }
+                }
+              }
             }
           });
         }
@@ -1055,18 +1127,25 @@
             const coordMatch = (q || '').trim().match(/^\s*([-+]?\d+(\.\d+)?)\s*,\s*([-+]?\d+(\.\d+)?)\s*$/);
             if(coordMatch) {
               const lat = coordMatch[1], lon = coordMatch[3];
-              const [curr, fc] = await Promise.all([ getCurrentByCoords(lat, lon, units), getForecastByCoords(lat, lon, units) ]);
+              const [curr, fc] = await Promise.all([ 
+                getCurrentByCoords(lat, lon, units), 
+                getForecastByCoords(lat, lon, units) 
+              ]);
               lastWeather = { current: curr, forecast: fc, units };
-              renderCurrent(curr, units); renderForecast(fc, units);
+              renderCurrent(curr, units); 
+              renderForecast(fc, units);
               rawEl.value = JSON.stringify({ current: curr, forecast: fc }, null, 2);
               return;
             }
 
-            // If looks like an IP or domain it will not necessarily work here — OpenWeather expects city names or coords.
-            // Try by city
-            const [current, forecast] = await Promise.all([ getCurrentByCity(q, units).catch(e => { throw e; }), getForecastByCity(q, units).catch(e => { throw e; }) ]);
+            // Try by city name
+            const [current, forecast] = await Promise.all([ 
+              getCurrentByCity(q, units), 
+              getForecastByCity(q, units) 
+            ]);
             lastWeather = { current, forecast, units };
-            renderCurrent(current, units); renderForecast(forecast, units);
+            renderCurrent(current, units); 
+            renderForecast(forecast, units);
             rawEl.value = JSON.stringify({ current, forecast }, null, 2);
           } catch (err) {
             console.error(err);
@@ -1175,7 +1254,7 @@
         /* init */
         (function init(){
           renderFavs();
-          // try quick auto-detect (non-intrusive): comment out if you prefer not to auto-request geolocation
+          // Uncomment the line below to automatically find user's IP on page load
           // if (navigator.geolocation) navigator.geolocation.getCurrentPosition(p => { qInput.value = `${p.coords.latitude},${p.coords.longitude}`; doSearch(qInput.value); });
         })();
     </script>
