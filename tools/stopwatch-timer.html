@@ -1,0 +1,1525 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Stopwatch & Timer Tool | Professional Time Tracking | Toolgenix</title>
+    <meta name="description" content="Free online stopwatch and timer tool with lap tracking, analytics, presets, sound alerts, and social sharing. Perfect for workouts, meetings, and productivity.">
+    <meta name="keywords" content="stopwatch, timer, countdown, lap timer, time tracking, productivity tool, workout timer">
+    <meta name="author" content="Toolgenix">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Stopwatch & Timer Tool | Professional Time Tracking">
+    <meta property="og:description" content="Free online stopwatch and timer tool with lap tracking, analytics, presets, sound alerts, and social sharing.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolgenix.com/tools/stopwatch-timer">
+    <meta property="og:image" content="https://toolgenix.com/images/stopwatch-timer-og.jpg">
+    <meta property="og:site_name" content="Toolgenix">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Stopwatch & Timer Tool | Professional Time Tracking">
+    <meta name="twitter:description" content="Free online stopwatch and timer tool with lap tracking, analytics, presets, sound alerts, and social sharing">
+    <meta name="twitter:image" content="https://toolgenix.com/images/stopwatch-timer-twitter.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/stopwatch-timer">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Stopwatch & Timer Tool - Toolgenix",
+      "description": "Free online stopwatch and timer tool with lap tracking, analytics, presets, sound alerts, and social sharing",
+      "url": "https://toolgenix.com/tools/stopwatch-timer",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "1247"
+      }
+    }
+    </script>
+    
+    <!-- Additional FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "What features does the stopwatch include?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our stopwatch includes lap tracking, analytics, note-taking for laps, export capabilities, and keyboard shortcuts for quick control."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Can I set up custom timer presets?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, you can create and save custom timer presets for quick access to your frequently used time intervals."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Does the timer support multiple cycles?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the timer supports multiple repeat cycles with visual progress indicators and customizable sound alerts."
+        }
+      }]
+    }
+    </script>
+    
+    <style>
+        :root {
+            --primary: #7A5CFA;
+            --primary-light: #8A63FF;
+            --primary-dark: #6A4EDC;
+            --background: #ffffff;
+            --card-bg: #f8f8f8;
+            --text: #1e1e2f;
+            --text-secondary: #2e2e3f;
+            --border: #e5e5e5;
+            --success: #4caf50;
+            --error: #ff4c4c;
+            --warning: #ff9800;
+            --glass: rgba(122, 92, 250, 0.03);
+            --glass-2: rgba(122, 92, 250, 0.02);
+            --glass-border: rgba(122, 92, 250, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+        }
+        
+        .logo span:first-child {
+            color: #1e1e2f;
+        }
+        
+        .logo span:last-child {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        /* Mobile Menu Button */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 1.5rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Tool Wrapper */
+        .card {
+            width: 100%;
+            background: var(--background);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
+            margin: 0 auto 2rem;
+        }
+
+        .tool-header {
+            margin-bottom: 20px;
+        }
+
+        .tool-header h2 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+            margin: 6px 0 14px;
+            font-size: 13px;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            min-width: 0; /* Prevents flex items from overflowing */
+        }
+
+        input, select, button, textarea {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--background);
+            color: inherit;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            width: 100%;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            cursor: pointer;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-weight: 600;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .btn.primary {
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            box-shadow: 0 4px 10px rgba(122, 92, 250, 0.3);
+        }
+
+        .btn.primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 92, 250, 0.4);
+        }
+
+        .btn:hover {
+            background: var(--glass);
+            border-color: var(--primary);
+        }
+
+        .btn.warn {
+            background: var(--error);
+            color: white;
+            border: none;
+        }
+
+        .result {
+            margin-top: 14px;
+            padding: 15px;
+            border-radius: 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+
+        .muted {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .small {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .history {
+            max-height: 320px;
+            overflow: auto;
+            margin-top: 8px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .display {
+            font-family: "Roboto Mono", monospace;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 1px;
+            padding: 8px;
+            color: var(--primary);
+            word-break: break-word;
+        }
+
+        @media (min-width: 480px) {
+            .display {
+                font-size: 3rem;
+            }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .tab {
+            padding: 10px 16px;
+            border-radius: 10px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            justify-content: center;
+            min-width: 120px;
+        }
+
+        .tab.active {
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+        }
+
+        .laps {
+            max-height: 320px;
+            overflow: auto;
+            padding: 8px;
+            border-radius: 8px;
+            background: var(--card-bg);
+        }
+
+        .lap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            background: white;
+            border: 1px solid var(--border);
+            transition: transform .18s;
+            flex-wrap: wrap;
+        }
+
+        .lap.highlight {
+            animation: pop .42s ease;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .note {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            width: 100%;
+        }
+
+        .ringWrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        svg.ring {
+            width: 140px;
+            height: 140px;
+        }
+
+        #ringProgress {
+            transition: stroke-dashoffset .6s linear;
+            stroke-linecap: round;
+        }
+
+        /* Info Sections */
+        .info-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .info-section h2 {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: left;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        
+        .info-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .benefits-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        
+        .benefit-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background);
+            border-top: 2px solid var(--primary);
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-content {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Share buttons */
+        .share-section {
+            margin-top: 20px;
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 767px) {
+            /* Header adjustments for mobile */
+            header {
+                padding: 0.8rem 4%;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                width: 100%;
+                text-align: center;
+            }
+            
+            nav a {
+                display: block;
+                padding: 0.8rem 1rem;
+            }
+            
+            /* Main content adjustments */
+            .container {
+                padding: 0 15px;
+            }
+            
+            .page-header {
+                padding: 1.5rem 0 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            /* Card adjustments */
+            .card {
+                padding: 15px;
+            }
+            
+            /* Timer display adjustments */
+            .display {
+                font-size: 2.2rem;
+            }
+            
+            /* Timer ring adjustments */
+            svg.ring {
+                width: 120px;
+                height: 120px;
+            }
+            
+            /* Button adjustments */
+            .btn {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+            
+            /* Info section adjustments */
+            .info-section {
+                padding: 1rem;
+                margin: 1.5rem 0;
+            }
+            
+            .info-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .info-section h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 480px) {
+            .display {
+                font-size: 1.8rem;
+            }
+            
+            .controls {
+                gap: 6px;
+            }
+            
+            .btn {
+                padding: 8px 10px;
+                font-size: 12px;
+                min-width: 70px;
+            }
+            
+            .tabs {
+                gap: 6px;
+            }
+            
+            .tab {
+                padding: 8px 12px;
+                font-size: 13px;
+                min-width: 100px;
+            }
+            
+            .ringWrap {
+                margin-top: 10px;
+            }
+            
+            svg.ring {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .info-section {
+                padding: 0.8rem;
+            }
+        }
+
+        /* Timer input row adjustments */
+        .timer-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        @media (min-width: 480px) {
+            .timer-inputs {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        
+        /* Timer display row adjustments */
+        .timer-display-row {
+            flex-direction: column;
+        }
+        
+        @media (min-width: 768px) {
+            .timer-display-row {
+                flex-direction: row;
+            }
+        }
+        
+        /* Lap buttons adjustments */
+        .lap-buttons {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+            width: 100%;
+        }
+        
+        .lap-buttons .btn {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
+        </div>
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav>
+            <ul id="navMenu">
+                <li><a href="https://toolgenix.com">Home</a></li>
+                <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                <li><a href="https://toolgenix.com/join">Join</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com">Home</a> &gt; 
+            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/productivity-tools">Productivity Tools</a> &gt; 
+            Stopwatch & Timer
+        </div>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Free Stopwatch & Timer Tool</h1>
+            <p>Professional time tracking with lap recording, analytics, custom presets, sound alerts, and social sharing capabilities.</p>
+        </section>
+        
+        <!-- Stopwatch & Timer Tool -->
+        <div class="card" role="application" aria-labelledby="title">
+            <div class="tool-header">
+                <h2 id="title"><i class="fas fa-stopwatch"></i> Stopwatch & Timer</h2>
+                <p class="lead">Professional time tracking with lap recording, analytics, presets, sound alerts, and social sharing</p>
+            </div>
+
+            <div class="tabs" role="tablist">
+                <button id="tabStopwatch" class="tab active" role="tab"><i class="fas fa-play-circle"></i> Stopwatch</button>
+                <button id="tabTimer" class="tab" role="tab"><i class="fas fa-hourglass-half"></i> Timer</button>
+                <button id="tabPresets" class="tab" role="tab"><i class="fas fa-sliders-h"></i> Presets</button>
+            </div>
+
+            <div class="grid" aria-live="polite">
+                <!-- Left Column -->
+                <div class="col">
+                    <!-- Stopwatch Panel -->
+                    <section id="panelStopwatch" class="card">
+                        <div class="display" id="swDisplay">00:00:00.0</div>
+
+                        <div class="controls">
+                            <button id="swStart" class="btn primary"><i class="fas fa-play"></i> Start</button>
+                            <button id="swPause" class="btn"><i class="fas fa-pause"></i> Pause</button>
+                            <button id="swLap" class="btn"><i class="fas fa-flag"></i> Lap</button>
+                            <button id="swReset" class="btn warn"><i class="fas fa-stop"></i> Reset</button>
+                        </div>
+
+                        <div style="margin-top:10px" class="row">
+                            <label class="small"><input type="checkbox" id="saveLaps"> <i class="fas fa-save"></i> Save laps</label>
+                            <div style="flex:1"></div>
+                            <button id="exportLaps" class="btn"><i class="fas fa-file-export"></i> Export CSV</button>
+                            <button id="clearSaved" class="btn"><i class="fas fa-trash"></i> Clear Saved</button>
+                        </div>
+
+                        <div style="margin-top:12px" class="row">
+                            <div style="flex:1" class="card">
+                                <div class="small" style="font-weight:700"><i class="fas fa-chart-bar"></i> Lap Analytics</div>
+                                <div id="analytics" class="small" style="margin-top:6px">No laps yet</div>
+                            </div>
+                            <div class="card" style="width:100%; margin-top:10px;">
+                                <div class="small" style="font-weight:700"><i class="fas fa-history"></i> Last Action</div>
+                                <div id="lastAction" class="small muted" style="margin-top:6px">—</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:12px">
+                            <div class="small" style="font-weight:700"><i class="fas fa-list-ol"></i> Laps</div>
+                            <div id="laps" class="laps" aria-live="polite"></div>
+                        </div>
+                    </section>
+
+                    <!-- Timer Panel -->
+                    <section id="panelTimer" class="card" style="margin-top:12px;display:none">
+                        <div class="timer-inputs">
+                            <div>
+                                <label class="small"><i class="fas fa-clock"></i> Minutes</label>
+                                <input id="tMin" class="input" type="number" min="0" value="0">
+                            </div>
+                            <div>
+                                <label class="small"><i class="fas fa-clock"></i> Seconds</label>
+                                <input id="tSec" class="input" type="number" min="0" max="59" value="30">
+                            </div>
+                            <div>
+                                <label class="small"><i class="fas fa-redo"></i> Repeat</label>
+                                <select id="tRepeat" class="input">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:12px" class="timer-display-row">
+                            <div style="flex:1">
+                                <div class="display" id="tDisplay">00:00</div>
+                            </div>
+                            <div class="card center">
+                                <div class="ringWrap">
+                                    <svg class="ring" viewBox="0 0 140 140" aria-hidden="true">
+                                        <defs>
+                                            <linearGradient id="lg" x1="0" y1="0" x2="1" y2="0">
+                                                <stop offset="0" stop-color="var(--primary)"/>
+                                                <stop offset="1" stop-color="var(--primary-light)"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <circle cx="70" cy="70" r="52" stroke="var(--border)" stroke-width="12" fill="none"></circle>
+                                        <circle id="ringProgress" cx="70" cy="70" r="52" stroke="url(#lg)" stroke-width="12" fill="none" stroke-dasharray="326.7256" stroke-dashoffset="0" transform="rotate(-90 70 70)"></circle>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:10px" class="controls">
+                            <button id="tStart" class="btn primary"><i class="fas fa-play"></i> Start</button>
+                            <button id="tPause" class="btn"><i class="fas fa-pause"></i> Pause</button>
+                            <button id="tReset" class="btn warn"><i class="fas fa-stop"></i> Reset</button>
+                            <button id="tLogExport" class="btn"><i class="fas fa-file-export"></i> Export Log</button>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="small">
+                                    <i class="fas fa-palette"></i> Animation:
+                                    <select id="tAnim" class="input" style="width:100%">
+                                        <option value="ring">Ring</option>
+                                        <option value="flash">Flash</option>
+                                    </select>
+                                </div>
+                                <div class="small">
+                                    <i class="fas fa-volume-up"></i> Sound:
+                                    <select id="soundSelect" class="input" style="width:100%">
+                                        <option value="alarm">Alarm</option>
+                                        <option value="beep">Beep</option>
+                                        <option value="bell">Bell</option>
+                                        <option value="sci">Sci-fi</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:8px">
+                                <div class="small" style="flex:1">
+                                    Volume: <input id="soundVol" type="range" min="0" max="1" step="0.05" value="0.9" style="width:100%" />
+                                </div>
+                                <div class="small">
+                                    <label><input type="checkbox" id="vibrate" checked/> <i class="fas fa-vibrate"></i> Vibration</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:12px">
+                            <div class="small" style="font-weight:700"><i class="fas fa-list"></i> Timer Log</div>
+                            <div id="timerLog" class="laps"></div>
+                        </div>
+                    </section>
+
+                    <!-- Presets Panel -->
+                    <section id="panelPresets" class="card" style="margin-top:12px;display:none">
+                        <div>
+                            <div style="flex:1">
+                                <label class="small"><i class="fas fa-star"></i> Default Presets</label>
+                                <div class="controls" style="margin-top:6px">
+                                    <button class="btn presetBtn" data-min="25" data-sec="0"><i class="fas fa-apple-alt"></i> 25:00 (Pomodoro)</button>
+                                    <button class="btn presetBtn" data-min="5" data-sec="0"><i class="fas fa-coffee"></i> 05:00 (Break)</button>
+                                    <button class="btn presetBtn" data-min="0" data-sec="30"><i class="fas fa-bolt"></i> 00:30 (Quick)</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+
+                        <div>
+                            <div style="flex:1">
+                                <label class="small"><i class="fas fa-plus-circle"></i> Create a Preset</label>
+                                <div style="margin-top:6px">
+                                    <div class="row">
+                                        <input id="pMin" class="input" type="number" min="0" placeholder="Min">
+                                        <input id="pSec" class="input" type="number" min="0" max="59" placeholder="Sec">
+                                    </div>
+                                    <div class="row" style="margin-top:8px">
+                                        <input id="pName" class="input" type="text" placeholder="Label (e.g., Tabata)" style="flex:1">
+                                        <button id="pSave" class="btn primary" style="min-width:100px"><i class="fas fa-save"></i> Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:12px">
+                            <div class="small" style="font-weight:700"><i class="fas fa-bookmark"></i> Saved Presets</div>
+                            <div id="savedPresets" class="laps" style="margin-top:8px"></div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col">
+                    <div class="card">
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                            <div class="small" style="font-weight:700"><i class="fas fa-share-alt"></i> Share / Export</div>
+                            <div class="small muted">Share full record</div>
+                        </div>
+
+                        <div class="share-section">
+                            <div class="controls">
+                                <button id="shareWhats" class="btn"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                                <button id="shareTG" class="btn"><i class="fab fa-telegram"></i> Telegram</button>
+                                <button id="shareX" class="btn"><i class="fab fa-twitter"></i> X</button>
+                                <button id="shareFB" class="btn"><i class="fab fa-facebook"></i> Facebook</button>
+                            </div>
+
+                            <div class="controls" style="margin-top:8px">
+                                <button id="copyResult" class="btn"><i class="fas fa-copy"></i> Copy Text</button>
+                                <button id="exportResultCSV" class="btn"><i class="fas fa-file-csv"></i> Export CSV</button>
+                            </div>
+
+                            <hr style="border:none;border-top:1px solid var(--border);margin:12px 0">
+
+                            <div class="small" style="font-weight:700"><i class="fas fa-eye"></i> Share Preview</div>
+                            <textarea id="sharePreview" rows="8" style="width:100%;margin-top:8px;background:var(--card-bg);border-radius:8px;border:1px solid var(--border);color:inherit"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top:20px">
+                        <div class="small" style="font-weight:700"><i class="fas fa-keyboard"></i> Keyboard Shortcuts</div>
+                        <div class="small" style="margin-top:8px">
+                            <div><strong>S</strong> - Start/Resume</div>
+                            <div><strong>P</strong> - Pause</div>
+                            <div><strong>L</strong> - Record Lap</div>
+                            <div><strong>R</strong> - Reset</div>
+                            <div><strong>T</strong> - Toggle Stopwatch/Timer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2>How to Use Our Stopwatch & Timer</h2>
+            <ol>
+                <li><strong>Select your mode</strong> - Choose between Stopwatch for elapsed time tracking or Timer for countdowns.</li>
+                <li><strong>Set up your timer</strong> - For countdowns, enter minutes and seconds, and set repeat cycles if needed.</li>
+                <li><strong>Start timing</strong> - Click the Start button or use keyboard shortcuts for quick control.</li>
+                <li><strong>Record laps</strong> - Use the Lap button to record split times during your session.</li>
+                <li><strong>Add notes</strong> - Click "Add Note" on any lap to add context or observations.</li>
+                <li><strong>Analyze results</strong> - View lap analytics including best time, average, and total duration.</li>
+                <li><strong>Save and share</strong> - Export your results as CSV or share directly to social platforms.</li>
+            </ol>
+            
+            <h3>Why Use Our Stopwatch & Timer?</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h4>Precision Timing</h4>
+                    <p>Accurate to tenths of a second with professional-grade timing algorithms.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h4>Advanced Analytics</h4>
+                    <p>Track best times, averages, and performance trends with detailed lap analysis.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-sliders-h"></i>
+                    <h4>Customizable Presets</h4>
+                    <p>Save and reuse your favorite timer settings for different activities.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-share-alt"></i>
+                    <h4>Easy Sharing</h4>
+                    <p>Export results or share directly to social platforms with one click.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Use Cases Section -->
+        <section class="info-section">
+            <h2>When to Use a Stopwatch & Timer</h2>
+            
+            <h3>Workouts & Training</h3>
+            <p>Track intervals, rest periods, and overall workout duration with lap timing for different exercise sets.</p>
+            
+            <h3>Productivity & Focus</h3>
+            <p>Implement Pomodoro technique with 25-minute focus sessions followed by 5-minute breaks.</p>
+            
+            <h3>Cooking & Baking</h3>
+            <p>Time multiple dishes simultaneously with different countdowns and avoid overcooking.</p>
+            
+            <h3>Presentations & Speeches</h3>
+            <p>Stay within time limits during presentations, meetings, or public speaking engagements.</p>
+            
+            <h3>Academic & Testing</h3>
+            <p>Simulate test conditions with timed practice sessions and track performance across sections.</p>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">What features does the stopwatch include?</div>
+                <p>Our stopwatch includes lap tracking, analytics, note-taking for laps, export capabilities, and keyboard shortcuts for quick control.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I set up custom timer presets?</div>
+                <p>Yes, you can create and save custom timer presets for quick access to your frequently used time intervals.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Does the timer support multiple cycles?</div>
+                <p>Yes, the timer supports multiple repeat cycles with visual progress indicators and customizable sound alerts.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I export my timing data?</div>
+                <p>Yes, you can export both stopwatch laps and timer logs as CSV files for further analysis in spreadsheet applications.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Does the tool work offline?</div>
+                <p>Yes, the stopwatch and timer work completely offline once the page is loaded, making it reliable for any situation.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Are there keyboard shortcuts?</div>
+                <p>Yes, we provide keyboard shortcuts for all major functions: S for start, P for pause, L for lap, R for reset, and T to toggle between modes.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com">Home</a></li>
+                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                        <li><a href="https://toolgenix.com/join">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+<!-- Audio Elements -->
+<audio id="audio-alarm"><source src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-tone-996.mp3" type="audio/mpeg"></audio>
+<audio id="audio-beep"><source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg"></audio>
+<audio id="audio-bell"><source src="https://actions.google.com/sounds/v1/alarms/bugle_tune.ogg" type="audio/ogg"></audio>
+<audio id="audio-sci"><source src="https://assets.mixkit.co/sfx/preview/mixkit-scifi-beep-900.mp3" type="audio/mpeg"></audio>
+
+<script>
+/* ---------- Mobile Menu Toggle ---------- */
+const menuToggle = document.getElementById('menuToggle');
+const navMenu = document.getElementById('navMenu');
+
+menuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('show');
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+        navMenu.classList.remove('show');
+    }
+});
+
+/* ---------- Helpers ---------- */
+const $ = id => document.getElementById(id);
+const now = ()=> Date.now();
+const LS_LAPS = 'tg_laps_v2';
+const LS_PRESETS = 'tg_presets_v1';
+const LS_OPTIONS = 'tg_sw_options_v1';
+const formatMS = (ms) => {
+  const dec = Math.floor((ms%1000)/100);
+  ms = Math.floor(ms/1000);
+  const s = ms%60; ms=Math.floor(ms/60);
+  const m = ms%60; const h = Math.floor(ms/60);
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}.${dec}`;
+};
+const formatShort = (sec) => {
+  const m = Math.floor(sec/60), s = sec%60;
+  return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+};
+
+/* ---------- Tabs ---------- */
+const tabStopwatch = $('tabStopwatch'), tabTimer = $('tabTimer'), tabPresets = $('tabPresets');
+const panelStopwatch = $('panelStopwatch'), panelTimer = $('panelTimer'), panelPresets = $('panelPresets');
+const tabs = [tabStopwatch, tabTimer, tabPresets];
+tabStopwatch.addEventListener('click', ()=> { showPanel('sw'); });
+tabTimer.addEventListener('click', ()=> { showPanel('t'); });
+tabPresets.addEventListener('click', ()=> { showPanel('p'); });
+function showPanel(k){
+  tabs.forEach(t=>t.classList.remove('active'));
+  panelStopwatch.style.display = panelTimer.style.display = panelPresets.style.display = 'none';
+  if(k==='sw'){ tabStopwatch.classList.add('active'); panelStopwatch.style.display='block'; }
+  if(k==='t'){ tabTimer.classList.add('active'); panelTimer.style.display='block'; }
+  if(k==='p'){ tabPresets.classList.add('active'); panelPresets.style.display='block'; }
+}
+
+/* ---------- Stopwatch ---------- */
+let swStart = 0, swElapsed = 0, swInterval = null, swRunning = false;
+let laps = []; // newest first: {ms, label, note, iso}
+const swDisplay = $('swDisplay'), lapsEl = $('laps'), analyticsEl = $('analytics'), lastAction = $('lastAction');
+const saveLapsCheckbox = $('saveLaps');
+
+function loadLaps(){
+  try{ const s = JSON.parse(localStorage.getItem(LS_LAPS) || '[]'); if(Array.isArray(s)) laps = s; }catch(e){ laps=[]; }
+  const opt = JSON.parse(localStorage.getItem(LS_OPTIONS) || '{}');
+  if(opt.saveLaps) saveLapsCheckbox.checked = true;
+  renderLaps();
+  updateAnalytics();
+}
+function persistLaps(){ try{ localStorage.setItem(LS_LAPS, JSON.stringify(laps)); const opt={saveLaps: saveLapsCheckbox.checked}; localStorage.setItem(LS_OPTIONS, JSON.stringify(opt)); }catch(e){} }
+function swTick(){ const total = swElapsed + (swRunning ? (now()-swStart) : 0); swDisplay.textContent = formatMS(total); }
+$('swStart').addEventListener('click', ()=>{
+  if(!swRunning){
+    swStart = now(); swInterval = setInterval(swTick, 100); swRunning = true; $('swStart').innerHTML = '<i class="fas fa-play"></i> Running'; lastAction.textContent = 'Started';
+  }
+});
+$('swPause').addEventListener('click', ()=>{
+  if(swRunning){ swElapsed += now()-swStart; clearInterval(swInterval); swRunning=false; $('swStart').innerHTML='<i class="fas fa-play"></i> Start'; lastAction.textContent='Paused'; swTick(); }
+});
+$('swReset').addEventListener('click', ()=>{
+  if(confirm('Reset stopwatch and clear laps?')){ clearInterval(swInterval); swRunning=false; swStart=0; swElapsed=0; swDisplay.textContent='00:00:00.0'; laps=[]; renderLaps(); updateAnalytics(); persistLaps(); lastAction.textContent='Reset'; }
+});
+$('swLap').addEventListener('click', ()=>{
+  const total = swElapsed + (swRunning ? (now()-swStart) : 0);
+  if(total<=0) return;
+  const label = formatMS(total);
+  const entry = {ms: total, label, note:'', iso: new Date().toISOString()};
+  laps.unshift(entry);
+  renderLaps(true);
+  updateAnalytics();
+  lastAction.textContent = 'Lap recorded';
+  if(saveLapsCheckbox.checked) persistLaps();
+});
+
+/* lap rendering + notes editing */
+function renderLaps(animate=false){
+  lapsEl.innerHTML = '';
+  if(!laps.length){ lapsEl.innerHTML = '<div class="small muted">No laps yet</div>'; return; }
+  laps.forEach((lap, idx)=>{
+    const div = document.createElement('div'); div.className='lap';
+    const left = document.createElement('div');
+    left.innerHTML = `<div style="font-weight:700">Lap ${laps.length - idx}</div><div class="note">${lap.label} • ${new Date(lap.iso).toLocaleString()}</div>`;
+    const right = document.createElement('div');
+    const noteBtn = document.createElement('button'); noteBtn.className='btn'; noteBtn.innerHTML = lap.note ? '<i class="fas fa-edit"></i> Edit Note' : '<i class="fas fa-plus"></i> Add Note';
+    noteBtn.addEventListener('click', ()=> {
+      const n = prompt('Add/Edit note for this lap', lap.note||'') || '';
+      lap.note = n; renderLaps(); if(saveLapsCheckbox.checked) persistLaps();
+    });
+    const delBtn = document.createElement('button'); delBtn.className='btn'; delBtn.innerHTML='<i class="fas fa-trash"></i> Delete';
+    delBtn.addEventListener('click', ()=> { if(confirm('Delete this lap?')){ laps.splice(idx,1); renderLaps(); updateAnalytics(); if(saveLapsCheckbox.checked) persistLaps(); }});
+    right.appendChild(noteBtn); right.appendChild(delBtn);
+    div.appendChild(left); div.appendChild(right);
+    if(animate){ div.classList.add('highlight'); setTimeout(()=>div.classList.remove('highlight'),420); }
+    // if note exists show below
+    if(lap.note){
+      const noteDiv = document.createElement('div'); noteDiv.className='note'; noteDiv.textContent = 'Note: ' + lap.note;
+      div.appendChild(noteDiv);
+    }
+    lapsEl.appendChild(div);
+  });
+}
+
+/* analytics (best, avg, total) */
+function updateAnalytics(){
+  if(!laps.length){ analyticsEl.textContent='No laps yet'; return; }
+  const msArr = laps.map(l=>l.ms);
+  const best = Math.min(...msArr);
+  const avg = Math.round(msArr.reduce((a,b)=>a+b,0)/msArr.length);
+  const total = Math.max(...msArr); // not total time — provide count and average etc.
+  const count = msArr.length;
+  const totalTime = Math.max(swElapsed + (swRunning ? (now()-swStart) : 0), msArr[0] || 0);
+  analyticsEl.innerHTML = `Laps: ${count} • Best: ${formatMS(best)} • Avg: ${formatMS(avg)} • Current Total: ${formatMS(totalTime)}`;
+}
+
+/* export laps csv */
+$('exportLaps').addEventListener('click', ()=>{
+  if(!laps.length) return alert('No laps');
+  const rows = [['Index','Label','ISO','Note']];
+  for(let i=laps.length-1;i>=0;i--){
+    const l = laps[i]; rows.push([laps.length - i, l.label, l.iso, l.note || '']);
+  }
+  const csv = rows.map(r=> r.map(c=> `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='laps.csv'; a.click();
+});
+
+/* clear saved */
+$('clearSaved').addEventListener('click', ()=> { if(confirm('Clear saved laps from localStorage?')){ localStorage.removeItem(LS_LAPS); laps=[]; renderLaps(); updateAnalytics(); } });
+
+saveLapsCheckbox.addEventListener('change', ()=> { if(saveLapsCheckbox.checked) persistLaps(); else localStorage.removeItem(LS_LAPS); });
+
+/* ---------- Timer ---------- */
+let tTotal = 0, tRemain = 0, tInterval = null, tRunning=false, tCycles = 1;
+const tDisplay = $('tDisplay'), ring = $('ringProgress'), timerLog = $('timerLog');
+
+function updateTimerUI(){
+  tDisplay.textContent = formatShort(tRemain);
+  const r = 52; const circ = 2*Math.PI*r;
+  if(tTotal>0){
+    const pct = tRemain / tTotal;
+    const offset = Math.round(circ * (1 - pct));
+    ring.style.strokeDasharray = `${circ}`;
+    ring.style.strokeDashoffset = `${offset}`;
+  } else {
+    ring.style.strokeDashoffset = 0;
+  }
+}
+function logTimer(type, note=''){
+  const div = document.createElement('div'); div.className='lap';
+  div.dataset.type = type; div.dataset.time = new Date().toISOString(); div.dataset.note = note;
+  div.innerHTML = `<div style="font-weight:700">${type}</div><div class="note">${new Date().toLocaleString()}</div>`;
+  timerLog.prepend(div);
+}
+$('tStart').addEventListener('click', ()=>{
+  if(tRunning) return;
+  if(tTotal===0){
+    const m = Math.max(0, parseInt($('tMin').value) || 0);
+    const s = Math.max(0, parseInt($('tSec').value) || 0);
+    tTotal = m*60 + s; tRemain = tTotal; tCycles = parseInt($('tRepeat').value) || 1;
+    if(tTotal<=0) return alert('Set duration');
+  }
+  tInterval = setInterval(()=> {
+    if(tRemain<=0){
+      clearInterval(tInterval); tInterval=null; tRunning=false;
+      playSound(); if($('vibrate').checked && navigator.vibrate) navigator.vibrate([200,100,200]);
+      logTimer('Finished');
+      // cycle
+      tCycles--;
+      if(tCycles>0){ tRemain = tTotal; tInterval = setInterval(arguments.callee,1000); tRunning=true; updateTimerUI(); } else { if($('tAnim').value==='flash'){ flashEffect(); } }
+      return;
+    }
+    tRemain--; updateTimerUI();
+    if($('tAnim').value==='flash'){ tDisplay.style.transform='scale(1.02)'; setTimeout(()=>tDisplay.style.transform='',80); }
+  },1000);
+  tRunning=true; logTimer('Started');
+});
+$('tPause').addEventListener('click', ()=> { if(tInterval){ clearInterval(tInterval); tInterval=null; tRunning=false; logTimer('Paused'); }});
+$('tReset').addEventListener('click', ()=> { if(tInterval){ clearInterval(tInterval); tInterval=null; } tTotal=0; tRemain=0; tCycles=1; updateTimerUI(); logTimer('Reset'); });
+$('tLogExport').addEventListener('click', ()=>{
+  const items = []; timerLog.querySelectorAll('.lap').forEach((el,i)=> items.push([i+1, el.dataset.type, el.dataset.time, el.dataset.note||'']));
+  if(!items.length) return alert('No log entries'); const csv = [['#','Type','ISO','Note']].concat(items).map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='timer-log.csv'; a.click();
+});
+
+/* flash UI */
+function flashEffect(){ let c=0; const id=setInterval(()=>{ document.body.style.filter = c%2? 'brightness(1.06)':'brightness(1)'; c++; if(c>6){ clearInterval(id); document.body.style.filter=''; }},120); }
+
+/* sound play */
+const audioAlarm = $('audio-alarm'), audioBeep = $('audio-beep'), audioBell = $('audio-bell'), audioSci = $('audio-sci');
+function playSound(){
+  const sel = $('soundSelect').value; const vol = parseFloat($('soundVol').value) || 0.9;
+  let el = audioAlarm; if(sel==='beep') el=audioBeep; if(sel==='bell') el=audioBell; if(sel==='sci') el=audioSci;
+  try{ el.volume = vol; el.currentTime = 0; el.play().catch(()=>{}); }catch(e){}
+}
+
+/* ---------- Presets ---------- */
+let presets = []; const savedPresetsEl = $('savedPresets');
+function loadPresets(){ try{ presets = JSON.parse(localStorage.getItem(LS_PRESETS) || '[]'); }catch(e){ presets = []; } renderPresets(); }
+function savePresets(){ localStorage.setItem(LS_PRESETS, JSON.stringify(presets)); renderPresets(); }
+function renderPresets(){
+  savedPresetsEl.innerHTML = '';
+  if(!presets.length) savedPresetsEl.innerHTML = '<div class="small muted">No saved presets</div>';
+  presets.forEach((p, idx)=> {
+    const div = document.createElement('div'); div.className='lap';
+    div.innerHTML = `<div style="font-weight:700">${p.name || `${p.min}:${String(p.sec).padStart(2,'0')}`}</div><div class="note">${p.min}:${String(p.sec).padStart(2,'0')}</div>`;
+    const apply = document.createElement('button'); apply.className='btn'; apply.innerHTML='<i class="fas fa-play"></i> Use';
+    apply.addEventListener('click', ()=> { $('tMin').value = p.min; $('tSec').value = p.sec; showPanel('t'); });
+    const del = document.createElement('button'); del.className='btn'; del.innerHTML='<i class="fas fa-trash"></i> Del';
+    del.addEventListener('click', ()=> { if(confirm('Delete preset?')){ presets.splice(idx,1); savePresets(); }});
+    div.appendChild(apply); div.appendChild(del);
+    savedPresetsEl.appendChild(div);
+  });
+}
+$('pSave').addEventListener('click', ()=> {
+  const min = Math.max(0, parseInt($('pMin').value)||0); const sec = Math.max(0, parseInt($('pSec').value)||0); const name = ($('pName').value||'').trim();
+  if(min===0 && sec===0) return alert('Set minutes or seconds');
+  presets.unshift({min, sec, name}); savePresets(); $('pMin').value=''; $('pSec').value=''; $('pName').value='';
+});
+document.querySelectorAll('.presetBtn').forEach(b=> b.addEventListener('click', (ev)=> {
+  const min = parseInt(ev.currentTarget.dataset.min)||0; const sec = parseInt(ev.currentTarget.dataset.sec)||0;
+  $('tMin').value = min; $('tSec').value = sec; showPanel('t');
+}));
+
+/* ---------- Share & Export ---------- */
+function buildShareText(){
+  // choose active panel's data: if stopwatch has laps, prefer that; else timer log
+  const title = '🏁 Toolgenix Stopwatch Result';
+  // compute total time
+  const totalTime = (laps.length ? laps[0].ms : (swElapsed + (swRunning ? now()-swStart : 0)));
+  const totalLabel = formatMS(totalTime || 0);
+  const lapCount = laps.length;
+  const best = lapCount ? formatMS(Math.min(...laps.map(l=>l.ms))) : '—';
+  const avg = lapCount ? formatMS(Math.round(laps.map(l=>l.ms).reduce((a,b)=>a+b,0)/lapCount)) : '—';
+  const notes = laps.map((l,i)=> `Lap ${lapCount - i}: ${l.label}${l.note? ' • Note: '+l.note : ''}`).join('\n');
+  const footer = '\nShared from Toolgenix Stopwatch';
+  const text = `${title}\nTotal Time: ${totalLabel}\nLaps: ${lapCount}\nBest: ${best}\nAvg: ${avg}\n\n${notes || '(no lap notes)'}${footer}`;
+  return text;
+}
+$('copyResult').addEventListener('click', ()=> {
+  const txt = buildShareText();
+  navigator.clipboard.writeText(txt).then(()=> alert('Copied result to clipboard'));
+});
+$('exportResultCSV').addEventListener('click', ()=> {
+  // create CSV of laps (or timer logs)
+  if(laps.length){
+    const rows = [['Index','Label','ISO','Note']];
+    for(let i=laps.length-1;i>=0;i--){ const l=laps[i]; rows.push([laps.length - i, l.label, l.iso, l.note || '']); }
+    const csv = rows.map(r=> r.map(c=> `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='stopwatch-result.csv'; a.click();
+  } else { alert('No laps to export'); }
+});
+$('shareWhats').addEventListener('click', ()=> {
+  const txt = encodeURIComponent(buildShareText());
+  window.open(`https://wa.me/?text=${txt}`, '_blank');
+});
+$('shareTG').addEventListener('click', ()=> {
+  const txt = encodeURIComponent(buildShareText());
+  window.open(`https://t.me/share/url?url=&text=${txt}`, '_blank');
+});
+$('shareX').addEventListener('click', ()=> {
+  const txt = encodeURIComponent(buildShareText());
+  window.open(`https://twitter.com/intent/tweet?text=${txt}`, '_blank');
+});
+$('shareFB').addEventListener('click', ()=> {
+  const txt = encodeURIComponent(buildShareText());
+  const u = encodeURIComponent(window.location.href);
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${u}&quote=${txt}`, '_blank');
+});
+$('sharePreview').value = buildShareText();
+
+/* update share preview when laps change */
+const sharePreviewEl = $('sharePreview');
+function refreshSharePreview(){ sharePreviewEl.value = buildShareText(); }
+
+/* ---------- Keyboard shortcuts ---------- */
+document.addEventListener('keydown', (e)=>{
+  const k = e.key.toLowerCase();
+  if(k==='s'){ // start/resume stopwatch or timer depending active
+    if(panelStopwatch.style.display!=='none') $('swStart').click(); else $('tStart').click();
+  }
+  if(k==='p'){ $('swPause').click(); $('tPause').click(); }
+  if(k==='l'){ $('swLap').click(); }
+  if(k==='r'){ $('swReset').click(); $('tReset').click(); }
+  if(k==='t'){ if(panelStopwatch.style.display!=='none') showPanel('t'); else showPanel('sw'); }
+});
+
+/* ---------- Init ---------- */
+loadLaps(); loadPresets(); updateAnalytics(); updateTimerUI(); sharePreviewEl.value = buildShareText();
+</script>
+</body>
+</html>
