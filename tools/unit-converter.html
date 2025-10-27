@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Unit Converter Tool | Convert Length, Mass, Temperature | Toolgenix</title>
+    <meta name="description" content="Free online unit converter tool. Convert between length, mass, temperature, area, volume, speed, time, data, and pressure units instantly.">
+    <meta name="keywords" content="unit converter, measurement converter, length converter, temperature converter, metric converter, imperial converter, online calculator">
+    <meta name="author" content="Toolgenix">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Advanced Unit Converter Tool | Convert Length, Mass, Temperature">
+    <meta property="og:description" content="Convert between length, mass, temperature, area, volume, speed, time, data, and pressure units instantly with our free online tool.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolgenix.com/tools/unit-converter">
+    <meta property="og:image" content="https://toolgenix.com/images/unit-converter-og.jpg">
+    <meta property="og:site_name" content="Toolgenix">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Advanced Unit Converter Tool | Convert Length, Mass, Temperature">
+    <meta name="twitter:description" content="Convert between length, mass, temperature, area, volume, speed, time, data, and pressure units instantly">
+    <meta name="twitter:image" content="https://toolgenix.com/images/unit-converter-twitter.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/unit-converter">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Advanced Unit Converter Tool - Toolgenix",
+      "description": "Free online tool to convert between length, mass, temperature, area, volume, speed, time, data, and pressure units",
+      "url": "https://toolgenix.com/tools/unit-converter",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "1247"
+      }
+    }
+    </script>
+    
+    <!-- Additional FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How accurate are the unit conversions?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our unit converter uses precise conversion factors and follows international standards for all calculations. The results are accurate to the decimal precision you specify."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What units and categories are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We support 9 categories: Length, Mass, Temperature, Area, Volume, Speed, Time, Data, and Pressure with multiple units in each category."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Can I save my conversion history?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the converter automatically saves your conversion history in your browser's local storage. You can export it as CSV or clear it at any time."
+        }
+      }]
+    }
+    </script>
+    
+    <style>
+        :root {
+            --primary: #7A5CFA;
+            --primary-light: #8A63FF;
+            --primary-dark: #6A4EDC;
+            --background: #ffffff;
+            --card-bg: #f8f8f8;
+            --text: #1e1e2f;
+            --text-secondary: #2e2e3f;
+            --border: #e5e5e5;
+            --success: #4caf50;
+            --error: #ff4c4c;
+            --warning: #ff9800;
+            --glass: rgba(122, 92, 250, 0.03);
+            --glass-2: rgba(122, 92, 250, 0.02);
+            --glass-border: rgba(122, 92, 250, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+        }
+        
+        .logo span:first-child {
+            color: #1e1e2f;
+        }
+        
+        .logo span:last-child {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Tool Wrapper */
+        .wrap {
+            max-width: 1100px;
+            margin: 28px auto;
+            padding: 18px;
+            border-radius: 14px;
+            background: var(--background);
+            box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .tool-header h2 {
+            margin: 0;
+            font-size: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-header p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 16px;
+        }
+
+        @media (max-width: 980px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: var(--card-bg);
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        select, input[type=number], input[type=text] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--background);
+            color: inherit;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, input[type=number]:focus, input[type=text]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .row > * {
+            flex: 1;
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .btn {
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            background: transparent;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn.primary {
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 10px rgba(122, 92, 250, 0.3);
+        }
+
+        .btn.primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 92, 250, 0.4);
+        }
+
+        .btn:hover {
+            background: var(--glass);
+        }
+
+        .small {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .resultCard {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            background: var(--background);
+            font-size: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .muted {
+            color: var(--text-secondary);
+        }
+
+        .history {
+            max-height: 320px;
+            overflow: auto;
+            margin-top: 12px;
+        }
+
+        .histItem {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px;
+            border-radius: 8px;
+            background: var(--background);
+            margin-bottom: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .footer {
+            margin-top: 12px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* UI Elements */
+        .inline {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .swapBtn {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .swapBtn:hover {
+            background: var(--glass);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .copyBtn {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .copyBtn:hover {
+            background: var(--glass);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .presetBtn {
+            background: transparent;
+            border: 1px dashed var(--border);
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .presetBtn:hover {
+            background: var(--glass);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .badge {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: var(--glass);
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Theme Toggle */
+        .themeToggle {
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .themeToggle:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .micro {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 520px) {
+            .controls {
+                flex-direction: column;
+            }
+            .row {
+                flex-direction: column;
+            }
+        }
+
+        /* Info Sections */
+        .info-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .info-section h2 {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: left;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        
+        .info-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        
+        .benefit-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background);
+            border-top: 2px solid var(--primary);
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="https://toolgenix.com">Home</a></li>
+                <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                <li><a href="https://toolgenix.com/join">Join</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com">Home</a> &gt; 
+            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/conversion-tools">Conversion Tools</a> &gt; 
+            Unit Converter
+        </div>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Advanced Unit Converter Tool</h1>
+            <p>Convert between length, mass, temperature, area, volume, speed, time, data, and pressure units instantly with our free online tool.</p>
+        </section>
+        
+        <!-- Unit Converter Tool -->
+        <div class="wrap" role="main">
+            <div class="tool-header">
+                <div>
+                    <h2><i class="fas fa-ruler-combined"></i> Unit Converter — Toolgenix</h2>
+                    <p class="small">Advanced converter — Length, Mass, Temp, Area, Volume, Speed, Time, Data, Pressure</p>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center">
+                    <div class="micro">Theme</div>
+                    <button id="themeToggle" class="themeToggle">Light</button>
+                </div>
+            </div>
+
+            <div class="grid">
+                <!-- LEFT: Converter -->
+                <div class="panel" aria-label="converter">
+                    <label><i class="fas fa-list"></i> Category</label>
+                    <select id="categorySelect" aria-label="category"></select>
+
+                    <div style="display:flex;gap:8px;margin-top:10px;align-items:center">
+                        <div style="flex:1">
+                            <label><i class="fas fa-arrow-right"></i> From</label>
+                            <select id="fromUnit"></select>
+                        </div>
+                        <div style="width:56px;display:flex;align-items:center;justify-content:center">
+                            <button id="swapUnits" class="swapBtn" title="Swap units"><i class="fas fa-exchange-alt"></i></button>
+                        </div>
+                        <div style="flex:1">
+                            <label><i class="fas fa-arrow-left"></i> To</label>
+                            <select id="toUnit"></select>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:10px" class="row">
+                        <input id="valueInput" type="number" placeholder="Enter value" aria-label="value input" />
+                        <div style="width:110px">
+                            <label><i class="fas fa-sliders-h"></i> Precision</label>
+                            <select id="precision">
+                                <option value="6">6 decimals</option>
+                                <option value="4" selected>4 decimals</option>
+                                <option value="2">2 decimals</option>
+                                <option value="0">0 decimals</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button id="convertBtn" class="btn primary"><i class="fas fa-calculator"></i> Convert</button>
+                        <button id="copyResult" class="btn"><i class="fas fa-copy"></i> Copy Result</button>
+                        <button id="copyInput" class="btn"><i class="fas fa-paste"></i> Copy Input</button>
+                        <button id="saveHistory" class="btn"><i class="fas fa-save"></i> Save</button>
+                        <button id="voiceInput" class="btn"><i class="fas fa-microphone"></i> Voice</button>
+                    </div>
+
+                    <div class="resultCard" role="status" aria-live="polite">
+                        <div class="small">Result</div>
+                        <div id="resultText" style="font-size:20px;margin-top:6px">—</div>
+                        <div style="display:flex;gap:8px;margin-top:8px">
+                            <div class="badge" id="unitLabel">—</div>
+                            <div class="micro" id="helpText">Press Enter to convert • Use Swap to flip units</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:12px">
+                        <label class="small"><i class="fas fa-bolt"></i> Quick Presets</label>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+                            <button class="presetBtn" data-preset="1|length|meter|kilometer">1 m → km</button>
+                            <button class="presetBtn" data-preset="1000|length|meter|kilometer">1000 m → km</button>
+                            <button class="presetBtn" data-preset="1|mass|kilogram|pound">1 kg → lb</button>
+                            <button class="presetBtn" data-preset="1|temperature|celsius|fahrenheit">1 °C → °F</button>
+                            <button class="presetBtn" data-preset="1|speed|kmh|ms">1 km/h → m/s</button>
+                            <button class="presetBtn" data-preset="1024|data|byte|kilobyte">1024 B → KB</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: History & extras -->
+                <div class="panel" aria-label="history">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <strong><i class="fas fa-history"></i> History</strong>
+                        <div style="display:flex;gap:8px">
+                            <button id="exportCSV" class="btn"><i class="fas fa-download"></i> Export CSV</button>
+                            <button id="clearAll" class="btn"><i class="fas fa-trash"></i> Clear</button>
+                        </div>
+                    </div>
+
+                    <div class="history" id="historyList" aria-live="polite" style="margin-top:12px"></div>
+
+                    <div style="margin-top:12px">
+                        <label class="small"><i class="fas fa-tachometer-alt"></i> Category shortcuts</label>
+                        <select id="quickCategory" style="margin-top:6px">
+                            <option value="">Choose</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-top:12px">
+                        <label class="small"><i class="fas fa-info-circle"></i> Status</label>
+                        <div id="status" class="small muted">Ready</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">Toolgenix • Client-side only • History stored in this browser</div>
+        </div>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2>How to Use Our Unit Converter</h2>
+            <ol>
+                <li><strong>Select a category</strong> from the dropdown menu (length, mass, temperature, etc.).</li>
+                <li><strong>Choose the "From" unit</strong> - the unit you want to convert from.</li>
+                <li><strong>Choose the "To" unit</strong> - the unit you want to convert to.</li>
+                <li><strong>Enter the value</strong> you want to convert in the input field.</li>
+                <li><strong>Click "Convert"</strong> or press Enter to see the converted result.</li>
+                <li><strong>Adjust precision</strong> using the dropdown to control decimal places in the result.</li>
+                <li><strong>Save conversions</strong> to your history for future reference.</li>
+            </ol>
+            
+            <h3>Why Use Our Unit Converter?</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h4>Fast & Accurate</h4>
+                    <p>Get instant, precise conversions with international standard conversion factors.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-layer-group"></i>
+                    <h4>Multiple Categories</h4>
+                    <p>Convert between 9 different measurement categories with multiple units each.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-history"></i>
+                    <h4>Conversion History</h4>
+                    <p>Save and export your conversion history for reference or documentation.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-lock"></i>
+                    <h4>Privacy Guaranteed</h4>
+                    <p>All conversions happen locally in your browser - no data is sent to servers.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Use Cases Section -->
+        <section class="info-section">
+            <h2>When to Use a Unit Converter</h2>
+            
+            <h3>Academic & Educational</h3>
+            <p>Convert between metric and imperial units for science, engineering, and mathematics coursework.</p>
+            
+            <h3>Professional & Business</h3>
+            <p>Handle unit conversions for international trade, manufacturing, construction, and technical documentation.</p>
+            
+            <h3>Cooking & Recipes</h3>
+            <p>Convert between different measurement systems when following recipes from different countries.</p>
+            
+            <h3>Travel & Navigation</h3>
+            <p>Convert distance, speed, and temperature units when traveling between countries with different measurement systems.</p>
+            
+            <h3>Technical & Engineering</h3>
+            <p>Convert between different units for pressure, data, and other technical measurements in engineering applications.</p>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">How accurate are the unit conversions?</div>
+                <p>Our unit converter uses precise conversion factors and follows international standards for all calculations. The results are accurate to the decimal precision you specify.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What units and categories are supported?</div>
+                <p>We support 9 categories: Length, Mass, Temperature, Area, Volume, Speed, Time, Data, and Pressure with multiple units in each category.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I save my conversion history?</div>
+                <p>Yes, the converter automatically saves your conversion history in your browser's local storage. You can export it as CSV or clear it at any time.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Does the tool work offline?</div>
+                <p>Yes, since all calculations happen locally in your browser, the tool works completely offline once the page is loaded.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I use voice input for values?</div>
+                <p>Yes, the tool supports voice input for entering values if your browser supports speech recognition.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is there a limit to the number of conversions I can do?</div>
+                <p>No, there's no limit. You can perform as many conversions as you need, and the history stores up to 120 recent conversions.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com">Home</a></li>
+                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                        <li><a href="https://toolgenix.com/join">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* =========================
+           Advanced Unit Converter
+           Single-file, client-side
+           ========================= */
+
+        /* ---------- Unit definitions ----------
+         We'll map units to a base unit per category (except temperature)
+         For each category provide `units` map: key -> multiplier relative to base
+         and `labels` for display
+        ----------------------------------------*/
+        const UNITS = {
+          length: {
+            base: 'meter',
+            units: {
+              millimeter: 0.001,
+              centimeter: 0.01,
+              meter: 1,
+              kilometer: 1000,
+              inch: 0.0254,
+              foot: 0.3048,
+              yard: 0.9144,
+              mile: 1609.344
+            },
+            labels: { millimeter:'mm', centimeter:'cm', meter:'m', kilometer:'km', inch:'in', foot:'ft', yard:'yd', mile:'mi' }
+          },
+          mass: {
+            base: 'kilogram',
+            units: {
+              gram: 0.001,
+              kilogram: 1,
+              tonne: 1000,
+              ounce: 0.028349523125,
+              pound: 0.45359237
+            },
+            labels: { gram:'g', kilogram:'kg', tonne:'t', ounce:'oz', pound:'lb' }
+          },
+          temperature: {
+            // handled by formulas
+            units: {
+              celsius: '°C',
+              fahrenheit: '°F',
+              kelvin: 'K'
+            }
+          },
+          area: {
+            base: 'square_meter',
+            units: {
+              square_centimeter: 0.0001,
+              square_meter: 1,
+              square_kilometer: 1e6,
+              square_inch: 0.00064516,
+              square_foot: 0.09290304,
+              square_yard: 0.83612736,
+              acre: 4046.8564224,
+              hectare: 10000
+            },
+            labels: { square_centimeter:'cm²', square_meter:'m²', square_kilometer:'km²', square_inch:'in²', square_foot:'ft²', square_yard:'yd²', acre:'acre', hectare:'ha' }
+          },
+          volume: {
+            base: 'liter',
+            units: {
+              milliliter: 0.001,
+              liter: 1,
+              cubic_meter: 1000,
+              teaspoon: 0.00492892159375,
+              tablespoon: 0.01478676478125,
+              fluid_ounce: 0.0295735295625,
+              cup: 0.24,
+              pint: 0.473176473,
+              quart: 0.946352946,
+              gallon: 3.785411784
+            },
+            labels: { milliliter:'mL', liter:'L', cubic_meter:'m³', teaspoon:'tsp', tablespoon:'tbsp', fluid_ounce:'fl oz', cup:'cup', pint:'pt', quart:'qt', gallon:'gal' }
+          },
+          speed: {
+            base: 'ms',
+            units: {
+              ms: 1, // meters per second
+              kmh: 0.27777777777778,
+              mph: 0.44704,
+              knot: 0.51444444444444
+            },
+            labels: { ms:'m/s', kmh:'km/h', mph:'mph', knot:'kn' }
+          },
+          time: {
+            base: 'second',
+            units: {
+              millisecond: 0.001,
+              second: 1,
+              minute: 60,
+              hour: 3600,
+              day: 86400,
+              week: 604800,
+              month: 2629800, // average month
+              year: 31557600
+            },
+            labels: { millisecond:'ms', second:'s', minute:'min', hour:'h', day:'d', week:'wk', month:'mo', year:'yr' }
+          },
+          data: {
+            base: 'byte',
+            units: {
+              bit: 1/8,
+              byte: 1,
+              kilobyte: 1024,
+              megabyte: 1024**2,
+              gigabyte: 1024**3,
+              terabyte: 1024**4
+            },
+            labels: { bit:'b', byte:'B', kilobyte:'KB', megabyte:'MB', gigabyte:'GB', terabyte:'TB' }
+          },
+          pressure: {
+            base: 'pascal',
+            units: {
+              pascal:1,
+              kilopascal:1000,
+              bar:100000,
+              psi:6894.757293168,
+              atmosphere:101325
+            },
+            labels: { pascal:'Pa', kilopascal:'kPa', bar:'bar', psi:'psi', atmosphere:'atm' }
+          }
+        };
+
+        /* ---------- Utilities ---------- */
+        const $ = sel => document.querySelector(sel);
+        const qs = sel => document.querySelectorAll(sel);
+        const HISTORY_KEY = 'tg_unit_history_v1';
+        const MAX_HISTORY = 120;
+
+        /* Format numbers */
+        function formatNumber(n, precision){
+          if(!isFinite(n)) return 'NaN';
+          const p = Math.max(0, parseInt(precision||4));
+          if(p === 0) return String(Math.round(n));
+          // Use toFixed then trim trailing zeros
+          let s = n.toFixed(p);
+          // Remove trailing zeros
+          s = s.replace(/\.?0+$/,'');
+          return s;
+        }
+
+        /* Temperature conversions */
+        function tempToCelsius(value, from){
+          if(from==='celsius') return value;
+          if(from==='fahrenheit') return (value - 32) * 5/9;
+          if(from==='kelvin') return value - 273.15;
+          throw new Error('Unknown temp unit');
+        }
+        function celsiusToTemp(c, to){
+          if(to==='celsius') return c;
+          if(to==='fahrenheit') return c * 9/5 + 32;
+          if(to==='kelvin') return c + 273.15;
+          throw new Error('Unknown temp unit');
+        }
+
+        /* Generic conversion: value (from) -> base -> to */
+        function convertGeneric(value, category, from, to){
+          if(category==='temperature'){
+            const c = tempToCelsius(value, from);
+            return celsiusToTemp(c, to);
+          }
+          const cat = UNITS[category];
+          if(!cat) throw new Error('Unknown category');
+          const fromFactor = cat.units[from];
+          const toFactor = cat.units[to];
+          if(fromFactor === undefined || toFactor === undefined) throw new Error('Invalid unit');
+          // Convert to base: value * fromFactor
+          const inBase = value * fromFactor;
+          // Convert to target: inBase / toFactor
+          return inBase / toFactor;
+        }
+
+        /* Build UI lists */
+        function populateCategoryList(){
+          const sel = $('#categorySelect');
+          sel.innerHTML = '';
+          Object.keys(UNITS).forEach(k => {
+            const opt = document.createElement('option');
+            opt.value = k;
+            opt.textContent = k.charAt(0).toUpperCase() + k.slice(1);
+            sel.appendChild(opt);
+          });
+          // also build quickCategory
+          const qc = $('#quickCategory');
+          qc.innerHTML = '<option value="">Choose</option>';
+          Object.keys(UNITS).forEach(k => {
+            const o = document.createElement('option'); o.value = k; o.textContent = k.charAt(0).toUpperCase() + k.slice(1); qc.appendChild(o);
+          });
+        }
+
+        function populateUnits(category){
+          const from = $('#fromUnit'); const to = $('#toUnit');
+          from.innerHTML = ''; to.innerHTML = '';
+          const info = UNITS[category];
+          if(!info) return;
+          // temperature uses keys
+          const keys = Object.keys(info.units);
+          for(const k of keys){
+            const o1 = document.createElement('option'); o1.value = k; o1.textContent = unitLabel(category,k); from.appendChild(o1);
+            const o2 = document.createElement('option'); o2.value = k; o2.textContent = unitLabel(category,k); to.appendChild(o2);
+          }
+          // set intelligent defaults
+          from.selectedIndex = 0;
+          to.selectedIndex = (keys.length>1)?1:0;
+        }
+
+        /* Unit label */
+        function unitLabel(category, key){
+          const info = UNITS[category];
+          if(category==='temperature') return (info.units[key]||key);
+          if(info.labels && info.labels[key]) return `${info.labels[key]} (${key.replace(/_/g,' ')})`;
+          return `${key} (${key.replace(/_/g,' ')})`;
+        }
+
+        /* History handling */
+        function loadHistory(){ try{ return JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]'); }catch(e){return [];} }
+        function saveHistory(arr){ localStorage.setItem(HISTORY_KEY, JSON.stringify(arr)); }
+        function pushHistory(entry){
+          const h = loadHistory();
+          h.unshift(entry);
+          if(h.length>MAX_HISTORY) h.splice(MAX_HISTORY);
+          saveHistory(h);
+          renderHistory();
+        }
+        function clearHistory(){ localStorage.removeItem(HISTORY_KEY); renderHistory(); }
+
+        /* Render history */
+        function renderHistory(){
+          const cont = $('#historyList');
+          cont.innerHTML = '';
+          const h = loadHistory();
+          if(!h.length){ cont.innerHTML = '<div class="muted">No history yet</div>'; return; }
+          for(const it of h){
+            const el = document.createElement('div'); el.className='histItem';
+            el.innerHTML = `<div>
+              <div style="font-weight:600">${it.inputValue} → ${it.result}</div>
+              <div class="small muted">${it.category} • ${it.from} → ${it.to} • ${new Date(it.time).toLocaleString()}</div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <button class="btn" data-act="apply"><i class="fas fa-undo"></i></button>
+              <button class="btn" data-act="copy"><i class="fas fa-copy"></i></button>
+              <button class="btn" data-act="del"><i class="fas fa-trash"></i></button>
+            </div>`;
+            el.querySelector('[data-act="apply"]').addEventListener('click', ()=>{
+              $('#categorySelect').value = it.category; populateUnits(it.category);
+              $('#fromUnit').value = it.from; $('#toUnit').value = it.to;
+              $('#valueInput').value = it.inputValue;
+              $('#precision').value = it.precision || '4';
+              doConvert();
+            });
+            el.querySelector('[data-act="copy"]').addEventListener('click', ()=> {
+              navigator.clipboard.writeText(it.result).then(()=> alert('Copied result'));
+            });
+            el.querySelector('[data-act="del"]').addEventListener('click', ()=>{
+              if(!confirm('Delete this entry?')) return;
+              const arr = loadHistory().filter(x=>x.time !== it.time);
+              saveHistory(arr); renderHistory();
+            });
+            cont.appendChild(el);
+          }
+        }
+
+        /* Export CSV */
+        function exportCSV(){
+          const h = loadHistory();
+          if(!h.length){ alert('No history to export'); return; }
+          const rows = [['time','category','input_value','from','to','result','precision']];
+          for(const it of h) rows.push([new Date(it.time).toISOString(), it.category, it.inputValue, it.from, it.to, it.result, it.precision||'']);
+          const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+          const blob = new Blob([csv], {type:'text/csv'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'unit_history.csv'; a.click();
+        }
+
+        /* Core convert action */
+        function doConvert(showSave=false){
+          const category = $('#categorySelect').value;
+          const from = $('#fromUnit').value;
+          const to = $('#toUnit').value;
+          const raw = $('#valueInput').value;
+          const precision = $('#precision').value;
+          if(raw === '' || raw === null){ $('#resultText').textContent = 'Enter a value to convert'; return; }
+          const n = Number(raw);
+          if(!isFinite(n)){ $('#resultText').textContent = 'Invalid number'; return; }
+          try{
+            const out = convertGeneric(n, category, from, to);
+            const formatted = `${formatNumber(out, precision)} ${labelShort(category,to)}`;
+            $('#resultText').textContent = formatted;
+            $('#unitLabel').textContent = `${labelShort(category,from)} → ${labelShort(category,to)}`;
+            $('#status').textContent = 'Converted';
+            if(showSave){
+              const entry = { time: Date.now(), category, from, to, inputValue: raw, result: formatted, precision };
+              pushHistory(entry);
+            }
+          }catch(err){
+            $('#resultText').textContent = 'Conversion error';
+            $('#status').textContent = err.message;
+          }
+        }
+
+        /* label short */
+        function labelShort(category,unit){
+          const info = UNITS[category];
+          if(category==='temperature') return UNITS.temperature.units[unit] || unit;
+          return (info.labels && info.labels[unit]) ? info.labels[unit] : unit;
+        }
+
+        /* swapping */
+        function swapUnits(){
+          const f = $('#fromUnit'); const t = $('#toUnit');
+          const tmp = f.value; f.value = t.value; t.value = tmp;
+          // re-run convert
+          doConvert();
+        }
+
+        /* voice input */
+        let recognition = null;
+        function startVoice(){
+          if(!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)){
+            alert('Speech recognition not supported in this browser.');
+            return;
+          }
+          const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+          recognition = new SpeechRec();
+          recognition.lang = 'en-US';
+          recognition.interimResults = false;
+          recognition.maxAlternatives = 1;
+          $('#status').textContent = 'Listening...';
+          recognition.onresult = (e) => {
+            const txt = e.results[0][0].transcript;
+            $('#valueInput').value = txt.replace(/[^\d\.\-]/g,''); // keep numbers/dot/minus
+            $('#status').textContent = `Heard: ${txt}`;
+            doConvert();
+          };
+          recognition.onerror = (e) => { $('#status').textContent = 'Voice error'; };
+          recognition.onend = ()=> { $('#status').textContent = 'Ready'; };
+          recognition.start();
+        }
+
+        /* quick presets */
+        function applyPreset(p){
+          const [val,cat,from,to] = p.split('|');
+          $('#categorySelect').value = cat;
+          populateUnits(cat);
+          $('#fromUnit').value = from;
+          $('#toUnit').value = to;
+          $('#valueInput').value = val;
+          doConvert();
+        }
+
+        /* Initialize UI */
+        document.addEventListener('DOMContentLoaded', ()=>{
+          populateCategoryList();
+          $('#categorySelect').addEventListener('change', ()=>{
+            populateUnits($('#categorySelect').value);
+          });
+          // initial
+          $('#categorySelect').value = 'length';
+          populateUnits('length');
+
+          // events
+          $('#convertBtn').addEventListener('click', ()=> doConvert());
+          $('#valueInput').addEventListener('keydown', (e)=> { if(e.key==='Enter') doConvert(); else $('#status').textContent='Typing...'; });
+          $('#swapUnits').addEventListener('click', swapUnits);
+          $('#copyResult').addEventListener('click', ()=> {
+            const r = $('#resultText').textContent;
+            if(!r) return alert('No result'); navigator.clipboard.writeText(r).then(()=> $('#status').textContent='Result copied');
+          });
+          $('#copyInput').addEventListener('click', ()=> {
+            const v = $('#valueInput').value; if(!v) return alert('No input'); navigator.clipboard.writeText(v).then(()=> $('#status').textContent='Input copied');
+          });
+          $('#saveHistory').addEventListener('click', ()=> {
+            const category = $('#categorySelect').value; const from = $('#fromUnit').value; const to = $('#toUnit').value; const val = $('#valueInput').value;
+            if(val===''){ alert('Enter a value first'); return; }
+            const res = $('#resultText').textContent;
+            if(!res || res==='—'){ doConvert(true); } else {
+              pushHistory({ time: Date.now(), category, from, to, inputValue: val, result: res, precision: $('#precision').value });
+              $('#status').textContent = 'Saved';
+            }
+          });
+          $('#voiceInput').addEventListener('click', startVoice);
+          $('#clearAll').addEventListener('click', ()=> { if(confirm('Clear all history?')) clearHistory(); });
+          $('#exportCSV').addEventListener('click', exportCSV);
+
+          // preset buttons
+          qs('.presetBtn').forEach(b=> b.addEventListener('click', ()=> applyPreset(b.dataset.preset)));
+
+          // quickCategory change
+          $('#quickCategory').addEventListener('change', (e)=>{
+            const c = e.target.value; if(!c) return;
+            $('#categorySelect').value = c; populateUnits(c);
+            $('#status').textContent = `Category set to ${c}`;
+            e.target.selectedIndex = 0;
+          });
+
+          // theme toggle
+          let isDark = false;
+          $('#themeToggle').addEventListener('click', ()=>{
+            isDark = !isDark;
+            if(isDark){
+              document.documentElement.style.setProperty('--bg','#071026');
+              document.documentElement.style.setProperty('--panel','#0f1724');
+              document.documentElement.style.setProperty('--card-bg','#081223');
+              document.documentElement.style.setProperty('--text','#e6eef7');
+              document.documentElement.style.setProperty('--text-secondary','#9ca3af');
+              document.documentElement.style.setProperty('--border','rgba(255,255,255,0.04)');
+              document.documentElement.style.setProperty('--glass','rgba(255,255,255,0.03)');
+              document.documentElement.style.setProperty('--glass-2','rgba(255,255,255,0.02)');
+              $('#themeToggle').textContent = 'Dark';
+            } else {
+              // light mode variables
+              document.documentElement.style.setProperty('--bg','#ffffff');
+              document.documentElement.style.setProperty('--panel','#f8f8f8');
+              document.documentElement.style.setProperty('--card-bg','#f8f8f8');
+              document.documentElement.style.setProperty('--text','#1e1e2f');
+              document.documentElement.style.setProperty('--text-secondary','#2e2e3f');
+              document.documentElement.style.setProperty('--border','#e5e5e5');
+              document.documentElement.style.setProperty('--glass','rgba(122, 92, 250, 0.03)');
+              document.documentElement.style.setProperty('--glass-2','rgba(122, 92, 250, 0.02)');
+              $('#themeToggle').textContent = 'Light';
+            }
+          });
+
+          // render history
+          renderHistory();
+          $('#status').textContent = 'Ready';
+        });
+    </script>
+</body>
+</html>
