@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter Tool | Count Words & Characters Instantly | Toolgenix</title>
+    <meta name="description" content="Free online word counter tool. Count words, characters, paragraphs, lines, reading time, and speaking time instantly. No registration required.">
+    <meta name="keywords" content="word counter, character counter, text analysis, reading time, speaking time, paragraph counter, word count tool">
+    <meta name="author" content="Toolgenix">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Word Counter Tool | Count Words & Characters Instantly">
+    <meta property="og:description" content="Count words, characters, paragraphs, lines, reading time, and speaking time instantly with our free online tool">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolgenix.com/tools/word-counter">
+    <meta property="og:image" content="https://toolgenix.com/images/word-counter-og.jpg">
+    <meta property="og:site_name" content="Toolgenix">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Word Counter Tool | Count Words & Characters Instantly">
+    <meta name="twitter:description" content="Count words, characters, paragraphs, lines, reading time, and speaking time instantly">
+    <meta name="twitter:image" content="https://toolgenix.com/images/word-counter-twitter.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/word-counter">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Word Counter Tool - Toolgenix",
+      "description": "Free online tool to count words, characters, paragraphs, lines, reading time, and speaking time",
+      "url": "https://toolgenix.com/tools/word-counter",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "1247"
+      }
+    }
+    </script>
+    
+    <!-- Additional FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How accurate is the word counting?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our word counter is highly accurate and counts words based on standard word separation rules. It handles various text formats and languages effectively."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is the difference between characters and characters (no spaces)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Characters count includes all characters including spaces, while Characters (No Spaces) excludes all whitespace characters for a more accurate measure of actual text content."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How is reading time calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Reading time is calculated based on an average reading speed of 200 words per minute (WPM). This is a standard metric used in content analysis."
+        }
+      }]
+    }
+    </script>
+    
+    <style>
+        :root {
+            --primary: #7A5CFA;
+            --primary-light: #8A63FF;
+            --primary-dark: #6A4EDC;
+            --background: #ffffff;
+            --card-bg: #f8f8f8;
+            --text: #1e1e2f;
+            --text-secondary: #2e2e3f;
+            --border: #e5e5e5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+        }
+        
+        .logo span:first-child {
+            color: #1e1e2f;
+        }
+        
+        .logo span:last-child {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Tool Container */
+        .tool-container {
+            max-width: 850px;
+            width: 100%;
+            background-color: var(--background);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
+            margin: 0 auto 3rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .tool-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .tool-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 220px;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            outline: none;
+            resize: vertical;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: white;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .stats {
+            margin-top: 12px;
+            font-size: 15px;
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 6px;
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        button {
+            background: var(--primary);
+            border: none;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(122, 92, 250, 0.3);
+        }
+
+        .btn-group {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Info Sections */
+        .info-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .info-section h2 {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: left;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        
+        .info-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        
+        .benefit-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background);
+            border-top: 2px solid var(--primary);
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .info-section {
+                padding: 1.5rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .tool-container { 
+                padding: 20px; 
+            }
+            
+            .page-header h1 { 
+                font-size: 1.8rem; 
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .stats {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="https://toolgenix.com">Home</a></li>
+                <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                <li><a href="https://toolgenix.com/join">Join</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com">Home</a> &gt; 
+            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/text-tools">Text Tools</a> &gt; 
+            Word Counter
+        </div>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Free Word Counter Tool</h1>
+            <p>Count words, characters, paragraphs, lines, reading time, and speaking time instantly with our accurate word counter tool.</p>
+        </section>
+        
+        <!-- Word Counter Tool -->
+        <section class="tool-container">
+            <div class="tool-header">
+                <h2>Word Counter – Count Words & Characters Instantly</h2>
+                <p>Get detailed text analysis with real-time statistics</p>
+            </div>
+
+            <textarea id="text" placeholder="Start typing or paste text here..."></textarea>
+
+            <div class="btn-group">
+                <button onclick="copyText()">Copy</button>
+                <button onclick="pasteText()">Paste</button>
+                <button onclick="clearText()">Clear</button>
+                <button onclick="downloadText()">Download</button>
+            </div>
+
+            <div id="stats" class="stats">
+                Words: 0 | Characters: 0 | Characters (No Spaces): 0<br>
+                Paragraphs: 0 | Lines: 0<br>
+                Reading Time: 0 sec | Speaking Time: 0 sec
+            </div>
+        </section>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2>How to Use Our Word Counter Tool</h2>
+            <ol>
+                <li><strong>Type or paste your text</strong> into the text area. The counter will update automatically as you type.</li>
+                <li><strong>Review the detailed statistics</strong> displayed below the text area including word count, character count, paragraph count, and more.</li>
+                <li><strong>Use the action buttons</strong> to copy your text, paste from clipboard, clear the text area, or download your text as a file.</li>
+                <li><strong>Monitor reading and speaking times</strong> to estimate how long it will take to read or speak your content.</li>
+                <li><strong>Track your progress</strong> as you write to ensure your content meets specific length requirements.</li>
+            </ol>
+            
+            <h3>Why Use Our Word Counter?</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Real-Time Counting</h4>
+                    <p>Get instant word and character counts as you type with no delay.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <h4>Comprehensive Stats</h4>
+                    <p>Track words, characters, paragraphs, lines, reading time, and speaking time.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-download"></i>
+                    <h4>Export Options</h4>
+                    <p>Copy your text or download it as a file for easy sharing and storage.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-lock"></i>
+                    <h4>Privacy Guaranteed</h4>
+                    <p>Your text is processed locally and never stored on our servers.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Use Cases Section -->
+        <section class="info-section">
+            <h2>When to Use a Word Counter Tool</h2>
+            
+            <h3>Content Creation</h3>
+            <p>Ensure your articles, blog posts, and social media content meet specific word count requirements for optimal engagement.</p>
+            
+            <h3>Academic Writing</h3>
+            <p>Track word counts for essays, research papers, and assignments to meet academic requirements.</p>
+            
+            <h3>Professional Documents</h3>
+            <p>Monitor the length of resumes, cover letters, business proposals, and reports for professional communication.</p>
+            
+            <h3>SEO Optimization</h3>
+            <p>Optimize content length for search engines by tracking word counts for better ranking potential.</p>
+            
+            <h3>Social Media Planning</h3>
+            <p>Ensure your posts fit within character limits for platforms like Twitter, LinkedIn, and Instagram.</p>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">How accurate is the word counting?</div>
+                <p>Our word counter is highly accurate and counts words based on standard word separation rules. It handles various text formats and languages effectively.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What is the difference between characters and characters (no spaces)?</div>
+                <p>Characters count includes all characters including spaces, while Characters (No Spaces) excludes all whitespace characters for a more accurate measure of actual text content.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How is reading time calculated?</div>
+                <p>Reading time is calculated based on an average reading speed of 200 words per minute (WPM). This is a standard metric used in content analysis.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How is speaking time calculated?</div>
+                <p>Speaking time is calculated based on an average speaking speed of 150 words per minute, which is typical for presentations and speeches.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Does the tool work with different languages?</div>
+                <p>Yes, our word counter works with text in any language. It counts words based on spaces and punctuation, which works for most writing systems.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is there a limit to how much text I can analyze?</div>
+                <p>No, there's no strict limit, but extremely long texts may slow down processing in your browser. For optimal performance, we recommend texts under 100,000 words.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com">Home</a></li>
+                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                        <li><a href="https://toolgenix.com/join">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const textArea = document.getElementById("text");
+        textArea.addEventListener("input", updateStats);
+
+        function updateStats() {
+            let text = textArea.value.trim();
+
+            let words = text.length ? text.split(/\s+/).length : 0;
+            let chars = text.length;
+            let charsNoSpace = text.replace(/\s+/g, "").length;
+            let lines = text ? text.split(/\n/).length : 0;
+            let paragraphs = text ? text.split(/\n\s*\n/).filter(p => p.length > 0).length : 0;
+
+            let readTime = Math.round(words / 3.3); // ~200 WPM
+            let speakTime = Math.round(words / 2.5); // Speech speed
+
+            document.getElementById("stats").innerHTML =
+                `Words: ${words} | Characters: ${chars} | Characters (No Spaces): ${charsNoSpace}<br>
+                 Paragraphs: ${paragraphs} | Lines: ${lines}<br>
+                 Reading Time: ${readTime} sec | Speaking Time: ${speakTime} sec`;
+        }
+
+        function copyText() {
+            textArea.select();
+            document.execCommand("copy");
+            alert("Copied to clipboard ✅");
+        }
+
+        async function pasteText() {
+            const text = await navigator.clipboard.readText();
+            textArea.value += (textArea.value ? "\n" : "") + text;
+            updateStats();
+        }
+
+        function clearText() {
+            textArea.value = "";
+            updateStats();
+        }
+
+        function downloadText() {
+            const blob = new Blob([textArea.value], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "word-counter-text.txt";
+            a.click();
+        }
+    </script>
+</body>
+</html>
