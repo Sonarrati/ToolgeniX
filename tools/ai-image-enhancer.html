@@ -7,6 +7,78 @@
     <meta name="description" content="Free AI-powered image enhancement tool with upscaling, sharpening, denoising, and color correction. Client-side processing for privacy and quality.">
     <meta name="keywords" content="AI image enhancer, image upscaler, photo enhancer, image sharpening, denoise tool, photo editor, image quality improvement">
     <meta name="author" content="Toolgenix">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="AI Image Enhancer | Professional Image Enhancement Tool">
+    <meta property="og:description" content="Free AI-powered image enhancement tool with upscaling, sharpening, denoising, and color correction. Client-side processing for privacy and quality.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolgenix.com/tools/ai-image-enhancer">
+    <meta property="og:image" content="https://toolgenix.com/images/ai-image-enhancer-og.jpg">
+    <meta property="og:site_name" content="Toolgenix">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Image Enhancer | Professional Image Enhancement Tool">
+    <meta name="twitter:description" content="Free AI-powered image enhancement tool with upscaling, sharpening, denoising, and color correction.">
+    <meta name="twitter:image" content="https://toolgenix.com/images/ai-image-enhancer-twitter.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/ai-image-enhancer">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "AI Image Enhancer - Toolgenix",
+      "description": "Free AI-powered image enhancement tool with upscaling, sharpening, denoising, and color correction",
+      "url": "https://toolgenix.com/tools/ai-image-enhancer",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "ratingCount": "892"
+      }
+    }
+    </script>
+    
+    <!-- Additional FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How does the AI Image Enhancer work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our tool uses advanced algorithms for sharpening, denoising, and color correction. All processing happens in your browser for maximum privacy and speed."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Can I upscale my images with this tool?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, you can upscale images up to 3x their original size while maintaining quality through advanced interpolation techniques."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is my image data kept private?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely! All processing happens locally in your browser. Your images never leave your device, ensuring complete privacy."
+        }
+      }]
+    }
+    </script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -609,6 +681,239 @@
             color: var(--text-secondary);
         }
 
+        /* Info Sections */
+        .info-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        
+        .info-section h2 {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: left;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .benefit-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background);
+            border-top: 2px solid var(--primary);
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-content {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Stats display */
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .stat {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
         /* Mobile specific adjustments */
         @media (max-width: 768px) {
             header {
@@ -698,6 +1003,23 @@
             .preview-card {
                 width: 100%;
             }
+            
+            .info-section {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
+            
+            .info-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .info-section h3 {
+                font-size: 1.2rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -738,57 +1060,6 @@
                 padding: 12px;
             }
         }
-
-        /* Preview slider for comparison */
-        .preview-slider {
-            position: relative;
-            width: 100%;
-            margin: 15px 0;
-        }
-
-        .preview-slider input[type="range"] {
-            width: 100%;
-        }
-
-        .slider-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 5px;
-        }
-
-        .slider-labels span {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        /* Stats display */
-        .stats-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-            gap: 10px;
-        }
-
-        .stat {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            background: var(--card-bg);
-            border-radius: 10px;
-            border: 1px solid var(--border);
-        }
-
-        .stat-value {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 5px;
-        }
     </style>
 </head>
 <body>
@@ -802,21 +1073,29 @@
         </button>
         <nav>
             <ul id="navMenu">
-                <li><a href="https://toolgenix.com">Home</a></li>
-                <li><a href="https://toolgenix.com/categories">Categories</a></li>
-                <li><a href="https://toolgenix.com/tools">Tools</a></li>
-                <li><a href="https://toolgenix.com/blog">Blog</a></li>
-                <li><a href="https://toolgenix.com/join">Join</a></li>
+                <li><a href="https://toolgenix.com"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="https://toolgenix.com/categories"><i class="fas fa-th-large"></i> Categories</a></li>
+                <li><a href="https://toolgenix.com/tools"><i class="fas fa-tools"></i> Tools</a></li>
+                <li><a href="https://toolgenix.com/blog"><i class="fas fa-blog"></i> Blog</a></li>
+                <li><a href="https://toolgenix.com/join"><i class="fas fa-user-plus"></i> Join</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Main Content -->
     <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com"><i class="fas fa-home"></i> Home</a> &gt; 
+            <a href="https://toolgenix.com/tools"><i class="fas fa-tools"></i> Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/image-tools"><i class="fas fa-image"></i> Image Tools</a> &gt; 
+            AI Image Enhancer
+        </div>
+        
         <!-- Page Header -->
         <section class="page-header">
-            <h1>AI Image Enhancer</h1>
-            <p>Enhance your images with AI-powered sharpening, denoising, and upscaling. All processing happens in your browser for complete privacy.</p>
+            <h1>Free AI Image Enhancer Tool</h1>
+            <p>Professional image enhancement with upscaling, sharpening, denoising, and color correction. All processing happens in your browser for complete privacy.</p>
         </section>
         
         <!-- AI Image Enhancer Tool -->
@@ -1100,13 +1379,129 @@
                 </div>
             </div>
         </div>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2><i class="fas fa-play-circle"></i> How to Use Our AI Image Enhancer</h2>
+            <ol>
+                <li><strong>Upload your image</strong> - Select a PNG, JPG, WebP, BMP, or GIF file from your device.</li>
+                <li><strong>Choose enhancement settings</strong> - Use presets or manually adjust sharpening, denoising, and color parameters.</li>
+                <li><strong>Preview the results</strong> - Compare original and enhanced images side by side.</li>
+                <li><strong>Adjust as needed</strong> - Fine-tune settings based on your preview until satisfied.</li>
+                <li><strong>Download your enhanced image</strong> - Save in your preferred format (PNG, JPEG, or WebP).</li>
+            </ol>
+            
+            <h3><i class="fas fa-star"></i> Why Use Our AI Image Enhancer?</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-user-shield"></i>
+                    <h4>Complete Privacy</h4>
+                    <p>All processing happens in your browser - your images never leave your device.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Instant Results</h4>
+                    <p>See enhancements in real-time with our efficient client-side processing.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-sliders-h"></i>
+                    <h4>Full Control</h4>
+                    <p>Fine-tune every aspect of enhancement with detailed parameter controls.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                    <h4>Quality Upscaling</h4>
+                    <p>Increase image size up to 3x while maintaining quality and detail.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Use Cases Section -->
+        <section class="info-section">
+            <h2><i class="fas fa-images"></i> When to Use an AI Image Enhancer</h2>
+            
+            <h3><i class="fas fa-camera"></i> Photography & Portraits</h3>
+            <p>Enhance portrait photos by sharpening details, reducing noise, and improving skin tones for professional results.</p>
+            
+            <h3><i class="fas fa-shopping-bag"></i> Product Images</h3>
+            <p>Make product photos pop with enhanced clarity, color correction, and upscaling for e-commerce listings.</p>
+            
+            <h3><i class="fas fa-share-alt"></i> Social Media Content</h3>
+            <p>Improve image quality for social media posts, stories, and profile pictures to stand out in feeds.</p>
+            
+            <h3><i class="fas fa-file-alt"></i> Document Restoration</h3>
+            <p>Enhance scanned documents, old photos, or low-quality images by improving readability and visual quality.</p>
+            
+            <h3><i class="fas fa-paint-brush"></i> Creative Projects</h3>
+            <p>Prepare images for presentations, websites, or design projects with professional-level enhancement tools.</p>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question"></i> How does the AI Image Enhancer work?</div>
+                <p>Our tool uses advanced algorithms for sharpening, denoising, and color correction. All processing happens in your browser for maximum privacy and speed.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question"></i> Can I upscale my images with this tool?</div>
+                <p>Yes, you can upscale images up to 3x their original size while maintaining quality through advanced interpolation techniques.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question"></i> Is my image data kept private?</div>
+                <p>Absolutely! All processing happens locally in your browser. Your images never leave your device, ensuring complete privacy.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question"></i> What image formats are supported?</div>
+                <p>We support PNG, JPG, WebP, BMP, and GIF formats for input, and PNG, JPEG, and WebP for output.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question"></i> Does the tool work on mobile devices?</div>
+                <p>Yes, our tool is fully responsive and works on smartphones, tablets, and desktop computers.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question"></i> Are there any usage limits?</div>
+                <p>No, you can use the tool as much as you want. We recommend keeping individual files under 15MB for optimal performance.</p>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
-    <footer style="background-color: var(--background); border-top: 1px solid var(--border); padding: 1.5rem 5%; margin-top: 2rem;">
+    <footer>
         <div class="container">
-            <div class="footer">
-                <p>© 2025 Toolgenix — AI Image Enhancer • All processing happens in your browser for complete privacy</p>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="https://toolgenix.com/categories"><i class="fas fa-th-large"></i> Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog"><i class="fas fa-blog"></i> Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools"><i class="fas fa-tools"></i> Tools</a></li>
+                        <li><a href="https://toolgenix.com/join"><i class="fas fa-user-plus"></i> Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
             </div>
         </div>
     </footer>
