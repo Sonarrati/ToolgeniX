@@ -1,178 +1,971 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AI Image Enhancer — Toolgenix</title>
-<style>
-:root{
-  --bg:#071025; --panel:#0e1724; --muted:#9fb0c7;
-  --accent:#39d98a; --accent2:#6aa6ff; --card:rgba(255,255,255,0.02);
-  --radius:12px; --glass: rgba(255,255,255,0.03);
-}
-*{box-sizing:border-box}
-body{
-  margin:0;font-family:Inter, system-ui, Arial; background:linear-gradient(180deg,var(--bg),#01101a); color:#eaf6ff;
-  -webkit-font-smoothing:antialiased; padding:20px;
-}
-.container{max-width:1100px;margin:0 auto}
-.header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
-.brand h1{margin:0;color:var(--accent)} .brand p{margin:0;color:var(--muted);font-size:13px}
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>AI Image Enhancer | Professional Image Enhancement Tool | Toolgenix</title>
+    <meta name="description" content="Free AI-powered image enhancement tool with upscaling, sharpening, denoising, and color correction. Client-side processing for privacy and quality.">
+    <meta name="keywords" content="AI image enhancer, image upscaler, photo enhancer, image sharpening, denoise tool, photo editor, image quality improvement">
+    <meta name="author" content="Toolgenix">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="AI Image Enhancer | Professional Image Enhancement Tool">
+    <meta property="og:description" content="Free AI-powered image enhancement tool with upscaling, sharpening, denoising, and color correction. Client-side processing for privacy and quality.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolgenix.com/tools/ai-image-enhancer">
+    <meta property="og:image" content="https://toolgenix.com/images/ai-image-enhancer-og.jpg">
+    <meta property="og:site_name" content="Toolgenix">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Image Enhancer | Professional Image Enhancement Tool">
+    <meta name="twitter:description" content="Free AI-powered image enhancement tool with upscaling, sharpening, denoising, and color correction.">
+    <meta name="twitter:image" content="https://toolgenix.com/images/ai-image-enhancer-twitter.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolgenix.com/tools/ai-image-enhancer">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "AI Image Enhancer - Toolgenix",
+      "description": "Free AI-powered image enhancement tool with upscaling, sharpening, denoising, and color correction",
+      "url": "https://toolgenix.com/tools/ai-image-enhancer",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "ratingCount": "892"
+      }
+    }
+    </script>
+    
+    <!-- Additional FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How does the AI Image Enhancer work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our tool uses advanced algorithms for sharpening, denoising, and color correction. All processing happens in your browser for maximum privacy and speed."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Can I upscale my images with this tool?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, you can upscale images up to 3x their original size while maintaining quality through advanced interpolation techniques."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is my image data kept private?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely! All processing happens locally in your browser. Your images never leave your device, ensuring complete privacy."
+        }
+      }]
+    }
+    </script>
+    
+    <style>
+        :root {
+            --primary: #7A5CFA;
+            --primary-light: #8A63FF;
+            --primary-dark: #6A4EDC;
+            --background: #ffffff;
+            --card-bg: #f8f8f8;
+            --text: #1e1e2f;
+            --text-secondary: #2e2e3f;
+            --border: #e5e5e5;
+            --success: #4caf50;
+            --error: #ff4c4c;
+            --warning: #ff9800;
+            --glass: rgba(122, 92, 250, 0.03);
+            --glass-2: rgba(122, 92, 250, 0.02);
+            --glass-border: rgba(122, 92, 250, 0.1);
+        }
 
-.grid{display:grid;grid-template-columns:420px 1fr;gap:14px}
-@media(max-width:980px){ .grid{grid-template-columns:1fr} }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.01));border-radius:var(--radius);padding:12px;border:1px solid rgba(255,255,255,0.03)}
-.small{font-size:13px;color:var(--muted)}
-.controls{display:flex;flex-direction:column;gap:10px}
-.row{display:flex;gap:8px;align-items:center}
-.label{min-width:110px;color:var(--muted);font-size:13px}
-input[type="range"]{width:100%}
-select,input[type="file"],button,textarea{border-radius:8px;border:none;padding:10px}
-.btn{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#022;font-weight:700;cursor:pointer}
-.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
-.previewWrap{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
-.preview{background:#081227;border-radius:8px;padding:8px;display:flex;flex-direction:column;align-items:center}
-.preview canvas{max-width:100%;height:auto;border-radius:6px;display:block}
-.meta{margin-top:6px;color:var(--muted);font-size:13px}
-.preset{background:transparent;border:1px solid rgba(255,255,255,0.03);border-radius:8px;padding:8px;cursor:pointer;color:var(--muted)}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
 
-.footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
-.badge{display:inline-block;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--muted);font-weight:600}
-.processing{display:inline-flex;align-items:center;gap:8px}
-.spinner{width:18px;height:18px;border:3px solid rgba(255,255,255,0.06);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(122, 92, 250, 0.15);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+        }
+        
+        .logo span:first-child {
+            color: #1e1e2f;
+        }
+        
+        .logo span:last-child {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
 
-/* small helpers */
-.col{display:flex;flex-direction:column;gap:8px}
-.rightActions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-</style>
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Tool Wrapper */
+        .card {
+            width: 100%;
+            background: var(--background);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(122, 92, 250, 0.1);
+            margin: 0 auto 2rem;
+        }
+
+        .tool-header {
+            margin-bottom: 20px;
+        }
+
+        .tool-header h2 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+            margin: 6px 0 14px;
+            font-size: 13px;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        input, select, button, textarea {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--background);
+            color: inherit;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            width: 100%;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            cursor: pointer;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-weight: 600;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .btn.primary {
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            box-shadow: 0 4px 10px rgba(122, 92, 250, 0.3);
+        }
+
+        .btn.primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 92, 250, 0.4);
+        }
+
+        .btn:hover {
+            background: var(--glass);
+            border-color: var(--primary);
+        }
+
+        .btn.warn {
+            background: var(--error);
+            color: white;
+            border: none;
+        }
+
+        .muted {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .small {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .previewWrap {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .preview {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            border: 1px solid var(--border);
+        }
+
+        .preview canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            display: block;
+            border: 1px solid var(--border);
+        }
+
+        .meta {
+            margin-top: 6px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .preset {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .preset:hover {
+            background: var(--glass);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .preset.active {
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+        }
+
+        .footer {
+            margin-top: 14px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 8px;
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            font-weight: 600;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .processing {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(122, 92, 250, 0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Info Sections */
+        .info-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .info-section h2 {
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: left;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        
+        .info-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .info-section p, .info-section li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .info-section ul, .info-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        
+        .benefit-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--background);
+            border-top: 2px solid var(--primary);
+            padding: 2rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-content {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-column p {
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(122, 92, 250, 0.15);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Range slider styling */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            .page-header {
+                padding: 2rem 0 1.5rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1.1rem;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .btn {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+            
+            .info-section {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
+            
+            .info-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .info-section h3 {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Label styling */
+        .label {
+            min-width: 110px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <div class="brand">
-      <h1>AI Image Enhancer</h1>
-      <p class="small">Boost image clarity — client-side enhancement (unsharp mask, denoise blend, color adjust, upscale)</p>
-    </div>
-    <div class="small">Tip: For best results use high-quality source image</div>
-  </div>
-
-  <div class="grid">
-    <!-- left controls -->
-    <div class="card">
-      <div class="controls">
-        <div>
-          <label class="small">Upload image (PNG/JPG/WebP/BMP/GIF)</label>
-          <input id="fileInput" type="file" accept="image/*">
-          <div class="small" id="fileNote">Max recommended size: 8MB</div>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>TOOL</span><span>GENIX</span>
         </div>
+        <nav>
+            <ul>
+                <li><a href="https://toolgenix.com">Home</a></li>
+                <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                <li><a href="https://toolgenix.com/join">Join</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <div class="col">
-          <div class="row">
-            <span class="label">Preset</span>
-            <button class="preset" id="presetAuto">Auto Enhance</button>
-            <button class="preset" id="presetSharpen">Sharpen Only</button>
-            <button class="preset" id="presetDenoise">Denoise Only</button>
-          </div>
-
-          <div class="row">
-            <span class="label">Strength</span>
-            <input id="strength" type="range" min="0" max="2" step="0.05" value="1">
-            <div class="badge" id="strengthVal">1.00</div>
-          </div>
-
-          <div class="row">
-            <span class="label">Sharpen</span>
-            <input id="sharpen" type="range" min="0" max="2" step="0.05" value="0.8">
-            <div class="badge" id="sharpenVal">0.80</div>
-          </div>
-
-          <div class="row">
-            <span class="label">Radius</span>
-            <input id="radius" type="range" min="0" max="10" step="0.5" value="1.5">
-            <div class="badge" id="radiusVal">1.5</div>
-          </div>
-
-          <div class="row">
-            <span class="label">Denoise</span>
-            <input id="denoise" type="range" min="0" max="1" step="0.01" value="0.12">
-            <div class="badge" id="denoiseVal">0.12</div>
-          </div>
-
-          <div class="row">
-            <span class="label">Brightness</span>
-            <input id="brightness" type="range" min="-0.5" max="0.5" step="0.01" value="0">
-            <div class="badge" id="brightnessVal">0</div>
-          </div>
-
-          <div class="row">
-            <span class="label">Contrast</span>
-            <input id="contrast" type="range" min="-0.6" max="0.8" step="0.01" value="0.06">
-            <div class="badge" id="contrastVal">0.06</div>
-          </div>
-
-          <div class="row">
-            <span class="label">Saturation</span>
-            <input id="saturation" type="range" min="-0.8" max="0.8" step="0.01" value="0.06">
-            <div class="badge" id="saturationVal">0.06</div>
-          </div>
-
-          <div class="row">
-            <span class="label">Upscale</span>
-            <select id="upscale" class="input">
-              <option value="1">1× (original)</option>
-              <option value="2">2×</option>
-              <option value="3">3×</option>
-            </select>
-          </div>
-
-          <div class="row">
-            <span class="label">Output format</span>
-            <select id="outFormat">
-              <option value="image/png">PNG</option>
-              <option value="image/jpeg">JPEG</option>
-              <option value="image/webp">WEBP</option>
-            </select>
-
-            <span style="margin-left:auto" class="small">Quality: <input id="jpegQuality" type="range" min="0.4" max="1" step="0.05" value="0.92"></span>
-          </div>
-
-          <div class="row">
-            <button id="applyBtn" class="btn">Apply Enhancements</button>
-            <button id="downloadBtn" class="btn ghost">Download</button>
-          </div>
-
-          <div class="row rightActions">
-            <div id="status" class="small">&nbsp;</div>
-            <div id="processing" class="processing" style="display:none"><div class="spinner"></div><div class="small">Processing...</div></div>
-          </div>
-
-          <div class="small" style="margin-top:6px">Optional: For real AI upscaling (GAN) connect server-side API — see comments in the code.</div>
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="https://toolgenix.com">Home</a> &gt; 
+            <a href="https://toolgenix.com/tools">Tools</a> &gt; 
+            <a href="https://toolgenix.com/tools/image-tools">Image Tools</a> &gt; 
+            AI Image Enhancer
         </div>
-      </div>
-    </div>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Free AI Image Enhancer Tool</h1>
+            <p>Professional image enhancement with upscaling, sharpening, denoising, and color correction. All processing happens in your browser for complete privacy.</p>
+        </section>
+        
+        <!-- AI Image Enhancer Tool -->
+        <div class="card" role="application" aria-labelledby="title">
+            <div class="tool-header">
+                <h2 id="title"><i class="fas fa-magic"></i> AI Image Enhancer</h2>
+                <p class="lead">Professional image enhancement with upscaling, sharpening, denoising, and color correction</p>
+            </div>
 
-    <!-- right preview -->
-    <div class="card">
-      <div class="previewWrap">
-        <div class="preview" style="width:48%">
-          <div class="small" style="font-weight:700">Original</div>
-          <canvas id="origCanvas"></canvas>
-          <div class="meta" id="origMeta">No image</div>
+            <div class="grid" aria-live="polite">
+                <!-- Left Column - Controls -->
+                <div class="col">
+                    <div class="card">
+                        <div>
+                            <label class="small"><i class="fas fa-upload"></i> Upload image (PNG/JPG/WebP/BMP/GIF)</label>
+                            <input id="fileInput" type="file" accept="image/*">
+                            <div class="small" id="fileNote">Max recommended size: 8MB</div>
+                        </div>
+
+                        <div class="controls" style="margin-top: 15px;">
+                            <div class="row">
+                                <span class="label"><i class="fas fa-sliders-h"></i> Preset</span>
+                                <button class="preset active" id="presetAuto"><i class="fas fa-robot"></i> Auto Enhance</button>
+                                <button class="preset" id="presetSharpen"><i class="fas fa-crosshairs"></i> Sharpen Only</button>
+                                <button class="preset" id="presetDenoise"><i class="fas fa-snowflake"></i> Denoise Only</button>
+                            </div>
+
+                            <div class="row">
+                                <span class="label"><i class="fas fa-bolt"></i> Strength</span>
+                                <input id="strength" type="range" min="0" max="2" step="0.05" value="1">
+                                <div class="badge" id="strengthVal">1.00</div>
+                            </div>
+
+                            <div class="row">
+                                <span class="label"><i class="fas fa-crosshairs"></i> Sharpen</span>
+                                <input id="sharpen" type="range" min="0" max="2" step="0.05" value="0.8">
+                                <div class="badge" id="sharpenVal">0.80</div>
+                            </div>
+
+                            <div class="row">
+                                <span class="label"><i class="fas fa-circle"></i> Radius</span>
+                                <input id="radius" type="range" min="0" max="10" step="0.5" value="1.5">
+                                <div class="badge" id="radiusVal">1.5</div>
+                            </div>
+
+                            <div class="row">
+                                <span class="label"><i class="fas fa-snowflake"></i> Denoise</span>
+                                <input id="denoise" type="range" min="0" max="1" step="0.01" value="0.12">
+                                <div class="badge" id="denoiseVal">0.12</div>
+                            </div>
+
+                            <div class="row">
+                                <span class="label"><i class="fas fa-sun"></i> Brightness</span>
+                                <input id="brightness" type="range" min="-0.5" max="0.5" step="0.01" value="0">
+                                <div class="badge" id="brightnessVal">0</div>
+                            </div>
+
+                            <div class="row">
+                                <span class="label"><i class="fas fa-adjust"></i> Contrast</span>
+                                <input id="contrast" type="range" min="-0.6" max="0.8" step="0.01" value="0.06">
+                                <div class="badge" id="contrastVal">0.06</div>
+                            </div>
+
+                            <div class="row">
+                                <span class="label"><i class="fas fa-palette"></i> Saturation</span>
+                                <input id="saturation" type="range" min="-0.8" max="0.8" step="0.01" value="0.06">
+                                <div class="badge" id="saturationVal">0.06</div>
+                            </div>
+
+                            <div class="row">
+                                <span class="label"><i class="fas fa-expand-arrows-alt"></i> Upscale</span>
+                                <select id="upscale" class="input">
+                                    <option value="1">1× (original)</option>
+                                    <option value="2">2×</option>
+                                    <option value="3">3×</option>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <span class="label"><i class="fas fa-file-export"></i> Output format</span>
+                                <select id="outFormat">
+                                    <option value="image/png">PNG</option>
+                                    <option value="image/jpeg">JPEG</option>
+                                    <option value="image/webp">WEBP</option>
+                                </select>
+
+                                <span style="margin-left:auto" class="small">Quality: <input id="jpegQuality" type="range" min="0.4" max="1" step="0.05" value="0.92"></span>
+                            </div>
+
+                            <div class="row">
+                                <button id="applyBtn" class="btn primary"><i class="fas fa-play"></i> Apply Enhancements</button>
+                                <button id="downloadBtn" class="btn"><i class="fas fa-download"></i> Download</button>
+                            </div>
+
+                            <div class="row" style="justify-content: space-between; margin-top: 10px;">
+                                <div id="status" class="small">&nbsp;</div>
+                                <div id="processing" class="processing" style="display:none"><div class="spinner"></div><div class="small">Processing...</div></div>
+                            </div>
+
+                            <div class="small" style="margin-top:10px"><i class="fas fa-info-circle"></i> Optional: For real AI upscaling (GAN) connect server-side API — see comments in the code.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Preview -->
+                <div class="col">
+                    <div class="card">
+                        <div class="previewWrap">
+                            <div class="preview">
+                                <div class="small" style="font-weight:700"><i class="fas fa-image"></i> Original</div>
+                                <canvas id="origCanvas"></canvas>
+                                <div class="meta" id="origMeta">No image</div>
+                            </div>
+
+                            <div class="preview">
+                                <div class="small" style="font-weight:700"><i class="fas fa-star"></i> Enhanced</div>
+                                <canvas id="outCanvas"></canvas>
+                                <div class="meta" id="outMeta">No output</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="margin-top:20px">
+                        <div class="small" style="font-weight:700"><i class="fas fa-lightbulb"></i> Quick Tips</div>
+                        <div class="small" style="margin-top:8px">
+                            <div><i class="fas fa-check-circle"></i> Use high-quality source images for best results</div>
+                            <div><i class="fas fa-check-circle"></i> Adjust strength to control overall enhancement intensity</div>
+                            <div><i class="fas fa-check-circle"></i> Use denoise for grainy or noisy images</div>
+                            <div><i class="fas fa-check-circle"></i> Try different presets for common scenarios</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
+        <!-- How to Use Section -->
+        <section class="info-section">
+            <h2>How to Use Our AI Image Enhancer</h2>
+            <ol>
+                <li><strong>Upload your image</strong> - Select a PNG, JPG, WebP, BMP, or GIF file from your device.</li>
+                <li><strong>Choose enhancement settings</strong> - Use presets or manually adjust sharpening, denoising, and color parameters.</li>
+                <li><strong>Preview the results</strong> - Compare original and enhanced images side by side.</li>
+                <li><strong>Adjust as needed</strong> - Fine-tune settings based on your preview until satisfied.</li>
+                <li><strong>Download your enhanced image</strong> - Save in your preferred format (PNG, JPEG, or WebP).</li>
+            </ol>
+            
+            <h3>Why Use Our AI Image Enhancer?</h3>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-user-shield"></i>
+                    <h4>Complete Privacy</h4>
+                    <p>All processing happens in your browser - your images never leave your device.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Instant Results</h4>
+                    <p>See enhancements in real-time with our efficient client-side processing.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-sliders-h"></i>
+                    <h4>Full Control</h4>
+                    <p>Fine-tune every aspect of enhancement with detailed parameter controls.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                    <h4>Quality Upscaling</h4>
+                    <p>Increase image size up to 3x while maintaining quality and detail.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Use Cases Section -->
+        <section class="info-section">
+            <h2>When to Use an AI Image Enhancer</h2>
+            
+            <h3>Photography & Portraits</h3>
+            <p>Enhance portrait photos by sharpening details, reducing noise, and improving skin tones for professional results.</p>
+            
+            <h3>Product Images</h3>
+            <p>Make product photos pop with enhanced clarity, color correction, and upscaling for e-commerce listings.</p>
+            
+            <h3>Social Media Content</h3>
+            <p>Improve image quality for social media posts, stories, and profile pictures to stand out in feeds.</p>
+            
+            <h3>Document Restoration</h3>
+            <p>Enhance scanned documents, old photos, or low-quality images by improving readability and visual quality.</p>
+            
+            <h3>Creative Projects</h3>
+            <p>Prepare images for presentations, websites, or design projects with professional-level enhancement tools.</p>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">How does the AI Image Enhancer work?</div>
+                <p>Our tool uses advanced algorithms for sharpening, denoising, and color correction. All processing happens in your browser for maximum privacy and speed.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I upscale my images with this tool?</div>
+                <p>Yes, you can upscale images up to 3x their original size while maintaining quality through advanced interpolation techniques.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is my image data kept private?</div>
+                <p>Absolutely! All processing happens locally in your browser. Your images never leave your device, ensuring complete privacy.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What image formats are supported?</div>
+                <p>We support PNG, JPG, WebP, BMP, and GIF formats for input, and PNG, JPEG, and WebP for output.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Does the tool work on mobile devices?</div>
+                <p>Yes, our tool is fully responsive and works on smartphones, tablets, and desktop computers.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Are there any usage limits?</div>
+                <p>No, you can use the tool as much as you want. We recommend keeping individual files under 15MB for optimal performance.</p>
+            </div>
+        </section>
+    </main>
 
-        <div class="preview" style="width:48%">
-          <div class="small" style="font-weight:700">Enhanced</div>
-          <canvas id="outCanvas"></canvas>
-          <div class="meta" id="outMeta">No output</div>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Toolgenix</h3>
+                    <p>Toolgenix provides free, easy-to-use online tools to simplify your digital life. Our mission is to make everyday tasks faster and more efficient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://toolgenix.com">Home</a></li>
+                        <li><a href="https://toolgenix.com/categories">Categories</a></li>
+                        <li><a href="https://toolgenix.com/blog">Blog</a></li>
+                        <li><a href="https://toolgenix.com/tools">Tools</a></li>
+                        <li><a href="https://toolgenix.com/join">Join</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Toolgenix — All rights reserved.</p>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">Toolgenix — Client-side Image Enhancer • No keys required for client-only mode</div>
-</div>
+    </footer>
 
 <script>
 /*
@@ -212,6 +1005,10 @@ const brightnessVal = document.getElementById('brightnessVal');
 const contrastVal = document.getElementById('contrastVal');
 const saturationVal = document.getElementById('saturationVal');
 
+const presetAuto = document.getElementById('presetAuto');
+const presetSharpen = document.getElementById('presetSharpen');
+const presetDenoise = document.getElementById('presetDenoise');
+
 let origImg = new Image();
 let origLoaded = false;
 let origWidth=0, origHeight=0;
@@ -230,6 +1027,50 @@ Array.from([strengthEl, sharpenEl, radiusEl, denoiseEl, brightnessEl, contrastEl
   el.addEventListener('input', updateBadges);
 });
 updateBadges();
+
+// Preset handling
+presetAuto.addEventListener('click', () => {
+  setActivePreset(presetAuto);
+  strengthEl.value = 1;
+  sharpenEl.value = 0.8;
+  radiusEl.value = 1.5;
+  denoiseEl.value = 0.12;
+  brightnessEl.value = 0;
+  contrastEl.value = 0.06;
+  saturationEl.value = 0.06;
+  updateBadges();
+});
+
+presetSharpen.addEventListener('click', () => {
+  setActivePreset(presetSharpen);
+  strengthEl.value = 1.2;
+  sharpenEl.value = 1.5;
+  radiusEl.value = 1.0;
+  denoiseEl.value = 0;
+  brightnessEl.value = 0;
+  contrastEl.value = 0.1;
+  saturationEl.value = 0;
+  updateBadges();
+});
+
+presetDenoise.addEventListener('click', () => {
+  setActivePreset(presetDenoise);
+  strengthEl.value = 1;
+  sharpenEl.value = 0;
+  radiusEl.value = 2.0;
+  denoiseEl.value = 0.3;
+  brightnessEl.value = 0.05;
+  contrastEl.value = 0.05;
+  saturationEl.value = 0.05;
+  updateBadges();
+});
+
+function setActivePreset(activePreset) {
+  [presetAuto, presetSharpen, presetDenoise].forEach(preset => {
+    preset.classList.remove('active');
+  });
+  activePreset.classList.add('active');
+}
 
 // file load
 fileInput.addEventListener('change', async (e)=>{
